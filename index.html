@@ -1184,33 +1184,10 @@
     );
   }
 
-  /* ─────── Modal (mock Tally redirect) ─────── */
-  function ApplyModal({ open, onClose }){
-    if(!open) return null;
-    return (
-      <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm pop-in" onClick={onClose}>
-        <div className="w-full max-w-[420px] mx-3 mb-3 bg-ink2 border border-line rounded-md p-6" onClick={e=>e.stopPropagation()}>
-          <div className="text-[10.5px] text-amber font-mono uppercase tracking-[0.16em] mb-3">신청서로 이동합니다</div>
-          <div className="text-[18px] font-extrabold leading-[1.4] mb-2 text-fg">1분이면 충분해요.</div>
-          <p className="text-[12.5px] text-muted leading-[1.7] mb-5">
-            이름, 거주 동네. 기본적인 것들만 받아요.<br/>
-            응답 후 문자로 안내사항 보내드릴게요.
-          </p>
-          <a href={TALLY_URL} target="_blank" rel="noreferrer"
-             className="block text-center bg-amber text-deep font-bold text-[14px] py-3.5 rounded-md mb-2">
-            신청서 열기 →
-          </a>
-          <button onClick={onClose} className="block w-full text-center text-[12px] text-muted py-2">닫기</button>
-        </div>
-      </div>
-    );
-  }
-
   /* ─────── App ─────── */
   function App(){
-    const [open, setOpen] = useState(false);
     useReveal();
-    const cta = () => setOpen(true);
+    const cta = () => { window.location.href = TALLY_URL; };
 
     return (
       <>
@@ -1233,7 +1210,6 @@
           <Foot />
         </div>
         <Sticky onCTA={cta} />
-        <ApplyModal open={open} onClose={()=>setOpen(false)} />
       </>
     );
   }
