@@ -332,7 +332,9 @@
 <body class="grain">
   <div id="root"></div>
 
-  <script type="text/babel" data-presets="env,react">
+  
+<script>window.__resources = {"moim5":"./assets/6fe04e8d-98a3-4080-8536-9fd567382438.png","moim7":"./assets/293bbf19-bda1-4792-ad13-561e7bfee9f2.png","moim2":"./assets/2735f3b0-a396-4d60-b35f-95de30bdb2d0.png","moim4":"./assets/d5b376d2-9f44-411a-b190-4eeeb88602d0.png","moimB8":"./assets/d835d072-e391-4fe4-b579-fcd55b144d9e.png","moim8":"./assets/99446e73-51c1-4c11-9879-ebfaa95ad7c9.png","moim9":"./assets/b328c206-12da-4e1e-996a-4f022358960e.png","moim6":"./assets/074f1c94-61e7-42be-b347-c7ebcb498911.png"};</script>
+<script type="text/babel" data-presets="env,react">
   const { useState, useEffect, useRef, useMemo } = React;
 
   const TALLY_URL = "https://smore.im/form/O5Yn3foBzs";
@@ -560,12 +562,12 @@
   function PhotoBand(){
     // Scroll-snap atmospheric band of community photos
     const photos = [
-      { src:window.__resources../assets/293bbf19-bda1-4792-ad13-561e7bfee9f2.png, tag:'운동 파트' },
-      { src:window.__resources../assets/6fe04e8d-98a3-4080-8536-9fd567382438.png, tag:'독서 파트' },
-      { src:window.__resources../assets/2735f3b0-a396-4d60-b35f-95de30bdb2d0.png, tag:'전시·공연 파트' },
-      { src:window.__resources../assets/99446e73-51c1-4c11-9879-ebfaa95ad7c9.png, tag:'창업 파트' },
-      { src:window.__resources../assets/b328c206-12da-4e1e-996a-4f022358960e.png, tag:'AFTER 파트' },
-      { src:window.__resources../assets/074f1c94-61e7-42be-b347-c7ebcb498911.png, tag:'AI 파트' },
+      { src:window.__resources.moim7, tag:'운동 파트' },
+      { src:window.__resources.moim5, tag:'독서 파트' },
+      { src:window.__resources.moim2, tag:'전시·공연 파트' },
+      { src:window.__resources.moim8, tag:'창업 파트' },
+      { src:window.__resources.moim9, tag:'AFTER 파트' },
+      { src:window.__resources.moim6, tag:'AI 파트' },
     ];
     return (
       <section className="reveal py-12 border-t border-b border-line bg-ink" data-screen-label="05 Photos">
@@ -704,10 +706,10 @@
 
   function Testimonials(){
     const list = [
-      { tag:'AI 파트 / 8회차', name:'지윤', age:'31 · 일산서구', body:'동네에서 이런 퀄리티 모임을 만날 줄 몰랐어요. 같은 동에 사는 사람과 같이 러닝 가는 게 일상이 됐어요.', img:window.__resources../assets/d835d072-e391-4fe4-b579-fcd55b144d9e.png },
-      { tag:'독서 모임 / 4회차', name:'재훈', age:'28 · 파주', body:'매주 단톡방에서 습관 인증하면서 에너지를 받아요. 한 달 만에 책 3권 읽은 거 처음.', img:window.__resources../assets/d5b376d2-9f44-411a-b190-4eeeb88602d0.png },
-      { tag:'창업 모임 / 6회차', name:'민지', age:'33 · 김포', body:'서울 강남까지 가야만 똑똑한 사람 만나는 줄 알았어요. 우리 동네에 이런 분들이 계셨다는 게 신기.', img:window.__resources../assets/074f1c94-61e7-42be-b347-c7ebcb498911.png },
-      { tag:'AI 스터디 / 2회차', name:'태오', age:'29 · 일산동구', body:'와인 한 잔 마시면서 GPT 얘기하는 거, 어색할 줄 알았는데 가장 깊은 대화가 됐습니다.', img:window.__resources../assets/99446e73-51c1-4c11-9879-ebfaa95ad7c9.png },
+      { tag:'AI 파트 / 8회차', name:'지윤', age:'31 · 일산서구', body:'동네에서 이런 퀄리티 모임을 만날 줄 몰랐어요. 같은 동에 사는 사람과 같이 러닝 가는 게 일상이 됐어요.', img:window.__resources.moimB8 },
+      { tag:'독서 모임 / 4회차', name:'재훈', age:'28 · 파주', body:'매주 단톡방에서 습관 인증하면서 에너지를 받아요. 한 달 만에 책 3권 읽은 거 처음.', img:window.__resources.moim4 },
+      { tag:'창업 모임 / 6회차', name:'민지', age:'33 · 김포', body:'서울 강남까지 가야만 똑똑한 사람 만나는 줄 알았어요. 우리 동네에 이런 분들이 계셨다는 게 신기.', img:window.__resources.moim6 },
+      { tag:'AI 스터디 / 2회차', name:'태오', age:'29 · 일산동구', body:'와인 한 잔 마시면서 GPT 얘기하는 거, 어색할 줄 알았는데 가장 깊은 대화가 됐습니다.', img:window.__resources.moim8 },
     ];
     const ref = useRef(null);
     return (
