@@ -22,6 +22,16 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5TE0MYT5QF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5TE0MYT5QF');
+</script>
+<!-- End GA4 -->
+
 
 
 
@@ -1207,6 +1217,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     useReveal();
     const cta = () => {
       if (typeof fbq === 'function') fbq('track', 'Lead');
+      if (typeof gtag === 'function') gtag('event', 'generate_lead', { value: 1, currency: 'KRW' });
       window.location.href = TALLY_URL;
     };
 
