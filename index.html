@@ -822,6 +822,46 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
+  /* ─────── Safety / Screening ─────── */
+  function Safety(){
+    const items = [
+      { t:'신청서 한 분 한 분 직접 검토',          d:'호스트가 모든 신청을 직접 읽습니다. 자동 승인 없음.' },
+      { t:'사진 2장 + 자기소개 필수',              d:'신청 단계에서 본인 확인을 받아요. 익명·랜덤 입장 X.' },
+      { t:'결 맞지 않는 분은 정중히 거절',          d:'분야가 또렷하지 않거나 결이 다른 분은 다음 회차로 안내드려요.' },
+      { t:'호스트가 처음부터 끝까지 함께',          d:'모임 내내 진행자가 자리에 있어요. "알아서 친해지세요" 식 X.' },
+      { t:'분위기 안 맞으면 회차 자체를 취소',      d:'호스트 기준에 미달하면 그 주는 모이지 않아요. 환불 처리.' },
+    ];
+    return (
+      <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04b Safety">
+        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">🛡 안전 · 검토 시스템</div>
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
+          처음 오시는 분도<br/>
+          <span className="text-amber">안심할 수 있게</span>.
+        </h2>
+        <p className="text-[12.5px] text-muted leading-[1.7] mb-7">
+          모임의 분위기는 결국 누가 모이느냐에서 결정돼요.<br/>
+          그래서 모집 단계부터 운영까지, 운영자가 직접 챙깁니다.
+        </p>
+        <div className="space-y-2.5">
+          {items.map((it,i)=>(
+            <div key={i} className="border border-line bg-ink2 p-4 flex items-start gap-3">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full border border-amber/50 bg-amber/10 flex items-center justify-center text-amber text-[12px] font-bold">✓</div>
+              <div className="flex-1">
+                <div className="text-[14px] font-bold text-fg leading-[1.4]">{it.t}</div>
+                <div className="text-[12px] text-muted leading-[1.6] mt-1">{it.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 p-4 border border-amber/30 bg-amber/5 rounded-md">
+          <p className="text-[12.5px] text-fg2 leading-[1.65]">
+            <span className="text-amber font-bold">혼자 오시는 분이 80%</span>예요. 친구·동반 없이도 자연스럽게 어울리실 수 있게, 콘텐츠와 진행을 그렇게 설계했어요.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   /* ─────── After the Party ─────── */
   function AfterParty(){
     const items = [
@@ -1236,6 +1276,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <PhotoBand />
           <Stats />
           <Host />
+          <Safety />
           <LoveStories />
           <AfterParty />
           <Testimonials />
