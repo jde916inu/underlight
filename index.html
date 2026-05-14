@@ -244,22 +244,22 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           display: ['Bebas Neue', 'Pretendard', 'sans-serif'],
         },
         colors: {
-          ink:    '#0B0B0F',
-          ink2:   '#13131A',
-          ink3:   '#1B1B24',
-          line:   '#2A2A36',
-          line2:  '#3A3A48',
-          fg:     '#F5F1E8',
-          fg2:    '#D9D3C2',
+          ink:    '#FFFFFF',
+          ink2:   '#FAF7F0',
+          ink3:   '#F2EDE2',
+          line:   '#E5E0D2',
+          line2:  '#CFC8B5',
+          fg:     '#1A1408',
+          fg2:    '#3F3621',
           muted:  '#8E8676',
-          dim:    '#5C5648',
-          amber:  '#FFB347',
-          amber2: '#FF9A2E',
-          deep:   '#1A1408',
-          ember:  '#FF5E62',
-          ember2: '#C8323A',
-          azure:  '#6EA8FF',
-          azure2: '#3B6BD6',
+          dim:    '#B5AC95',
+          amber:  '#C77800',
+          amber2: '#FFB347',
+          deep:   '#FFFFFF',
+          ember:  '#C73438',
+          ember2: '#9F2A2F',
+          azure:  '#3B6BD6',
+          azure2: '#1F4FB3',
         }
       }
     }
@@ -271,21 +271,21 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 <script src="./assets/635db49e-47d3-4ec2-af55-b517fd5a3964.js"></script>
 
 <style>
-  html, body { background: #0B0B0F; color: #F5F1E8; -webkit-font-smoothing:antialiased; }
+  html, body { background: #FFFFFF; color: #1A1408; -webkit-font-smoothing:antialiased; }
   body { font-family: Pretendard, system-ui, sans-serif; padding-bottom: env(safe-area-inset-bottom); }
   /* page wrapper for desktop */
   .page-shell {
     max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative;
     background:
-      radial-gradient(900px 500px at 50% -120px, rgba(255,179,71,0.18), transparent 60%),
-      radial-gradient(700px 600px at 100% 30%, rgba(255,154,46,0.06), transparent 70%),
-      #0B0B0F;
+      radial-gradient(900px 500px at 50% -120px, rgba(255,179,71,0.12), transparent 60%),
+      radial-gradient(700px 600px at 100% 30%, rgba(199,120,0,0.04), transparent 70%),
+      #FFFFFF;
     overflow: hidden;
   }
-  /* film grain */
+  /* subtle paper grain */
   .grain::before{
-    content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.05; mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.4 0 0 0 0 0.2 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
   @keyframes pulse-amber{
     0%,100%{ box-shadow:0 0 0 0 rgba(255,179,71,.55), 0 10px 30px rgba(255,179,71,.25)}
@@ -301,7 +301,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   .pulse{ animation: pulse-amber 2.6s ease-in-out infinite }
   .shimmer{position:relative; overflow:hidden}
   .shimmer::after{content:""; position:absolute; inset:0;
-    background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+    background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%);
     animation: shimmer 3.2s infinite;
   }
   .blink{ animation: blink 1s step-end infinite }
@@ -310,34 +310,34 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* hero grid */
   .hero-grid{
     background-image:
-      linear-gradient(#F5F1E8 1px, transparent 1px),
-      linear-gradient(90deg, #F5F1E8 1px, transparent 1px);
+      linear-gradient(#1A1408 1px, transparent 1px),
+      linear-gradient(90deg, #1A1408 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(ellipse at 50% 30%, black 25%, transparent 75%);
-    opacity:.06;
+    opacity:.04;
   }
   .light-streak{
-    background: linear-gradient(90deg, transparent, #FFB347, transparent);
-    height: 1px; filter: blur(.5px); opacity:.55;
+    background: linear-gradient(90deg, transparent, #C77800, transparent);
+    height: 1px; filter: blur(.5px); opacity:.45;
   }
   /* placeholder hatch */
   .hatch{
     background-image: repeating-linear-gradient(135deg, transparent 0, transparent 14px,
-      rgba(255,255,255,0.04) 14px, rgba(255,255,255,0.04) 15px);
+      rgba(26,20,8,0.06) 14px, rgba(26,20,8,0.06) 15px);
   }
   /* photo treatments */
   .ph-fade::after{
     content:""; position:absolute; inset:0; pointer-events:none;
-    background: linear-gradient(180deg, rgba(11,11,15,0) 0%, rgba(11,11,15,.55) 70%, #0B0B0F 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 70%, #FFFFFF 100%);
   }
   .ph-warm{
-    filter: contrast(1.1) saturate(1.08) brightness(.78);
+    filter: contrast(1.05) saturate(1.05) brightness(.92);
     transform: scale(1.08);
     transform-origin: center 55%;
   }
   .ph-veil::after{
     content:""; position:absolute; inset:0; pointer-events:none;
-    background: radial-gradient(ellipse at 50% 40%, rgba(11,11,15,0) 30%, rgba(11,11,15,.7) 100%);
+    background: radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0) 30%, rgba(255,255,255,.7) 100%);
   }
   /* testimonial scroller */
   .scroll-x{ scroll-snap-type: x mandatory; scrollbar-width: none }
@@ -345,7 +345,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   .scroll-x > *{ scroll-snap-align: start }
   /* sticky cta gradient veil */
   .cta-veil{
-    background: linear-gradient(180deg, rgba(11,11,15,0) 0%, rgba(11,11,15,0.85) 35%, #0B0B0F 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 35%, #FFFFFF 100%);
   }
   /* number ticker */
   @keyframes pop-in{ 0%{opacity:0; transform:translateY(8px)} 100%{opacity:1; transform:translateY(0)} }
@@ -432,7 +432,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         {/* Backdrop atmospheric photo */}
         <div className="absolute inset-0 pointer-events-none">
           <img src="./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.22}}/>
-          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(11,11,15,.55) 0%, rgba(11,11,15,.85) 60%, #0B0B0F 100%)'}}></div>
+          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.85) 60%, #FFFFFF 100%)'}}></div>
           <div className="absolute inset-0" style={{background:'radial-gradient(600px 300px at 12% 10%, rgba(255,179,71,.10), transparent 60%), radial-gradient(500px 300px at 90% 80%, rgba(255,94,98,.10), transparent 60%)'}}></div>
         </div>
         <div className="absolute inset-0 hero-grid pointer-events-none"></div>
@@ -552,7 +552,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         <div className="relative border border-amber/30 bg-gradient-to-b from-ink2 to-ink overflow-hidden rounded-md">
           <div className="absolute inset-0 pointer-events-none">
             <img src="./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.18}}/>
-            <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(11,11,15,.6) 0%, rgba(11,11,15,.92) 100%)'}}></div>
+            <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,.92) 100%)'}}></div>
           </div>
           <div className="relative p-7">
             <div className="inline-flex items-center gap-2 mb-4 px-2.5 py-1 border border-amber/40 text-amber text-[10.5px] font-mono uppercase tracking-[0.18em] rounded-full">
@@ -741,7 +741,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           {photos.map((p,i)=>(
             <div key={i} className="relative flex-shrink-0 w-[220px] aspect-[4/5] overflow-hidden border border-line">
               <img src={p.src} alt="" className="w-full h-full object-cover ph-warm"/>
-              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 50%, rgba(11,11,15,.85) 100%)'}}></div>
+              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 50%, rgba(255,255,255,.85) 100%)'}}></div>
               <div className="absolute bottom-2 left-2 text-[10px] text-amber font-mono uppercase tracking-[0.14em]">{p.tag}</div>
             </div>
           ))}
@@ -832,7 +832,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         note:'성장 메이트 톡방' },
     ];
     return (
-      <section className="reveal px-5 py-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #0B0B0F 0%, #0F0F16 100%)'}}>
+      <section className="reveal px-5 py-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%)'}}>
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">PROGRAM · 4 STEPS</div>
         <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
           4단계가 <span className="text-ember">여러분들을</span><br/>
@@ -988,7 +988,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       { icon:'🚀', title:'성장 궤도를 공유하는 팀원 페어', desc:'같은 목표를 향해 가는 2~3인 페어. 매주 진척률을 서로 인증해요.', tone:'amber' },
     ];
     return (
-      <section className="reveal px-5 py-16 relative overflow-hidden border-t border-line" data-screen-label="04d After" style={{background:'linear-gradient(180deg, #0B0B0F 0%, #11111A 50%, #0B0B0F 100%)'}}>
+      <section className="reveal px-5 py-16 relative overflow-hidden border-t border-line" data-screen-label="04d After" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #F4F1EA 50%, #FFFFFF 100%)'}}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0" style={{background:'radial-gradient(500px 300px at 80% 10%, rgba(255,94,98,.10), transparent 60%), radial-gradient(500px 300px at 10% 90%, rgba(255,179,71,.10), transparent 60%)'}}></div>
         </div>
@@ -1068,7 +1068,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-14 relative overflow-hidden" data-screen-label="04b Love">
         <div className="absolute inset-0 pointer-events-none">
           <img src="./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.16}}/>
-          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(11,11,15,.88) 0%, rgba(11,11,15,.75) 45%, rgba(11,11,15,.95) 100%)'}}></div>
+          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.75) 45%, rgba(255,255,255,.95) 100%)'}}></div>
         </div>
         <div className="relative">
           <div className="flex items-center gap-2 mb-3">
@@ -1087,17 +1087,17 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <div className="grid grid-cols-3 gap-1 mb-6">
             <div className="aspect-square overflow-hidden border border-line relative">
               <img src="./assets/acbe3817-4f1d-46db-94a4-81a5925d083e.png" alt="" className="w-full h-full object-cover ph-warm"/>
-              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 60%, rgba(11,11,15,.78) 100%)'}}></div>
+              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 60%, rgba(255,255,255,.78) 100%)'}}></div>
               <div className="absolute bottom-1.5 left-1.5 text-[9.5px] text-amber font-mono uppercase tracking-[0.14em]">독서 파트</div>
             </div>
             <div className="aspect-square overflow-hidden border border-line relative">
               <img src="./assets/f94b1ed3-e03d-4ef0-9483-1fbfe00234ba.png" alt="" className="w-full h-full object-cover ph-warm"/>
-              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 60%, rgba(11,11,15,.78) 100%)'}}></div>
+              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 60%, rgba(255,255,255,.78) 100%)'}}></div>
               <div className="absolute bottom-1.5 left-1.5 text-[9.5px] text-amber font-mono uppercase tracking-[0.14em]">헬스 파트</div>
             </div>
             <div className="aspect-square overflow-hidden border border-line relative">
               <img src="./assets/10c3ff9e-ab2f-4f30-b8c4-be29b84b7e9e.png" alt="" className="w-full h-full object-cover ph-warm"/>
-              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 60%, rgba(11,11,15,.78) 100%)'}}></div>
+              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 60%, rgba(255,255,255,.78) 100%)'}}></div>
               <div className="absolute bottom-1.5 left-1.5 text-[9.5px] text-amber font-mono uppercase tracking-[0.14em]">전시 파트</div>
             </div>
           </div>
@@ -1157,7 +1157,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <div key={i} className="flex-shrink-0 w-[280px] border border-line bg-ink2 overflow-hidden">
               <div className="relative h-[140px] overflow-hidden">
                 <img src={t.img} alt="" className="w-full h-full object-cover ph-warm" style={{filter:'contrast(1.05) saturate(1.05) brightness(.85)'}}/>
-                <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(11,11,15,.1) 30%, rgba(19,19,26,.95) 100%)'}}></div>
+                <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.1) 30%, rgba(250,247,240,.95) 100%)'}}></div>
                 <div className="absolute top-3 left-3 text-[10px] text-amber font-mono uppercase tracking-[0.14em] bg-ink/70 px-2 py-1">{t.tag}</div>
               </div>
               <div className="p-5 pt-3">
@@ -1197,7 +1197,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-16 relative overflow-hidden" data-screen-label="06 Urgency">
         <div className="absolute inset-0 pointer-events-none">
           <img src="./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.18}}/>
-          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, #0B0B0F 0%, rgba(11,11,15,.85) 50%, #0B0B0F 100%)'}}></div>
+          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,.85) 50%, #FFFFFF 100%)'}}></div>
         </div>
         <div className="relative">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">04 / 마감 임박</div>
@@ -1302,7 +1302,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 pt-16 pb-12 relative overflow-hidden" data-screen-label="08 Final">
         <div className="absolute inset-0 pointer-events-none">
           <img src="./assets/10c3ff9e-ab2f-4f30-b8c4-be29b84b7e9e.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.22}}/>
-          <div className="absolute inset-0" style={{background:'radial-gradient(ellipse at 50% 30%, rgba(11,11,15,.5) 30%, #0B0B0F 80%)'}}></div>
+          <div className="absolute inset-0" style={{background:'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,.5) 30%, #FFFFFF 80%)'}}></div>
         </div>
         <div className="absolute light-streak left-[-10%] top-[20%] w-[120%] -rotate-[6deg]"></div>
 
