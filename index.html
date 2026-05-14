@@ -741,8 +741,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           {photos.map((p,i)=>(
             <div key={i} className="relative flex-shrink-0 w-[220px] aspect-[4/5] overflow-hidden border border-line">
               <img src={p.src} alt="" className="w-full h-full object-cover ph-warm"/>
-              <div className="absolute inset-0" style={{background:'linear-gradient(180deg, transparent 50%, rgba(255,255,255,.85) 100%)'}}></div>
-              <div className="absolute bottom-2 left-2 text-[10px] text-amber font-mono uppercase tracking-[0.14em]">{p.tag}</div>
             </div>
           ))}
         </div>
@@ -1213,7 +1211,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <div className="relative h-[140px] overflow-hidden">
                 <img src={t.img} alt="" className="w-full h-full object-cover ph-warm" style={{filter:'contrast(1.05) saturate(1.05) brightness(.85)'}}/>
                 <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.1) 30%, rgba(250,247,240,.95) 100%)'}}></div>
-                <div className="absolute top-3 left-3 text-[10px] text-amber font-mono uppercase tracking-[0.14em] bg-ink/70 px-2 py-1">{t.tag}</div>
               </div>
               <div className="p-5 pt-3">
                 <div className="font-display text-amber text-[32px] leading-none mb-2">"</div>
