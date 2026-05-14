@@ -884,41 +884,96 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   function Host(){
     return (
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04c Host">
-        <div className="text-[11px] text-ember font-mono uppercase tracking-[0.2em] mb-3">HOST · 기획자</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-5">
-          <span className="text-ember">트렌드를 따라가는 사람</span>이<br/>
-          진행합니다.
+        <div className="text-[11px] text-ember font-mono uppercase tracking-[0.2em] mb-3 text-center">HOST · 기획자</div>
+
+        <h2 className="text-[30px] font-extrabold tracking-[-0.02em] leading-[1.22] mb-6 text-center">
+          안녕하세요,<br/>
+          호스트 <span className="text-amber">정인우</span>예요.
         </h2>
-        <div className="border border-line bg-ink2 p-5">
-          <div className="flex items-center gap-3 pb-4 border-b border-line">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-ember to-amber flex items-center justify-center text-deep font-extrabold text-[18px]">U</div>
-            <div>
-              <div className="text-[14px] text-fg font-bold">정인우 <span className="text-muted font-normal text-[11px] ml-1">· Underlight 호스트</span></div>
-              <div className="text-[11px] text-muted font-mono">CONTENT · COMMUNITY BUILDER</div>
-            </div>
+
+        {/* Avatar */}
+        <div className="flex justify-center mb-8">
+          <div className="relative">
+            <div className="w-[120px] h-[120px] rounded-full bg-gradient-to-br from-amber to-ember flex items-center justify-center text-deep font-extrabold text-[44px] tracking-[-0.04em] shadow-lg">정</div>
+            <div className="absolute inset-0 rounded-full border-2 border-amber/30 scale-110"></div>
           </div>
-          <div className="grid grid-cols-3 gap-2 mt-4 mb-4">
-            <div className="text-center py-3 bg-ink3 border border-line">
-              <div className="font-display text-ember text-[24px] leading-none">20<span className="text-[12px] text-muted">m</span></div>
-              <div className="text-[9.5px] text-muted font-mono mt-1 tracking-wider">유튜브 운영</div>
-            </div>
-            <div className="text-center py-3 bg-ink3 border border-line">
-              <div className="font-display text-ember text-[24px] leading-none">1<span className="text-[12px] text-muted">y</span></div>
-              <div className="text-[9.5px] text-muted font-mono mt-1 tracking-wider">AI 코딩</div>
-            </div>
-            <div className="text-center py-3 bg-ink3 border border-line">
-              <div className="font-display text-ember text-[24px] leading-none">38<span className="text-[12px] text-muted">회</span></div>
-              <div className="text-[9.5px] text-muted font-mono mt-1 tracking-wider">모임 기획</div>
-            </div>
-          </div>
-          <p className="text-[13px] text-fg2 leading-[1.7]">
-            저는 유튜브, AI 같은 최신 트렌드를 매일 따라가려 하는 사람이에요. 결국 가장 중요한 건 <span className="text-fg font-bold">내가 어떤 환경에 놓여 있는가</span>라고 생각해요.
+        </div>
+
+        {/* Letter body */}
+        <div className="text-[14px] text-fg leading-[1.85] space-y-4 max-w-[400px] mx-auto">
+          <p>안녕하세요. 호스트 정인우입니다!</p>
+
+          <p>
+            제가 이 모임을 만들기로 한 건,<br/>
+            좋은 사람들을 자연스럽게 이어주고 싶어서예요.
           </p>
-          <p className="mt-3 text-[12.5px] text-muted leading-[1.7]">
-            그런데 일산엔 그런 자리가 별로 없더라고요. 그래서 직접 만들었어요. <span className="text-fg2">검증된 분들끼리</span> 동네에서 자연스럽게 만날 수 있는 자리를요.
+
+          <p>
+            제 주변에는 정말 괜찮은 친구들이 참 많거든요. 누가 봐도 외모도 좋고, 자기관리도 잘하고, 인성도 좋은 친구들이 있잖아요.
           </p>
-          <p className="mt-3 text-[12.5px] text-muted leading-[1.7]">
-            모임에서 가장 중요한 건 <span className="text-fg2">누가 모이느냐</span>예요. <span className="text-fg font-bold">결이 맞는 분들끼리 모이면, 그 다음은 자연스럽게 일어나는 일</span>이라 믿습니다.
+
+          <p>
+            실제로 잘생겼다, 예쁘다는 소리도 꽤 듣고, 인기도 많을 것 같은 친구들이요!
+          </p>
+
+          <p>
+            그런데 이상하게 <span className="text-amber font-bold">괜찮은 사람인데도 연애를 잘 못 하는 친구들이 너무 많더라고요</span>. 그 친구들에겐 공통점이 있었어요.
+          </p>
+
+          <ol className="space-y-2 pl-1">
+            <li className="flex gap-2"><span className="text-amber font-mono font-bold flex-shrink-0">1.</span><span>이성과의 연결고리가 없어서 못 만나고 있음</span></li>
+            <li className="flex gap-2"><span className="text-amber font-mono font-bold flex-shrink-0">2.</span><span>이성에게 먼저 다가가는 걸 어려워함</span></li>
+            <li className="flex gap-2"><span className="text-amber font-mono font-bold flex-shrink-0">3.</span><span>클럽이나 술집에서 사람 만나는 건 안 좋아함</span></li>
+            <li className="flex gap-2"><span className="text-amber font-mono font-bold flex-shrink-0">4.</span><span>소개팅은 부담스러워서 잘 안 하려고 함</span></li>
+          </ol>
+
+          <p>이 자리는 이런 사람들을 위해 만든 자리예요.</p>
+
+          <p>
+            <span className="text-amber font-bold">3단계 심사</span>를 통해 결이 맞는 분들만 참석하고, 짧은 시간 안에 친밀감을 쌓을 수 있는 콘텐츠로만 구성했어요.
+          </p>
+
+          <p>
+            이 곳에 왔을 때 <span className="text-amber font-bold">두 가지</span>만큼은 약속드릴 수 있어요.
+          </p>
+
+          <p className="text-amber font-bold text-[15px]">
+            마음에 드는 이성이<br/>
+            반드시 이 자리에 올 거예요.
+          </p>
+
+          <p className="text-amber font-bold text-[15px]">
+            그리고, 마음에 드는 이성과<br/>
+            빠르게 가까워지는 시간을 가질 수 있을 거예요.
+          </p>
+
+          <p>
+            단순히 대화만 하는 걸로 끝나지 않고, 자연스러운 인연으로 이어질 수 있도록 곳곳에 설렘 포인트를 준비해뒀어요.
+          </p>
+
+          <p>매 회차 저의 목표는 딱 하나예요.</p>
+
+          <p className="text-amber font-bold text-[15px]">
+            이 곳에서 최대한<br/>
+            많은 인연이 탄생하는 것.
+          </p>
+
+          <p>
+            이 목표를 이루기 위해 저는 지금도 <span className="text-fg font-bold">'더 결 맞는 분들'</span>과 <span className="text-fg font-bold">'더 설레는 콘텐츠'</span>를 위해 시간을 쓰고 있어요.
+          </p>
+
+          <p>
+            만약 이곳에 오셔서 좋은 인연을 만드신다면 후기만 알려주세요. 저는 그것만으로도 노력한 보람이 있을 거예요.
+          </p>
+
+          <p>
+            앞으로도 여러분의 새로운 인연이 탄생하도록, 최선을 다해서 설레는 모임을 준비하겠습니다.
+          </p>
+
+          <p>감사합니다!</p>
+
+          <p className="text-right text-[16px] font-bold pt-3 text-fg2 font-display tracking-wider">
+            정인우 드림
           </p>
         </div>
       </section>
