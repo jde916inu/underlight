@@ -560,12 +560,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               로테이션 소개팅
             </div>
             <h2 className="text-[28px] font-extrabold leading-[1.22] tracking-[-0.01em] mb-4">
-              매력적인<br/>
-              <span className="text-amber">자기관리하는 분</span>들의<br/>
-              만남.
+              <span className="text-amber">3단계 심사</span>를<br/>
+              통과한 분들의<br/>
+              로테이션 소개팅.
             </h2>
             <p className="text-[14px] text-fg2 leading-[1.7] mb-5">
-              검토된 <span className="text-amber font-bold">30명</span>, 자기 분야 또렷한 분들.<br/>
+              검증된 <span className="text-amber font-bold">매주 30명</span>, 자기 분야 또렷한 분들.<br/>
               30분의 용기로 새로운 인연을 시작하세요.
             </p>
             <div className="flex flex-wrap gap-2 text-[10.5px] font-mono tracking-[0.06em]">
@@ -580,18 +580,67 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
-  /* ─────── Bridge — who comes ─────── */
+  /* ─────── Comparison Table ─────── */
+  function CompareTable(){
+    const cols = ['결정사', '소개팅 앱', 'Underlight'];
+    const rows = [
+      { k:'가격',         v:['100만원 ↑', '월 3만원~',  '36,800원/회'] },
+      { k:'신원 보장',     v:['△',          '❌',         '✅ 3단계 심사'] },
+      { k:'만남 방식',     v:['1:1 어색',    '채팅만',     '검증된 30명 그룹'] },
+      { k:'1회 만남 인원', v:['1명',         '무제한',     '30명'] },
+      { k:'사후 매칭',     v:['일부 유료',    '❌',         '✅ 1:1 연락처 안내'] },
+      { k:'동네',         v:['서울',         '랜덤',       '일산·파주·김포'] },
+    ];
+    return (
+      <section className="reveal px-5 py-14 border-t border-line" data-screen-label="02c Compare">
+        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">VS · 비교</div>
+        <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
+          왜 <span className="text-amber">Underlight</span>인가?
+        </h2>
+        <p className="text-[12.5px] text-muted leading-[1.7] mb-6">
+          어플의 가벼움도, 결정사의 부담도 없는<br/>
+          <span className="text-fg2">동네 기반 검증된 30명 만남</span>.
+        </p>
+
+        <div className="border border-line overflow-hidden">
+          {/* header */}
+          <div className="grid grid-cols-4 bg-ink2 text-[11px] font-mono uppercase tracking-[0.06em]">
+            <div className="p-3 text-muted border-b border-line"></div>
+            {cols.map((c,i)=>(
+              <div key={i} className={"p-3 border-b border-line text-center " + (i===2 ? 'bg-amber/10 text-amber font-bold' : 'text-muted')}>{c}</div>
+            ))}
+          </div>
+          {/* rows */}
+          {rows.map((r,i)=>(
+            <div key={i} className="grid grid-cols-4 text-[12px]">
+              <div className="p-3 bg-ink2/50 text-fg2 font-bold border-b border-line">{r.k}</div>
+              {r.v.map((v,j)=>(
+                <div key={j} className={"p-3 text-center border-b border-line " + (j===2 ? 'bg-amber/5 text-amber font-bold' : 'text-muted')}>{v}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-5 text-[12.5px] text-fg2 leading-[1.7] text-center">
+          어플 가벼움 ❌ &nbsp;·&nbsp; 결정사 부담 ❌ &nbsp;·&nbsp; <span className="text-amber font-bold">검증 + 동네 + 그룹</span> ✓
+        </p>
+      </section>
+    );
+  }
+
+  /* ─────── Bridge — killing copy ─────── */
   function Bridge(){
     return (
       <section className="reveal px-5 py-14 border-t border-b border-line text-center" data-screen-label="02b Bridge">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-4">─── Underlight ───</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
-          <span className="text-amber">자기관리에 진심</span>인<br/>
-          분들이 모이는 곳.
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-4">
+          괜찮은 사람을<br/>
+          아직 <span className="text-amber">못 만난 이유</span>는<br/>
+          기회가 없었기 때문입니다.
         </h2>
         <p className="text-[13px] text-muted leading-[1.7] max-w-[330px] mx-auto">
           호스트가 직접 검토한 분들만 모입니다.<br/>
-          분야가 또렷한, 결이 맞는 30명.
+          매주 30명의 검증된 인연.
         </p>
       </section>
     );
@@ -615,9 +664,9 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Pain & Empathy ─────── */
   function Pain(){
     const questions = [
-      { emoji:'🤔', q:'나 정도면 괜찮지 않나?',   sub:'근데 왜 동네엔 결 맞는 사람이 없을까…' },
-      { emoji:'😢', q:'도대체 괜찮은 사람 어디서 만나?', sub:'소개팅은 무겁고, 클럽·헌팅은 가벼운데…' },
-      { emoji:'💭', q:'자기관리는 진심인데, 외로워…', sub:'운동·독서·AI — 같이 할 사람만 있다면…' },
+      { emoji:'📱', q:'소개팅 어플의 가벼움에 지치셨나요?', sub:'프로필 보고 채팅하다 끝나는 만남, 이제 그만…' },
+      { emoji:'💸', q:'결정사의 무거운 비용이 부담되나요?', sub:'100만원 넘는 가입비에 1:1 어색한 자리는 부담…' },
+      { emoji:'🤔', q:'동네엔 결 맞는 사람이 없으셨나요?',  sub:'자기관리는 진심인데, 주변엔 같이 할 사람만 있다면…' },
     ];
     const voices = [
       ['수아 · 26 · 일산동구', '금요일 저녁, 단톡방 알람은 쉴 새 없이 울리는데 다들 강남, 홍대, 성수… 나만 쏙 빠진 기분이에요..ㅠ'],
@@ -626,13 +675,14 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">01 / 나만 그래요?</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
-          퇴근하고 운동, 자기개발,<br/>
-          <span className="text-amber">인맥관리</span>…
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
+          소중한 주말,<br/>
+          <span className="text-amber">검증되지 않은 사람</span>과<br/>
+          낭비하지 마세요.
         </h2>
         <p className="text-[13.5px] text-muted leading-[1.7] mb-7">
-          바쁜 일상 살아가다 보니,<br/>
-          <span className="text-fg2">인연 만날 기회가 점점 줄어들고 있나요?</span>
+          어플의 가벼움도, 결정사의 부담도 싫은데<br/>
+          <span className="text-fg2">동네엔 만날 기회가 없었다면…</span>
         </p>
 
         {/* 3 question cards */}
@@ -875,37 +925,53 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
-  /* ─────── Safety / Screening ─────── */
+  /* ─────── Safety / 3-Step Screening ─────── */
   function Safety(){
-    const items = [
-      { t:'신청서 한 분 한 분 직접 검토',          d:'호스트가 모든 신청을 직접 읽습니다. 자동 승인 없음.' },
-      { t:'사진 2장 + 자기소개 필수',              d:'신청 단계에서 본인 확인을 받아요. 익명·랜덤 입장 X.' },
-      { t:'결 맞지 않는 분은 정중히 거절',          d:'분야가 또렷하지 않거나 결이 다른 분은 다음 회차로 안내드려요.' },
-      { t:'호스트가 처음부터 끝까지 함께',          d:'모임 내내 진행자가 자리에 있어요. "알아서 친해지세요" 식 X.' },
-      { t:'분위기 안 맞으면 회차 자체를 취소',      d:'호스트 기준에 미달하면 그 주는 모이지 않아요. 환불 처리.' },
+    const steps = [
+      { n:'01', t:'신청서 1차 검토', d:'직업, 자기 분야, 신청 동기를 호스트가 직접 읽습니다.' },
+      { n:'02', t:'사진·자기소개 2차 검토', d:'사진 2장 + 자기소개로 분위기 적합성을 확인합니다.' },
+      { n:'03', t:'호스트 최종 컨펌',     d:'결이 맞을지 한 번 더 점검. 분야 또렷하지 않으면 다음 회차로 안내드려요.' },
+    ];
+    const safeguards = [
+      '호스트가 처음부터 끝까지 함께',
+      '분위기 안 맞으면 회차 자체를 취소·환불',
+      '1:1 사후 연락처 전달 — 양쪽 동의 시에만',
     ];
     return (
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04b Safety">
-        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">🛡 안전 · 검토 시스템</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
-          처음 오시는 분도<br/>
-          <span className="text-amber">안심할 수 있게</span>.
+        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">🛡 검증 시스템</div>
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
+          빌런 사절,<br/>
+          <span className="text-amber">3단계 심사</span>를 통과한<br/>
+          분들만 모입니다.
         </h2>
         <p className="text-[12.5px] text-muted leading-[1.7] mb-7">
           모임의 분위기는 결국 누가 모이느냐에서 결정돼요.<br/>
-          그래서 모집 단계부터 운영까지, 운영자가 직접 챙깁니다.
+          모집 단계부터 운영까지, 호스트가 직접 챙깁니다.
         </p>
-        <div className="space-y-2.5">
-          {items.map((it,i)=>(
-            <div key={i} className="border border-line bg-ink2 p-4 flex items-start gap-3">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full border border-amber/50 bg-amber/10 flex items-center justify-center text-amber text-[12px] font-bold">✓</div>
-              <div className="flex-1">
-                <div className="text-[14px] font-bold text-fg leading-[1.4]">{it.t}</div>
-                <div className="text-[12px] text-muted leading-[1.6] mt-1">{it.d}</div>
-              </div>
+
+        {/* 3-step screening */}
+        <div className="space-y-3 mb-6">
+          {steps.map((s,i)=>(
+            <div key={i} className="relative border border-line bg-ink2 p-5">
+              <div className="absolute top-4 right-4 text-[10px] text-muted font-mono">STEP {s.n}</div>
+              <div className="text-amber text-[28px] font-extrabold leading-none mb-2 font-mono">{s.n}</div>
+              <div className="text-[15px] font-extrabold text-fg leading-[1.35] mb-1.5">{s.t}</div>
+              <div className="text-[12.5px] text-muted leading-[1.6]">{s.d}</div>
             </div>
           ))}
         </div>
+
+        {/* Extra safeguards */}
+        <div className="space-y-2">
+          {safeguards.map((sg,i)=>(
+            <div key={i} className="border border-line bg-ink2/60 p-3 flex items-start gap-3">
+              <div className="flex-shrink-0 w-5 h-5 rounded-full border border-amber/50 bg-amber/10 flex items-center justify-center text-amber text-[11px] font-bold">✓</div>
+              <div className="text-[13px] text-fg2 leading-[1.5]">{sg}</div>
+            </div>
+          ))}
+        </div>
+
         <div className="mt-5 p-4 border border-amber/30 bg-amber/5 rounded-md">
           <p className="text-[12.5px] text-fg2 leading-[1.65]">
             <span className="text-amber font-bold">혼자 오시는 분이 80%</span>예요. 친구·동반 없이도 자연스럽게 어울리실 수 있게, 콘텐츠와 진행을 그렇게 설계했어요.
@@ -1243,12 +1309,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         <div className="text-center">
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-4">JOIN US</div>
           <h2 className="text-[34px] font-extrabold tracking-[-0.02em] leading-[1.2] mb-4">
-            모임이 끝나는 <span className="text-amber">밤 11시</span>,<br/>
-            당신의 ‘<span className="text-amber">갓생</span>’ 메이트가<br/>
-            결정됩니다.
+            이번 주 금요일,<br/>
+            당신의 일상에<br/>
+            <span className="text-amber">상큼한 설렘</span>을 더하세요.
           </h2>
-          <p className="text-[14px] text-muted leading-[1.7] mb-8 max-w-[300px] mx-auto">
-            지금 바로 신청하세요!
+          <p className="text-[14px] text-muted leading-[1.7] mb-8 max-w-[320px] mx-auto">
+            검증된 30명. 정원 마감 임박.
           </p>
 
           <button onClick={onCTA}
@@ -1325,11 +1391,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <ConceptHero />
           <Pain />
           <Bridge />
+          <CompareTable />
           <Stats />
           <Testimonials />
           <Marquee />
-          <Programs />
           <Safety />
+          <Programs />
           <Benefits />
           <PhotoBand />
           <Host />
