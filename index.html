@@ -588,7 +588,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       { k:'신원 보장',     v:['△',          '❌',         '✅ 3단계 심사'] },
       { k:'만남 방식',     v:['1:1 어색',    '채팅만',     '검증된 30명 그룹'] },
       { k:'1회 만남 인원', v:['1명',         '무제한',     '30명'] },
-      { k:'사후 매칭',     v:['일부 유료',    '❌',         '✅ 1:1 연락처 안내'] },
+      { k:'사후 매칭',     v:['일부 유료',    '❌',         '✅ 1:1 매칭 안내'] },
       { k:'동네',         v:['서울',         '랜덤',       '일산·파주·김포'] },
     ];
     return (
@@ -622,7 +622,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
 
         <p className="mt-5 text-[12.5px] text-fg2 leading-[1.7] text-center">
-          어플 가벼움 ❌ &nbsp;·&nbsp; 결정사 부담 ❌ &nbsp;·&nbsp; <span className="text-amber font-bold">검증 + 동네 + 그룹</span> ✓
+          시간 낭비 ❌ &nbsp;·&nbsp; 결정사 부담 ❌ &nbsp;·&nbsp; <span className="text-amber font-bold">검증 + 동네 + 그룹</span> ✓
         </p>
       </section>
     );
@@ -664,13 +664,13 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Pain & Empathy ─────── */
   function Pain(){
     const questions = [
-      { emoji:'📱', q:'소개팅 어플의 가벼움에 지치셨나요?', sub:'프로필 보고 채팅하다 끝나는 만남, 이제 그만…' },
+      { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?', sub:'사진이랑 다르거나, 결이 안 맞거나… 두 시간 만에 후회만…' },
       { emoji:'💸', q:'결정사의 무거운 비용이 부담되나요?', sub:'100만원 넘는 가입비에 1:1 어색한 자리는 부담…' },
       { emoji:'🤔', q:'동네엔 결 맞는 사람이 없으셨나요?',  sub:'마음 통할 사람을 동네에서 만나고 싶다면…' },
     ];
     const voices = [
-      ['수아 · 26 · 일산동구', '금요일 저녁, 단톡방 알람은 쉴 새 없이 울리는데 다들 강남, 홍대, 성수… 나만 쏙 빠진 기분이에요..ㅠ'],
-      ['다은 · 29 · 김포',     '주말인데 집 근처엔 갈 만한 곳도 없고, 결국 침대에 누워 핸드폰만 무의미하게 보다보면 너무 공허해지더라구요..'],
+      ['수아 · 26 · 일산동구', '소개팅 한 번 나가는 데 머리·옷·화장 두 시간씩 걸리는데, 막상 가보면 1시간 만에 끝나고 후회만 남더라구요..ㅠ'],
+      ['다은 · 29 · 김포',     '어플로 매칭돼서 카톡 몇 주 하다가 만났는데, 직접 보니까 결이 너무 안 맞아서 어색하기만 했어요. 이런 게 반복되니까 지치더라구요..'],
     ];
     return (
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
@@ -820,7 +820,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         desc:'아직 어색한 첫 30분, 종이 위에 가벼운 한 줄로 첫인상을 주고받아요.',
         note:'내향형도 편하게 대화' },
       { n:'02', name:'대화카드 진행', tone:'amber', tag:'WARM-UP',
-        desc:'질문 카드를 따라가다 보면 모르는 사람이 "원래 알던 친구" 같아져요.',
+        desc:'질문 카드를 따라가다 보면 어색함이 자연스럽게 사라져요.',
         note:'끊길 일 없는 대화의 온기' },
       { n:'03', name:'내 가치관에 맞는 사람은?', tone:'amber', tag:'SPARK',
         desc:'결이 맞는 사람을 찾는 기분 좋은 예감.',
@@ -1188,11 +1188,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function Testimonials(){
     const list = [
-      { tag:'러닝 파트 / 8회차', name:'지윤', age:'31 · 일산서구', body:'동네에서 이런 퀄리티 모임을 만날 줄 몰랐어요. 같은 동에 사는 사람과 같이 러닝 가는 게 일상이 됐어요.', img:window.__resources.mb8 },
-      { tag:'독서 모임 / 4회차', name:'재훈', age:'28 · 파주', body:'매주 단톡방에서 습관 인증하면서 에너지를 받아요. 한 달 만에 책 3권 읽은 거 처음.', img:window.__resources.m4 },
-      { tag:'러닝 파트 / 5회차', name:'서연', age:'27 · 일산동구', body:'러닝 파트에서 자주 마주치다가 자연스럽게 사귀게 됐어요. 의도하고 만난 게 아닌데 결이 비슷한 사람이라 편해요.', img:window.__resources.m9 },
-      { tag:'창업 모임 / 6회차', name:'민지', age:'33 · 김포', body:'서울 강남까지 가야만 똑똑한 사람 만나는 줄 알았어요. 우리 동네에 이런 분들이 계셨다는 게 신기.', img:window.__resources.m6 },
-      { tag:'AI 스터디 / 2회차', name:'태오', age:'29 · 일산동구', body:'차 한 잔 마시면서 GPT 얘기하는 거, 어색할 줄 알았는데 가장 깊은 대화가 됐습니다.', img:window.__resources.m8 },
+      { tag:'', name:'지윤', age:'31 · 일산서구', body:'어플로는 절대 못 만났을 분이에요. 같은 동네 사는데 평소엔 마주칠 일 없는 분. 자연스럽게 알아갈 수 있어서 좋았어요.', img:window.__resources.mb8 },
+      { tag:'', name:'재훈', age:'28 · 파주', body:'소개팅 두 번 망하고 포기했었는데, 30명이 한 자리에 있으니까 부담이 확 줄었어요. 마음에 든 분도 자연스럽게 알아볼 수 있고.', img:window.__resources.m4 },
+      { tag:'', name:'서연', age:'27 · 일산동구', body:'쪽지로 마음 전하는 게 정말 좋았어요. 거절 걱정 없이 솔직하게 보낼 수 있고, 양쪽 다 보내서 매칭됐을 때 정말 설레요.', img:window.__resources.m9 },
+      { tag:'', name:'민지', age:'33 · 김포', body:'결정사 1:1은 너무 부담스러웠는데, 여긴 자연스럽게 여러 분 만나면서 결을 보는 게 편하더라고요. 동네에 이런 자리가 있다는 게 감사.', img:window.__resources.m6 },
+      { tag:'', name:'태오', age:'29 · 일산동구', body:'호스트가 흐름을 워낙 잘 만들어주셔서, 처음 보는 분들이랑 30분만 지나니까 어색함이 다 사라지더라구요. 결국 마지막엔 쪽지까지 보냈어요.', img:window.__resources.m8 },
     ];
     const ref = useRef(null);
     return (
