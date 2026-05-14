@@ -545,6 +545,58 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
+  /* ─────── Concept Hero ─────── */
+  function ConceptHero(){
+    return (
+      <section className="reveal px-5 py-12" data-screen-label="01b Concept">
+        <div className="relative border border-amber/30 bg-gradient-to-b from-ink2 to-ink overflow-hidden rounded-md">
+          <div className="absolute inset-0 pointer-events-none">
+            <img src="./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.18}}/>
+            <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(11,11,15,.6) 0%, rgba(11,11,15,.92) 100%)'}}></div>
+          </div>
+          <div className="relative p-7">
+            <div className="inline-flex items-center gap-2 mb-4 px-2.5 py-1 border border-amber/40 text-amber text-[10.5px] font-mono uppercase tracking-[0.18em] rounded-full">
+              <span className="w-1 h-1 rounded-full bg-amber"></span>
+              로테이션 소개팅
+            </div>
+            <h2 className="text-[28px] font-extrabold leading-[1.22] tracking-[-0.01em] mb-4">
+              매력적인<br/>
+              <span className="text-amber">자기관리하는 분</span>들의<br/>
+              만남.
+            </h2>
+            <p className="text-[14px] text-fg2 leading-[1.7] mb-5">
+              검토된 <span className="text-amber font-bold">30명</span>, 자기 분야 또렷한 분들.<br/>
+              30분의 용기로 새로운 인연을 시작하세요.
+            </p>
+            <div className="flex flex-wrap gap-2 text-[10.5px] font-mono tracking-[0.06em]">
+              <span className="px-2.5 py-1 border border-amber/40 text-amber rounded-full">매주 금/토</span>
+              <span className="px-2.5 py-1 border border-line text-fg2 rounded-full">백석역 5분</span>
+              <span className="px-2.5 py-1 border border-line text-fg2 rounded-full">24~35세</span>
+              <span className="px-2.5 py-1 border border-line text-fg2 rounded-full">정원 30</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ─────── Bridge — who comes ─────── */
+  function Bridge(){
+    return (
+      <section className="reveal px-5 py-14 border-t border-b border-line text-center" data-screen-label="02b Bridge">
+        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-4">─── Underlight ───</div>
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
+          <span className="text-amber">자기관리에 진심</span>인<br/>
+          분들이 모이는 곳.
+        </h2>
+        <p className="text-[13px] text-muted leading-[1.7] max-w-[330px] mx-auto">
+          호스트가 직접 검토한 분들만 모입니다.<br/>
+          분야가 또렷한, 결이 맞는 30명.
+        </p>
+      </section>
+    );
+  }
+
   /* ─────── Marquee ─────── */
   function Marquee(){
     const items = ['일산 · 파주 · 김포','★','매주 모이는 30명','★','음료 · 핑거푸드','★','운동 · 독서 · 창업 · AI','★','동네 아지트','★'];
@@ -562,7 +614,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* ─────── Pain & Empathy ─────── */
   function Pain(){
-    const lines = [
+    const questions = [
+      { emoji:'🤔', q:'나 정도면 괜찮지 않나?',   sub:'근데 왜 동네엔 결 맞는 사람이 없을까…' },
+      { emoji:'😢', q:'도대체 괜찮은 사람 어디서 만나?', sub:'소개팅은 무겁고, 클럽·헌팅은 가벼운데…' },
+      { emoji:'💭', q:'자기관리는 진심인데, 외로워…', sub:'운동·독서·AI — 같이 할 사람만 있다면…' },
+    ];
+    const voices = [
       ['수아 · 26 · 일산동구', '금요일 저녁, 단톡방 알람은 쉴 새 없이 울리는데 다들 강남, 홍대, 성수… 나만 쏙 빠진 기분이에요..ㅠ'],
       ['다은 · 29 · 김포',     '주말인데 집 근처엔 갈 만한 곳도 없고, 결국 침대에 누워 핸드폰만 무의미하게 보다보면 너무 공허해지더라구요..'],
     ];
@@ -570,43 +627,39 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">01 / 나만 그래요?</div>
         <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
-          나만 빼고 다 서울인 것 같은<br/>
-          <span className="text-amber">금요일 밤</span>, 겪어본 적 있나요?
+          퇴근하고 운동, 자기개발,<br/>
+          <span className="text-amber">인맥관리</span>…
         </h2>
-        <p className="text-[13.5px] text-muted leading-[1.7] mb-8">
-          서울에 친구 다 있고, 우리 동네엔 정말<br/>
-          <span className="text-fg2">갈만한 곳도 없잖아요…</span>
+        <p className="text-[13.5px] text-muted leading-[1.7] mb-7">
+          바쁜 일상 살아가다 보니,<br/>
+          <span className="text-fg2">인연 만날 기회가 점점 줄어들고 있나요?</span>
         </p>
 
+        {/* 3 question cards */}
+        <div className="space-y-3 mb-8">
+          {questions.map((it,i)=>(
+            <div key={i} className="border border-line bg-ink2/60 p-5 flex items-start gap-4">
+              <div className="text-[26px] leading-none flex-shrink-0">{it.emoji}</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[15.5px] font-extrabold text-fg leading-[1.35]">{it.q}</div>
+                <div className="text-[12.5px] text-muted leading-[1.6] mt-1">{it.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 2 long-form voice cards */}
         <div className="space-y-3">
-          {lines.map(([tag,body],i)=>(
+          {voices.map(([tag,body],i)=>(
             <div key={i} className="border border-line bg-ink2/60 p-4 relative overflow-hidden">
               <div className="font-display text-amber text-[28px] leading-none mb-1">“</div>
-              <div className="text-[14px] text-fg2 leading-[1.7]">{body}</div>
+              <div className="text-[13.5px] text-fg2 leading-[1.7]">{body}</div>
               <div className="mt-3 pt-3 border-t border-line flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full bg-line2 flex items-center justify-center text-[10px] text-fg font-bold">{tag[0]}</div>
                 <div className="text-[10.5px] text-muted font-mono tracking-[0.04em]">{tag}</div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="mt-10 p-5 bg-ink2 border border-line rounded-md relative overflow-hidden">
-          <div className="absolute inset-0 opacity-25">
-            <img src="./assets/acbe3817-4f1d-46db-94a4-81a5925d083e.png" alt="" className="w-full h-full object-cover ph-warm"/>
-            <div className="absolute inset-0" style={{background:'linear-gradient(90deg, #13131A 30%, rgba(19,19,26,.6) 100%)'}}></div>
-          </div>
-          <div className="relative">
-            <div className="text-[12px] text-amber font-mono uppercase tracking-[0.12em] mb-2">저희가 만든 답</div>
-            <p className="text-[16px] leading-[1.6] text-fg font-medium">
-              서울 모임 <span className="text-amber font-bold">절반 가격</span>,<br/>
-              매주 만나는 <span className="text-amber font-bold">30명 이상</span>의 발전하는 사람들.
-            </p>
-            <p className="mt-2 text-[12.5px] text-fg2 leading-[1.6]">
-              음료 무제한, 지루할 틈 없는 프로그램.<br/>
-              왕복 30분이면 충분해요.
-            </p>
-          </div>
         </div>
       </section>
     );
@@ -1269,16 +1322,18 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         <div className="page-shell">
           <StatusStrip />
           <Hero onCTA={cta} />
-          <Marquee />
+          <ConceptHero />
           <Pain />
+          <Bridge />
+          <Stats />
+          <Testimonials />
+          <Marquee />
           <Programs />
           <Safety />
           <Benefits />
           <PhotoBand />
-          <Stats />
           <Host />
           <LoveStories />
-          <Testimonials />
           <Urgency onCTA={cta} />
           <MiniFAQ />
           <FinalCTA onCTA={cta} />
