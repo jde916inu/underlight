@@ -614,12 +614,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Pain & Empathy ─────── */
   function Pain(){
     const questions = [
-      { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?' },
-      { emoji:'🤔', q:'동네엔 결 맞는 사람이 없으셨나요?' },
+      { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?', sub:'외모가 마음에 안들거나.. 결이 안맞거나..' },
+      { emoji:'🤔', q:'동네엔 괜찮은 사람을 만날 곳이 없으셨나요?', sub:'친구들은 다 서울에 있어서 슬퍼요..' },
     ];
-    const voices = [
-      ['수아 · 26 · 일산동구', '소개팅 한 번 나가는 데 머리·옷·화장 두 시간씩 걸리는데, 막상 가보면 별로인 분만 있어서 후회만 남더라구요..ㅠ'],
-    ];
+    const voices = [];
     return (
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
         <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.3] mb-3">
@@ -636,24 +634,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <div className="text-[26px] leading-none flex-shrink-0">{it.emoji}</div>
               <div className="flex-1 min-w-0">
                 <div className="text-[15.5px] font-extrabold text-fg leading-[1.35]">{it.q}</div>
+                {it.sub && <div className="text-[12.5px] text-muted leading-[1.6] mt-1">{it.sub}</div>}
               </div>
             </div>
           ))}
         </div>
 
-        {/* 2 long-form voice cards */}
-        <div className="space-y-3">
-          {voices.map(([tag,body],i)=>(
-            <div key={i} className="border border-line bg-ink2/60 p-4 relative overflow-hidden">
-              <div className="font-display text-amber text-[28px] leading-none mb-1">“</div>
-              <div className="text-[13.5px] text-fg2 leading-[1.7]">{body}</div>
-              <div className="mt-3 pt-3 border-t border-line flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-line2 flex items-center justify-center text-[10px] text-fg font-bold">{tag[0]}</div>
-                <div className="text-[10.5px] text-muted font-mono tracking-[0.04em]">{tag}</div>
-              </div>
-            </div>
-          ))}
-        </div>
       </section>
     );
   }
