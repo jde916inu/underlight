@@ -744,14 +744,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   function Programs(){
     const sessions = [
       { n:'01', name:'프로필 카드 작성', tone:'amber', tag:'INTRO',
-        desc:'직업 · 관심사 · 이상형을 카드에 적어요. 처음 보는 분들도 자연스럽게 알아갈 수 있는 첫 단추.',
-        note:'직업 · 관심사 · 이상형' },
+        desc:'직업 · 관심사 · 이상형을 카드에 적어요. 처음 보는 분들도 자연스럽게 알아갈 수 있는 첫 단추.' },
       { n:'02', name:'10분 로테이션 대화', tone:'amber', tag:'TALK',
-        desc:'한 분당 10분씩, 로테이션으로 모든 분과 1:1로 이야기 나눠요. 짧고 집중된 대화가 결을 보여줘요.',
-        note:'한 분당 10분 · 1:1 대화' },
+        desc:'한 분당 10분씩, 로테이션으로 모든 분과 1:1로 이야기 나눠요. 짧고 집중된 대화가 결을 보여줘요.' },
       { n:'03', name:'쪽지 교환 & 매칭', tone:'ember', tag:'MATCH',
-        desc:'대화가 끝난 후 마음에 든 분께 익명 쪽지를 보내요. 양쪽 다 보내면 호스트가 1:1 연락처를 안내해드려요.',
-        note:'양쪽 다 보내면 1:1 매칭' },
+        desc:'대화가 끝난 후 마음에 든 분께 쪽지를 보내요.' },
     ];
     return (
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%)'}}>
@@ -760,9 +757,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           3단계로 <span className="text-amber">자연스럽게</span><br/>
           이어드려요.
         </h2>
-        <p className="text-[12.5px] text-muted leading-[1.7] mb-8">
-          짜임새 있는 흐름으로 처음 만나도 어색함 없이.
-        </p>
+        <div className="mb-8"></div>
 
         {/* timeline */}
         <div className="relative pl-7">
@@ -780,9 +775,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                   </div>
                   <div className="text-[16px] font-extrabold text-fg mb-1">{s.name}</div>
                   <div className="text-[13px] text-fg2 leading-[1.6]">{s.desc}</div>
-                  <div className={"mt-2.5 inline-flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.06em] text-" + s.tone}>
-                    <span>↳</span><span>{s.note}</span>
-                  </div>
                 </div>
               </div>
             ))}
