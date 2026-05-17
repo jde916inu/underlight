@@ -1022,7 +1022,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-12 bg-ink2 border-y border-line" data-screen-label="04 Stats">
         <div className="grid grid-cols-3 gap-3 text-center">
           <div>
-            <div className="font-display text-amber text-[40px] leading-none">412</div>
+            <div className="font-display text-amber text-[40px] leading-none">84</div>
             <div className="mt-2 text-[11px] text-muted font-mono uppercase tracking-[0.1em]">누적 참여</div>
           </div>
           <div className="border-x border-line">
@@ -1109,7 +1109,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function Testimonials(){
     const list = [
-      { tag:'', name:'지윤', age:'31 · 일산서구', body:'어플로는 절대 못 만났을 분이에요. 같은 동네 사는데 평소엔 마주칠 일 없는 분. 자연스럽게 알아갈 수 있어서 좋았어요.', img:window.__resources.mb8 },
+      { tag:'', name:'지윤', age:'31 · 일산서구', body:'같은 동네 사는데 평소엔 마주칠 일 없던 분. 자연스럽게 알아갈 수 있어서 좋았어요.', img:window.__resources.mb8 },
       { tag:'', name:'재훈', age:'28 · 파주', body:'소개팅 두 번 망하고 포기했었는데, 30명이 한 자리에 있으니까 부담이 확 줄었어요. 마음에 든 분도 자연스럽게 알아볼 수 있고.', img:window.__resources.m4 },
       { tag:'', name:'서연', age:'27 · 일산동구', body:'쪽지로 마음 전하는 게 정말 좋았어요. 거절 걱정 없이 솔직하게 보낼 수 있고, 양쪽 다 보내서 매칭됐을 때 정말 설레요.', img:window.__resources.m9 },
       { tag:'', name:'민지', age:'33 · 김포', body:'결정사 1:1은 너무 부담스러웠는데, 여긴 자연스럽게 여러 분 만나면서 결을 보는 게 편하더라고요. 동네에 이런 자리가 있다는 게 감사.', img:window.__resources.m6 },
@@ -1121,7 +1121,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         <div className="px-5 mb-6">
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">03 / 후기</div>
           <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2]">
-            이미 <span className="text-amber">412명</span>이<br/>
+            이미 <span className="text-amber">84명</span>이<br/>
             동네에서 경험했습니다.
           </h2>
         </div>
@@ -1148,17 +1148,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           ))}
         </div>
 
-        {/* trust strip */}
-        <div className="mt-10 px-5">
-          <div className="text-[10.5px] text-muted font-mono uppercase tracking-[0.14em] mb-3 text-center">언급된 곳</div>
-          <div className="grid grid-cols-3 border border-line">
-            {['LOCAL ZINE','CITY POST','GAYO MEDIA'].map((b,i)=>(
-              <div key={i} className={"py-4 flex items-center justify-center text-[11px] font-mono tracking-[0.18em] text-muted hatch " + (i<2 ? 'border-r border-line' : '')}>
-                {b}
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
     );
   }
