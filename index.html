@@ -1124,13 +1124,13 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
         <div className="relative">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">04 / 마감 임박</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-2">
-          이번 주 <span className="text-amber">금요일</span>,<br/>
-          잔여 <span className="text-amber">3석</span>.
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-2">
+          이번주 휴일,<br/>
+          <span className="text-amber">금요일</span>, <span className="text-amber">토요일</span>.
         </h2>
         <p className="text-[13px] text-muted leading-[1.65] mb-6">
-          모임은 매주 30명 한정.<br/>
-          이번 회차가 마감되면 다음 주 화요일까지 기다리셔야 해요.
+          이번 회차가 마감되면<br/>
+          다음주까지 기다리셔야 해요.
         </p>
 
         {/* Countdown */}
@@ -1157,26 +1157,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <div key={i} className={"flex-1 h-6 border " + (i<15 ? 'bg-amber/80 border-amber' : 'border-line2 bg-ink3')}></div>
             ))}
           </div>
-        </div>
-
-        {/* Incentives */}
-        <div className="border border-amber/40 bg-amber/5 p-5 rounded-md">
-          <div className="text-[10.5px] text-amber font-mono uppercase tracking-[0.16em] mb-3">지금 신청 시</div>
-          <ul className="space-y-3">
-            {[
-              ['참여 25% 할인', '49,000원 → 36,800원'],
-              ['속마음 쪽지 매칭', '거절 걱정 없이 익명으로'],
-              ['1:1 연락처 전달', '양쪽 동의 시 호스트가 안내'],
-            ].map(([a,b],i)=>(
-              <li key={i} className="flex items-start gap-3">
-                <span className="text-amber font-mono text-[11px] mt-1">0{i+1}</span>
-                <div>
-                  <div className="text-[14px] text-fg font-bold">{a}</div>
-                  <div className="text-[12px] text-muted">{b}</div>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
 
         <button onClick={onCTA}
