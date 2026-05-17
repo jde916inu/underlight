@@ -679,44 +679,33 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     const cards = [
       {
         n: '01',
-        big: '만남',
-        title: '검증된 30명과의 자연스러운 만남',
-        desc: '3단계 심사를 통과한 분들. 동네에서 결이 맞는 분들을 한 자리에 만나요. "이런 분이 동네에 계셨다는 게 신기" 한 자리.',
+        big: '검증',
+        title: '검증된 분들만 모십니다',
+        desc: '3단계 심사를 통과한 분들만 한 자리에. 시간 낭비할 일 없이, 진짜 괜찮은 분들과의 만남.',
         chip: '검증'
       },
       {
         n: '02',
-        big: '흐름',
-        title: '어색함 없는 4단계 진행',
-        desc: '첫인상 롤링페이퍼부터 대화카드까지. 호스트가 자연스러운 흐름을 만들어요. 30분이면 다 편해지세요.',
-        chip: '진행'
+        big: '편안',
+        title: '내향형도 편하게 이야기',
+        desc: '미리 작성하는 프로필 카드로 대화의 첫 단추를 미리 마련해드려요. 어색함 없이 자연스럽게.',
+        chip: '편안'
       },
       {
         n: '03',
-        big: '쪽지',
-        title: '익명 속마음 쪽지로 부담 없이',
-        desc: '마음에 든 분께 익명으로 쪽지를 보내요. 거절 걱정 없이, 부담 없이. 양쪽 다 보내면 매칭.',
-        chip: '쪽지'
+        big: '안전',
+        title: '여성분들 먼저 안전하게',
+        desc: '모임 종료 후 여성분들이 먼저 나가실 수 있도록 진행해요. 안전하게 마무리되는 자리.',
+        chip: '안전'
       },
-      {
-        n: '04',
-        big: '연결',
-        title: '1:1 연락처 전달, 그 다음은 두 분의 몫',
-        desc: '쪽지로 매칭된 분의 연락처를 호스트가 양쪽 동의 후 안내해드려요. 그 후 시작은 두 사람의 자연스러운 흐름.',
-        chip: '연결'
-      }
     ];
     return (
       <section className="reveal px-5 py-16" data-screen-label="03 Benefits">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">02 / WHAT YOU GET</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-8">
           Underlight의<br/>
-          <span className="text-amber">4가지 약속</span>.
+          <span className="text-amber">3가지 약속</span>.
         </h2>
-        <p className="text-[12.5px] text-muted leading-[1.7] mb-8">
-          그냥 모이고 끝나는 자리가 아니에요.<br/>
-          만남 → 흐름 → 쪽지 → 1:1 연결까지.
-        </p>
 
         <div className="space-y-3">
           {cards.map(c => (
@@ -727,13 +716,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <div className="text-[16px] font-bold text-fg mb-1.5">{c.title}</div>
               <div className="text-[12.5px] text-muted leading-[1.65]">{c.desc}</div>
             </div>
-          ))}
-        </div>
-
-        {/* themed pills */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          {['운동','독서','전시회','창업','AI 스터디','재테크'].map(t => (
-            <span key={t} className="text-[12px] px-3 py-1.5 border border-line2 text-fg2 rounded-full">#{t}</span>
           ))}
         </div>
       </section>
