@@ -614,13 +614,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Pain & Empathy ─────── */
   function Pain(){
     const questions = [
-      { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?', sub:'사진이랑 다르거나, 결이 안 맞거나… 두 시간 만에 후회만…' },
-      { emoji:'💸', q:'결정사의 무거운 비용이 부담되나요?', sub:'100만원 넘는 가입비에 1:1 어색한 자리는 부담…' },
-      { emoji:'🤔', q:'동네엔 결 맞는 사람이 없으셨나요?',  sub:'마음 통할 사람을 동네에서 만나고 싶다면…' },
+      { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?' },
+      { emoji:'🤔', q:'동네엔 결 맞는 사람이 없으셨나요?' },
     ];
     const voices = [
       ['수아 · 26 · 일산동구', '소개팅 한 번 나가는 데 머리·옷·화장 두 시간씩 걸리는데, 막상 가보면 별로인 분만 있어서 후회만 남더라구요..ㅠ'],
-      ['다은 · 29 · 김포',     '어플로 매칭돼서 카톡 몇 주 하다가 만났는데, 직접 보니까 결이 너무 안 맞아서 어색하기만 했어요. 이런 게 반복되니까 지치더라구요..'],
     ];
     return (
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
@@ -638,7 +636,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <div className="text-[26px] leading-none flex-shrink-0">{it.emoji}</div>
               <div className="flex-1 min-w-0">
                 <div className="text-[15.5px] font-extrabold text-fg leading-[1.35]">{it.q}</div>
-                <div className="text-[12.5px] text-muted leading-[1.6] mt-1">{it.sub}</div>
               </div>
             </div>
           ))}
