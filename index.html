@@ -41,9 +41,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <style>/**
  * Minified by jsDelivr using clean-css v5.3.3.
  * Original file: /gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css
@@ -245,13 +242,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           sans: ['Pretendard', 'ui-sans-serif', 'system-ui', 'sans-serif'],
           mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
           display: ['Bebas Neue', 'Pretendard', 'sans-serif'],
-          serif: ['"Noto Serif KR"', '"Gowun Batang"', 'Pretendard', 'serif'],
         },
         colors: {
-          ink:    '#FAF7F0',
-          ink2:   '#FFFFFF',
+          ink:    '#FFFFFF',
+          ink2:   '#FAF7F0',
           ink3:   '#F2EDE2',
-          cream:  '#FAF7F0',
           line:   '#E5E0D2',
           line2:  '#CFC8B5',
           fg:     '#1A1408',
@@ -265,9 +260,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           ember2: '#9F2A2F',
           azure:  '#3B6BD6',
           azure2: '#1F4FB3',
-          pink:   '#E85A7E',
-          pink2:  '#FFB6C8',
-          pinkbg: '#FFF1F4',
         }
       }
     }
@@ -279,15 +271,15 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 <script src="./assets/635db49e-47d3-4ec2-af55-b517fd5a3964.js"></script>
 
 <style>
-  html, body { background: #FAF7F0; color: #1A1408; -webkit-font-smoothing:antialiased; }
+  html, body { background: #FFFFFF; color: #1A1408; -webkit-font-smoothing:antialiased; }
   body { font-family: Pretendard, system-ui, sans-serif; padding-bottom: env(safe-area-inset-bottom); }
   /* page wrapper for desktop */
   .page-shell {
     max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative;
     background:
-      radial-gradient(700px 400px at 50% -80px, rgba(232,90,126,0.06), transparent 60%),
-      radial-gradient(600px 500px at 100% 30%, rgba(255,179,71,0.04), transparent 70%),
-      #FAF7F0;
+      radial-gradient(900px 500px at 50% -120px, rgba(255,179,71,0.12), transparent 60%),
+      radial-gradient(700px 600px at 100% 30%, rgba(199,120,0,0.04), transparent 70%),
+      #FFFFFF;
     overflow: hidden;
   }
   /* subtle paper grain */
@@ -365,73 +357,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* Custom select-like price pill */
   .ring-amber-glow{ box-shadow: 0 0 0 1px #FFB347, 0 0 28px rgba(255,179,71,.25) inset, 0 0 24px rgba(255,179,71,.15) }
-
-  /* === REFERENCE STYLE: editorial Korean serif === */
-  .h-myeongjo{
-    font-family: "Noto Serif KR", "Gowun Batang", Pretendard, serif;
-    font-weight: 900;
-    letter-spacing: -0.025em;
-    word-break: keep-all;
-    line-height: 1.3;
-  }
-  .h-myeongjo-md{
-    font-family: "Noto Serif KR", "Gowun Batang", Pretendard, serif;
-    font-weight: 700;
-    letter-spacing: -0.018em;
-    word-break: keep-all;
-    line-height: 1.4;
-  }
-  .time-stamp{
-    font-family: "Noto Serif KR", "Gowun Batang", serif;
-    font-weight: 700;
-    color: #1A1408;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-  }
-
-  /* Section eyebrow underline (reference: "Timetable") */
-  .eyebrow-en{
-    display: inline-block;
-    font-family: "Noto Serif KR", serif;
-    font-weight: 500;
-    font-size: 13px;
-    color: #1A1408;
-    letter-spacing: 0.05em;
-    padding-bottom: 6px;
-    border-bottom: 1.5px solid #1A1408;
-    margin-bottom: 28px;
-  }
-
-  /* Timeline component */
-  .tl-row{ display: grid; grid-template-columns: 64px 22px 1fr; gap: 12px; align-items: start; }
-  .tl-time{ text-align: right; padding-top: 2px; }
-  .tl-dot-col{ position: relative; display: flex; justify-content: center; padding-top: 6px; }
-  .tl-dot{ width: 10px; height: 10px; border-radius: 50%; background: #C77800; box-shadow: 0 0 0 4px rgba(199,120,0,0.12); position: relative; z-index: 2; }
-  .tl-line{ position: absolute; top: 16px; bottom: -40px; left: 50%; width: 1px; background: linear-gradient(180deg, #CFC8B5 0%, #E5E0D2 100%); transform: translateX(-50%); }
-  .tl-label{ font-size: 16.5px; font-weight: 600; color: #1A1408; padding-bottom: 6px; border-bottom: 1px solid #1A1408; display: inline-block; margin-bottom: 10px; }
-  .tl-sub{ font-size: 15px; font-weight: 700; color: #1A1408; margin-bottom: 12px; }
-
-  /* Rounded full-bleed photos */
-  .photo-rounded{ width: 100%; aspect-ratio: 4/5; border-radius: 6px; overflow: hidden; position: relative; background: #E5E0D2; }
-  .photo-rounded img{ width: 100%; height: 100%; object-fit: cover; display: block; }
-  .photo-caption-over{
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 24px 22px 26px;
-    color: #fff;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.5) 60%, rgba(0,0,0,.78) 100%);
-    font-size: 13.5px; line-height: 1.7;
-  }
-
-  /* Pink accent highlight underline */
-  .pink-underline{ background-image: linear-gradient(transparent 62%, rgba(232,90,126,0.28) 62%); padding: 0 2px; }
-  .pink-text{ color: #E85A7E; font-weight: 700; }
-
-  /* Bullet list with emoji */
-  .ed-bullets{ font-size: 14px; color: #3F3621; line-height: 2.1; }
-  .ed-bullets > div{ display: flex; gap: 6px; }
-
-  /* Centered section footer (reference closing) */
-  .ed-footer{ text-align: center; padding: 36px 28px 24px; font-size: 14px; color: #3F3621; line-height: 1.8; }
 </style>
 </head>
 <body class="grain">
@@ -524,7 +449,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             일산 · 파주 · 김포
           </div>
 
-          <h1 className="text-[34px] leading-[1.18] h-myeongjo text-fg">
+          <h1 className="text-[34px] leading-[1.18] font-extrabold tracking-[-0.02em] text-fg">
             괜찮은 사람들<br/>
             다 모이는 곳,<br/>
             <span className="text-amber">Underlight</span>
@@ -589,7 +514,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <span className="w-1 h-1 rounded-full bg-amber"></span>
               로테이션 소개팅
             </div>
-            <h2 className="text-[28px] h-myeongjo leading-[1.22] mb-4">
+            <h2 className="text-[28px] font-extrabold leading-[1.22] tracking-[-0.01em] mb-4">
               <span className="text-amber">3단계 심사</span>를<br/>
               통과한 분들의<br/>
               로테이션 소개팅.
@@ -624,7 +549,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-14 border-t border-line" data-screen-label="02c Compare">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">VS · 비교</div>
-        <h2 className="text-[24px] h-myeongjo leading-[1.22] mb-3">
+        <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
           왜 <span className="text-amber">Underlight</span>인가?
         </h2>
         <p className="text-[12.5px] text-muted leading-[1.7] mb-6">
@@ -663,7 +588,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-14 border-t border-b border-line text-center" data-screen-label="02b Bridge">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-4">─── Underlight ───</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.25] mb-4">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-4">
           괜찮은 사람을<br/>
           아직 <span className="text-amber">못 만난 이유</span>는<br/>
           기회가 없었기 때문입니다.
@@ -705,7 +630,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">01 / 나만 그래요?</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.22] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
           소중한 주말,<br/>
           <span className="text-amber">검증되지 않은 사람</span>과<br/>
           낭비하지 마세요.
@@ -749,43 +674,31 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* ─────── Benefits ─────── */
   function PhotoBand(){
-    // Editorial vertical photo storytelling
-    const scenes = [
-      {
-        src: './assets/f94b1ed3-e03d-4ef0-9483-1fbfe00234ba.png',
-        head: <>괜찮은 사람을 만날<br/>기회가 없었을 뿐.</>,
-        sub: '검증된 30명. 결이 맞는 분들이 한 자리에.',
-      },
-      {
-        src: './assets/10c3ff9e-ab2f-4f30-b8c4-be29b84b7e9e.png',
-        head: <>30분이면<br/>다 편해지세요.</>,
-        sub: '대화카드부터 쪽지까지 — 호스트가 흐름을 만들어요.',
-      },
-      {
-        src: './assets/34133862-b136-45b0-96d1-787e03f8ae8c.png',
-        head: <>이미 모임에서<br/><span className="pink-text">연인</span>이 된 분들.</>,
-        sub: '"이런 분이 동네에 계셨다는 게 신기" — 매 회차 새로운 연결.',
-      },
+    // Scroll-snap atmospheric band of community photos
+    const photos = [
+      { src:'./assets/f94b1ed3-e03d-4ef0-9483-1fbfe00234ba.png', tag:'운동 파트' },
+      { src:'./assets/acbe3817-4f1d-46db-94a4-81a5925d083e.png', tag:'독서 파트' },
+      { src:'./assets/10c3ff9e-ab2f-4f30-b8c4-be29b84b7e9e.png', tag:'전시·공연 파트' },
+      { src:'./assets/442c8f85-60d1-4df0-ba67-83a8b3b1162b.png', tag:'창업 파트' },
+      { src:'./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png', tag:'AFTER 파트' },
+      { src:'./assets/34133862-b136-45b0-96d1-787e03f8ae8c.png', tag:'AI 파트' },
     ];
     return (
-      <section className="reveal py-16 bg-cream" data-screen-label="05 Photos">
-        <div className="px-5 text-center mb-10">
-          <span className="eyebrow-en">Moments</span>
-          <h2 className="h-myeongjo text-[26px] leading-[1.35] text-fg">매주, 이런 밤이<br/>이어집니다</h2>
-        </div>
-
-        {scenes.map((s,i)=>(
-          <div key={i} className="px-5 mb-10">
-            <div className="photo-rounded">
-              <img src={s.src} alt="" className="ph-warm"/>
-            </div>
-            <div className="text-center pt-6 pb-2">
-              <div className="ps-rule" style={{width:24,height:1,background:'#C77800',margin:'0 auto 12px'}}></div>
-              <div className="h-myeongjo text-[22px] leading-[1.4] text-fg mb-2">{s.head}</div>
-              <div className="text-[13px] text-muted leading-[1.7] max-w-[300px] mx-auto">{s.sub}</div>
-            </div>
+      <section className="reveal py-12 border-t border-b border-line bg-ink" data-screen-label="05 Photos">
+        <div className="px-5 mb-4 flex items-end justify-between">
+          <div>
+            <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-1">현장</div>
+            <div className="text-[15px] font-bold text-fg">매주 이런 밤이 있어요</div>
           </div>
-        ))}
+          <div className="text-[10px] text-muted font-mono">SWIPE →</div>
+        </div>
+        <div className="scroll-x flex gap-2 overflow-x-auto px-5">
+          {photos.map((p,i)=>(
+            <div key={i} className="relative flex-shrink-0 w-[220px] aspect-[4/5] overflow-hidden border border-line">
+              <img src={p.src} alt="" className="w-full h-full object-cover ph-warm"/>
+            </div>
+          ))}
+        </div>
       </section>
     );
   }
@@ -824,7 +737,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16" data-screen-label="03 Benefits">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">02 / WHAT YOU GET</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
           Underlight의<br/>
           <span className="text-amber">4가지 약속</span>.
         </h2>
@@ -855,100 +768,66 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
-  /* ─────── Programs as Timetable (editorial reference style) ─────── */
+  /* ─────── Programs (4 sessions infographic) ─────── */
   function Programs(){
-    const rows = [
-      {
-        time1: '19:30', time2: '~20:00',
-        label: '입장 시간',
-        sub: '설레는 입장타임',
-        photo: './assets/f94b1ed3-e03d-4ef0-9483-1fbfe00234ba.png',
-        photoCap: '먼저 오신 분들끼리\n다른 사람들과 편하게 알아갈 수 있도록\n대화 콘텐츠도 준비해두었어요',
-        bullets: null,
-      },
-      {
-        time1: '20:00', time2: '~21:30',
-        label: '두근두근 1차 파티',
-        sub: '우리는 서로 알아가는 중..!',
-        photo: './assets/acbe3817-4f1d-46db-94a4-81a5925d083e.png',
-        photoCap: '로테이션을 하며 새로운 사람들을 알아가는 시간이에요!',
-        bullets: [
-          { e: '✨', t: '첫인상 롤링페이퍼' },
-          { e: '💌', t: '설레임 소개서 / 이미지 지목' },
-          { e: '👀', t: '우리를 맞혀봐 / 매력을 보여줘' },
-          { e: '🤍', t: '대화 카드 진행' },
-          { e: '🗳️', t: '비공개 첫인상 투표' },
-        ],
-        underPhoto: true,
-      },
-      {
-        time1: '21:30', time2: '~22:30',
-        label: '설렘가득 2차 파티',
-        sub: '매칭률 1위를 자랑하는 썸 타임',
-        photo: './assets/34133862-b136-45b0-96d1-787e03f8ae8c.png',
-        photoCap: null,
-        bullets: [
-          { e: '🤍', t: '자유 자리 선택 TIME' },
-          { e: '✨', t: '나를 맞혀봐' },
-          { e: '💌', t: '속마음 쪽지 보내기' },
-          { e: '🤎', t: '두번째 자리 선택 TIME' },
-          { e: '🥂', t: '서로의 마음 확인' },
-        ],
-        underPhoto: false,
-      },
+    const sessions = [
+      { n:'01', name:'첫인상 롤링페이퍼', tone:'amber', tag:'ICEBREAK',
+        desc:'아직 어색한 첫 30분, 종이 위에 가벼운 한 줄로 첫인상을 주고받아요.',
+        note:'내향형도 편하게 대화' },
+      { n:'02', name:'대화카드 진행', tone:'amber', tag:'WARM-UP',
+        desc:'질문 카드를 따라가다 보면 어색함이 자연스럽게 사라져요.',
+        note:'끊길 일 없는 대화의 온기' },
+      { n:'03', name:'내 가치관에 맞는 사람은?', tone:'amber', tag:'SPARK',
+        desc:'결이 맞는 사람을 찾는 기분 좋은 예감.',
+        note:'대화의 결' },
+      { n:'04', name:'속마음 쪽지 매칭', tone:'amber', tag:'CORE',
+        desc:'마음에 든 분께 익명 쪽지를 보내요. 양쪽 다 쪽지를 보내면 호스트가 1:1 연락처를 안내해드려요.',
+        note:'쪽지 한 장의 용기' },
     ];
     return (
-      <section className="reveal px-5 py-20 bg-cream" data-screen-label="03b Programs">
-        <div className="text-center">
-          <span className="eyebrow-en">Timetable</span>
-        </div>
-        <h2 className="h-myeongjo text-[34px] leading-[1.25] text-fg text-center mb-12">
-          무엇을 하는지<br/>알려드릴게요
+      <section className="reveal px-5 py-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%)'}}>
+        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">PROGRAM · 4 STEPS</div>
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
+          4단계가 <span className="text-ember">여러분들을</span><br/>
+          자연스럽게 <span className="text-amber">이끌어줘요</span>.
         </h2>
+        <p className="text-[12.5px] text-muted leading-[1.7] mb-8">
+          짜임새 있는 프로그램으로 내향형도 편하게 이야기해요.
+        </p>
 
-        <div className="space-y-1">
-          {rows.map((r, i)=>(
-            <div key={i} className="tl-row pb-10">
-              <div className="tl-time">
-                <div className="time-stamp text-[14px]">{r.time1}</div>
-                <div className="time-stamp text-[14px] text-muted">{r.time2}</div>
-              </div>
-              <div className="tl-dot-col">
-                <div className="tl-dot"></div>
-                {i < rows.length - 1 && <div className="tl-line"></div>}
-              </div>
-              <div>
-                <div className="tl-label h-myeongjo-md">{r.label}</div>
-                <div className="tl-sub">{r.sub}</div>
-
-                {r.bullets && r.bullets.length > 0 && (
-                  <div className="ed-bullets mb-5">
-                    {r.bullets.map((b, j)=>(
-                      <div key={j}><span>{b.e}</span><span>{b.t}</span></div>
-                    ))}
+        {/* timeline */}
+        <div className="relative pl-7">
+          <div className="absolute left-[10px] top-2 bottom-2 w-px bg-gradient-to-b from-amber via-amber2 to-ember opacity-60"></div>
+          <div className="space-y-4">
+            {sessions.map((s,i)=>(
+              <div key={s.n} className="relative">
+                <div className={"absolute -left-[26px] top-3 w-4 h-4 rounded-full border-2 bg-ink border-" + s.tone}></div>
+                <div className="border border-line bg-ink2 p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={"text-[10px] font-mono tracking-[0.18em] text-" + s.tone}>{s.tag}</span>
+                      <span className="text-[10px] text-muted font-mono">— {s.n}</span>
+                    </div>
+                    <span className="text-[9.5px] text-muted font-mono">{['7:00','7:40','8:30','9:15'][i]} PM</span>
                   </div>
-                )}
-
-                {r.photo && (
-                  <div className="photo-rounded mt-4">
-                    <img src={r.photo} alt="" className="ph-warm"/>
-                    {r.photoCap && (
-                      <div className="photo-caption-over">
-                        {r.photoCap.split('\n').map((line, k)=>(
-                          <div key={k}>{line}</div>
-                        ))}
-                      </div>
-                    )}
+                  <div className="text-[16px] font-extrabold text-fg mb-1">{s.name}</div>
+                  <div className="text-[13px] text-fg2 leading-[1.6]">{s.desc}</div>
+                  <div className={"mt-2.5 inline-flex items-center gap-1.5 text-[10.5px] font-mono tracking-[0.06em] text-" + s.tone}>
+                    <span>↳</span><span>{s.note}</span>
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="ed-footer">
-          <div>본격적으로 설레는 콘텐츠들이 준비되어 있어요</div>
-          <div className="mt-1"><span className="pink-text">가장 설레는 순간은 2차 파티에서 일어나요</span> 🥂</div>
+        <div className="mt-7 p-4 border border-amber/30 bg-amber/5 rounded-md">
+          <div className="text-[10.5px] text-amber font-mono uppercase tracking-[0.16em] mb-1.5">ANONYMOUS NOTE</div>
+          <p className="text-[12.5px] text-fg2 leading-[1.65]">
+            거절 걱정 없이,<br/>
+            <span className="text-fg font-bold">익명 쪽지 한 장</span>으로 마음을 전해요.<br/>
+            양쪽 다 보내면 1:1 매칭됩니다.
+          </p>
         </div>
       </section>
     );
@@ -960,7 +839,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04c Host">
         <div className="text-[11px] text-ember font-mono uppercase tracking-[0.2em] mb-3 text-center">HOST · 기획자</div>
 
-        <h2 className="text-[30px] h-myeongjo leading-[1.22] mb-6 text-center">
+        <h2 className="text-[30px] font-extrabold tracking-[-0.02em] leading-[1.22] mb-6 text-center">
           안녕하세요,<br/>
           호스트 <span className="text-amber">정인우</span>예요.
         </h2>
@@ -1069,7 +948,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04b Safety">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">🛡 검증 시스템</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.22] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
           빌런 사절,<br/>
           <span className="text-amber">3단계 심사</span>를 통과한<br/>
           분들만 모입니다.
@@ -1123,7 +1002,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
         <div className="relative">
           <div className="text-[11px] text-ember font-mono uppercase tracking-[0.2em] mb-3">AFTER THE PARTY</div>
-          <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-3">
+          <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
             모임이 끝나도,<br/>
             <span className="text-amber">이어집니다</span>.
           </h2>
@@ -1204,7 +1083,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <span className="text-[10px] text-amber font-mono uppercase tracking-[0.18em]">P.S. · 연애 이야기</span>
             <span className="flex-1 h-px bg-line"></span>
           </div>
-          <h3 className="text-[24px] h-myeongjo leading-[1.25] mb-3">
+          <h3 className="text-[24px] font-extrabold leading-[1.25] tracking-[-0.01em] mb-3">
             이미 모임에서<br/>
             <span className="text-amber">연인이 된 분들</span>이 많아요.
           </h3>
@@ -1269,7 +1148,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-0 py-16" data-screen-label="05 Testimonials">
         <div className="px-5 mb-6">
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">03 / 후기</div>
-          <h2 className="text-[26px] h-myeongjo leading-[1.2]">
+          <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2]">
             이미 <span className="text-amber">412명</span>이<br/>
             동네에서 경험했습니다.
           </h2>
@@ -1323,7 +1202,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
         <div className="relative">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">04 / 마감 임박</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-2">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-2">
           이번 주 <span className="text-amber">금요일</span>,<br/>
           잔여 <span className="text-amber">3석</span>.
         </h2>
@@ -1430,7 +1309,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
         <div className="text-center">
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-4">JOIN US</div>
-          <h2 className="text-[34px] h-myeongjo leading-[1.2] mb-4">
+          <h2 className="text-[34px] font-extrabold tracking-[-0.02em] leading-[1.2] mb-4">
             이번 주 금요일,<br/>
             당신의 일상에<br/>
             <span className="text-amber">상큼한 설렘</span>을 더하세요.
