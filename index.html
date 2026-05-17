@@ -41,9 +41,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <style>/**
  * Minified by jsDelivr using clean-css v5.3.3.
  * Original file: /gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css
@@ -245,8 +242,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           sans: ['Pretendard', 'ui-sans-serif', 'system-ui', 'sans-serif'],
           mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
           display: ['Bebas Neue', 'Pretendard', 'sans-serif'],
-          serif: ['"Noto Serif KR"', '"Gowun Batang"', 'Pretendard', 'serif'],
-          myeongjo: ['"Noto Serif KR"', '"Gowun Batang"', 'Pretendard', 'serif'],
         },
         colors: {
           ink:    '#FFFFFF',
@@ -362,37 +357,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* Custom select-like price pill */
   .ring-amber-glow{ box-shadow: 0 0 0 1px #FFB347, 0 0 28px rgba(255,179,71,.25) inset, 0 0 24px rgba(255,179,71,.15) }
-
-  /* Korean serif headlines — Noto Serif KR + Gowun Batang */
-  .h-myeongjo{
-    font-family: "Noto Serif KR", "Gowun Batang", Pretendard, serif;
-    font-weight: 900;
-    letter-spacing: -0.025em;
-    word-break: keep-all;
-    line-height: 1.28;
-  }
-  .h-myeongjo-md{
-    font-family: "Noto Serif KR", "Gowun Batang", Pretendard, serif;
-    font-weight: 700;
-    letter-spacing: -0.018em;
-    word-break: keep-all;
-    line-height: 1.4;
-  }
-  /* Vertical photo-story block (long mobile reference) */
-  .photo-story{ position: relative; width: 100%; overflow: hidden; }
-  .photo-story img{ width: 100%; height: 100%; object-fit: cover; display: block; }
-  .photo-story .caption-over{
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 28px 24px 32px;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.72) 100%);
-    color: #fff;
-  }
-  .photo-story .caption-under{
-    padding: 22px 24px 8px;
-    color: #1A1408;
-    text-align: center;
-  }
-  .ps-rule{ width:28px; height:2px; background:#C77800; margin:0 auto 14px; }
 </style>
 </head>
 <body class="grain">
@@ -485,7 +449,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             일산 · 파주 · 김포
           </div>
 
-          <h1 className="text-[34px] leading-[1.18] h-myeongjo text-fg">
+          <h1 className="text-[34px] leading-[1.18] font-extrabold tracking-[-0.02em] text-fg">
             괜찮은 사람들<br/>
             다 모이는 곳,<br/>
             <span className="text-amber">Underlight</span>
@@ -550,7 +514,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <span className="w-1 h-1 rounded-full bg-amber"></span>
               로테이션 소개팅
             </div>
-            <h2 className="text-[28px] h-myeongjo leading-[1.22] mb-4">
+            <h2 className="text-[28px] font-extrabold leading-[1.22] tracking-[-0.01em] mb-4">
               <span className="text-amber">3단계 심사</span>를<br/>
               통과한 분들의<br/>
               로테이션 소개팅.
@@ -585,7 +549,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-14 border-t border-line" data-screen-label="02c Compare">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">VS · 비교</div>
-        <h2 className="text-[24px] h-myeongjo leading-[1.22] mb-3">
+        <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
           왜 <span className="text-amber">Underlight</span>인가?
         </h2>
         <p className="text-[12.5px] text-muted leading-[1.7] mb-6">
@@ -624,7 +588,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-14 border-t border-b border-line text-center" data-screen-label="02b Bridge">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-4">─── Underlight ───</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.25] mb-4">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-4">
           괜찮은 사람을<br/>
           아직 <span className="text-amber">못 만난 이유</span>는<br/>
           기회가 없었기 때문입니다.
@@ -666,7 +630,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16 relative" data-screen-label="02 Pain">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">01 / 나만 그래요?</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.22] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
           소중한 주말,<br/>
           <span className="text-amber">검증되지 않은 사람</span>과<br/>
           낭비하지 마세요.
@@ -710,66 +674,31 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* ─────── Benefits ─────── */
   function PhotoBand(){
-    // Vertical photo storytelling — tall scenes with bold myeongjo captions
-    const scenes = [
-      {
-        src: './assets/f94b1ed3-e03d-4ef0-9483-1fbfe00234ba.png',
-        kicker: 'SCENE 01',
-        head: <>괜찮은 사람을 만날<br/>기회가 없었을 뿐.</>,
-        sub: '검증된 30명. 동네에서 결이 맞는 분들이 한 자리에 모입니다.',
-        over: true,
-      },
-      {
-        src: './assets/acbe3817-4f1d-46db-94a4-81a5925d083e.png',
-        kicker: 'SCENE 02',
-        head: <>30분이면<br/>다 편해지세요.</>,
-        sub: '첫인상 롤링페이퍼부터 대화카드까지 — 호스트가 어색함을 흐름으로 바꿔놓습니다.',
-        over: false,
-      },
-      {
-        src: './assets/10c3ff9e-ab2f-4f30-b8c4-be29b84b7e9e.png',
-        kicker: 'SCENE 03',
-        head: <>거절 걱정 없이,<br/>속마음만 슬쩍.</>,
-        sub: '익명 쪽지로 마음을 전해요. 양쪽이 마음을 보내면, 1:1 연락처 전달.',
-        over: true,
-      },
-      {
-        src: './assets/34133862-b136-45b0-96d1-787e03f8ae8c.png',
-        kicker: 'SCENE 04',
-        head: <>이미 모임에서<br/>연인이 된 분들.</>,
-        sub: '"이런 분이 동네에 계셨다는 게 신기" — 매 회차 새로운 연결이 만들어집니다.',
-        over: false,
-      },
+    // Scroll-snap atmospheric band of community photos
+    const photos = [
+      { src:'./assets/f94b1ed3-e03d-4ef0-9483-1fbfe00234ba.png', tag:'운동 파트' },
+      { src:'./assets/acbe3817-4f1d-46db-94a4-81a5925d083e.png', tag:'독서 파트' },
+      { src:'./assets/10c3ff9e-ab2f-4f30-b8c4-be29b84b7e9e.png', tag:'전시·공연 파트' },
+      { src:'./assets/442c8f85-60d1-4df0-ba67-83a8b3b1162b.png', tag:'창업 파트' },
+      { src:'./assets/d3f1eee3-4aeb-40cb-b84c-851485fc3819.png', tag:'AFTER 파트' },
+      { src:'./assets/34133862-b136-45b0-96d1-787e03f8ae8c.png', tag:'AI 파트' },
     ];
     return (
-      <section className="reveal py-10 border-t border-b border-line bg-ink" data-screen-label="05 Photos">
-        <div className="px-5 mb-8 text-center">
-          <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-2">— Moments —</div>
-          <div className="h-myeongjo text-[22px] text-fg leading-[1.35]">매주, 이런 밤이<br/>이어집니다.</div>
-        </div>
-
-        {scenes.map((s,i)=>(
-          <div key={i} className="mb-2">
-            <div className="photo-story aspect-[3/4]">
-              <img src={s.src} alt="" className="ph-warm"/>
-              {s.over && (
-                <div className="caption-over">
-                  <div className="text-[10.5px] text-amber2 font-mono tracking-[0.2em] mb-2">{s.kicker}</div>
-                  <div className="h-myeongjo text-[26px] mb-3">{s.head}</div>
-                  <div className="text-[12.5px] text-ink2/90 leading-[1.65] max-w-[300px]">{s.sub}</div>
-                </div>
-              )}
-            </div>
-            {!s.over && (
-              <div className="caption-under">
-                <div className="ps-rule" />
-                <div className="text-[10.5px] text-amber font-mono tracking-[0.2em] mb-2">{s.kicker}</div>
-                <div className="h-myeongjo text-[24px] mb-3">{s.head}</div>
-                <div className="text-[12.5px] text-muted leading-[1.65] max-w-[300px] mx-auto pb-2">{s.sub}</div>
-              </div>
-            )}
+      <section className="reveal py-12 border-t border-b border-line bg-ink" data-screen-label="05 Photos">
+        <div className="px-5 mb-4 flex items-end justify-between">
+          <div>
+            <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-1">현장</div>
+            <div className="text-[15px] font-bold text-fg">매주 이런 밤이 있어요</div>
           </div>
-        ))}
+          <div className="text-[10px] text-muted font-mono">SWIPE →</div>
+        </div>
+        <div className="scroll-x flex gap-2 overflow-x-auto px-5">
+          {photos.map((p,i)=>(
+            <div key={i} className="relative flex-shrink-0 w-[220px] aspect-[4/5] overflow-hidden border border-line">
+              <img src={p.src} alt="" className="w-full h-full object-cover ph-warm"/>
+            </div>
+          ))}
+        </div>
       </section>
     );
   }
@@ -808,7 +737,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16" data-screen-label="03 Benefits">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">02 / WHAT YOU GET</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
           Underlight의<br/>
           <span className="text-amber">4가지 약속</span>.
         </h2>
@@ -858,7 +787,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%)'}}>
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">PROGRAM · 4 STEPS</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
           4단계가 <span className="text-ember">여러분들을</span><br/>
           자연스럽게 <span className="text-amber">이끌어줘요</span>.
         </h2>
@@ -910,7 +839,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04c Host">
         <div className="text-[11px] text-ember font-mono uppercase tracking-[0.2em] mb-3 text-center">HOST · 기획자</div>
 
-        <h2 className="text-[30px] h-myeongjo leading-[1.22] mb-6 text-center">
+        <h2 className="text-[30px] font-extrabold tracking-[-0.02em] leading-[1.22] mb-6 text-center">
           안녕하세요,<br/>
           호스트 <span className="text-amber">정인우</span>예요.
         </h2>
@@ -1019,7 +948,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <section className="reveal px-5 py-16 border-t border-line" data-screen-label="04b Safety">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">🛡 검증 시스템</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.22] mb-3">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-3">
           빌런 사절,<br/>
           <span className="text-amber">3단계 심사</span>를 통과한<br/>
           분들만 모입니다.
@@ -1073,7 +1002,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
         <div className="relative">
           <div className="text-[11px] text-ember font-mono uppercase tracking-[0.2em] mb-3">AFTER THE PARTY</div>
-          <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-3">
+          <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
             모임이 끝나도,<br/>
             <span className="text-amber">이어집니다</span>.
           </h2>
@@ -1154,7 +1083,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <span className="text-[10px] text-amber font-mono uppercase tracking-[0.18em]">P.S. · 연애 이야기</span>
             <span className="flex-1 h-px bg-line"></span>
           </div>
-          <h3 className="text-[24px] h-myeongjo leading-[1.25] mb-3">
+          <h3 className="text-[24px] font-extrabold leading-[1.25] tracking-[-0.01em] mb-3">
             이미 모임에서<br/>
             <span className="text-amber">연인이 된 분들</span>이 많아요.
           </h3>
@@ -1219,7 +1148,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-0 py-16" data-screen-label="05 Testimonials">
         <div className="px-5 mb-6">
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">03 / 후기</div>
-          <h2 className="text-[26px] h-myeongjo leading-[1.2]">
+          <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2]">
             이미 <span className="text-amber">412명</span>이<br/>
             동네에서 경험했습니다.
           </h2>
@@ -1273,7 +1202,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
         <div className="relative">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">04 / 마감 임박</div>
-        <h2 className="text-[26px] h-myeongjo leading-[1.2] mb-2">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-2">
           이번 주 <span className="text-amber">금요일</span>,<br/>
           잔여 <span className="text-amber">3석</span>.
         </h2>
@@ -1380,7 +1309,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
         <div className="text-center">
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-4">JOIN US</div>
-          <h2 className="text-[34px] h-myeongjo leading-[1.2] mb-4">
+          <h2 className="text-[34px] font-extrabold tracking-[-0.02em] leading-[1.2] mb-4">
             이번 주 금요일,<br/>
             당신의 일상에<br/>
             <span className="text-amber">상큼한 설렘</span>을 더하세요.
