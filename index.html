@@ -548,7 +548,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
         <div className="border border-line overflow-hidden">
           {/* header */}
-          <div className="bg-ink2 text-[11px] font-mono uppercase tracking-[0.06em]" style={{display:'grid', gridTemplateColumns:'70px 1fr 1fr 1.35fr'}}>
+          <div className="bg-ink2 text-[11px] font-mono uppercase tracking-[0.06em]" style={{display:'grid', gridTemplateColumns:'82px 1fr 1fr 1.3fr'}}>
             <div className="p-3 text-muted border-b border-line"></div>
             {cols.map((c,i)=>(
               <div key={i} className={"p-3 border-b border-line text-center " + (i===2 ? 'bg-amber/10 text-amber font-bold' : 'text-muted')}>{c}</div>
@@ -556,8 +556,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           </div>
           {/* rows */}
           {rows.map((r,i)=>(
-            <div key={i} className="text-[12px]" style={{display:'grid', gridTemplateColumns:'70px 1fr 1fr 1.35fr'}}>
-              <div className="p-3 bg-ink2/50 text-fg2 font-bold border-b border-line">{r.k}</div>
+            <div key={i} className="text-[12px]" style={{display:'grid', gridTemplateColumns:'82px 1fr 1fr 1.3fr'}}>
+              <div className="p-3 bg-ink2/50 text-fg2 font-bold border-b border-line whitespace-nowrap">{r.k}</div>
               {r.v.map((v,j)=>(
                 <div key={j} className={"p-3 text-center border-b border-line " + (j===2 ? 'bg-amber/5 text-amber font-bold whitespace-nowrap' : 'text-muted')}>{v}</div>
               ))}
