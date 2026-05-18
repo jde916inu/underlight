@@ -727,7 +727,14 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         desc:'대화가 끝난 후 마음에 든 분께 쪽지를 보내요.' },
     ];
     return (
-      <section className="reveal px-5 py-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%)'}}>
+      <section className="reveal pt-0 px-0 pb-16 border-t border-line" data-screen-label="03b Programs" style={{background:'linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%)'}}>
+        {/* atmospheric photo above heading */}
+        <div className="relative w-full overflow-hidden mb-10" style={{aspectRatio:'4/3'}}>
+          <img src="./assets/hands.png" alt="" className="w-full h-full object-cover"/>
+          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(255,247,240,.85) 88%, #FAF7F0 100%)'}}></div>
+        </div>
+
+        <div className="px-5">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">PROGRAM · 3 STEPS</div>
         <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2] mb-3">
           3단계로 <span className="text-amber">자연스럽게</span><br/>
@@ -755,6 +762,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
     );
