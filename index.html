@@ -1117,53 +1117,54 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* ─────── Urgency ─────── */
   function Urgency({ onCTA }){
-    const c = useCountdown();
+    const rows = [
+      ['장소',     '백석역 도보 3분 거리 (승인된 분들에게 개별 안내)'],
+      ['시간',     '20시 ~ 22시'],
+      ['제공 사항', '핑거푸드 + 커피/차/물 무한 제공'],
+      ['인원',     '14 : 14'],
+      ['금/토',    '나이제한 (남자) 92~01년생 / (여자) 92년생부터 가능'],
+      ['참여비',   '신청서에서 이벤트 가격 확인해주세요!'],
+    ];
+    const grid = [
+      './assets/talk.png',
+      './assets/date-a.png',
+      './assets/hands.png',
+      './assets/date-b.png',
+    ];
     return (
-      <section className="reveal px-5 py-16 relative overflow-hidden" data-screen-label="06 Urgency">
-        <div className="absolute inset-0 pointer-events-none">
-          <img src="./assets/date-a.png" alt="" className="w-full h-full object-cover ph-warm" style={{opacity:.18}}/>
-          <div className="absolute inset-0" style={{background:'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,.85) 50%, #FFFFFF 100%)'}}></div>
-        </div>
+      <section className="reveal px-5 py-16 relative overflow-hidden bg-ink2/30" data-screen-label="06 Urgency">
         <div className="relative">
-        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">04 / 마감 임박</div>
-        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-2">
+        <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-2 text-center">
           이번주 휴일,<br/>
-          <span className="text-amber">금요일</span>, <span className="text-amber">토요일</span>.
+          <span className="text-amber">금요일</span> · <span className="text-amber">토요일</span>
         </h2>
-        <p className="text-[13px] text-muted leading-[1.65] mb-6">
+        <p className="text-[13px] text-muted leading-[1.65] mb-7 text-center">
           이번 회차가 마감되면<br/>
           다음주까지 기다리셔야 해요.
         </p>
 
-        {/* Countdown */}
-        <div className="grid grid-cols-4 gap-2 mb-5">
-          {[['DAYS', c.d],['HRS', c.h],['MIN', c.m],['SEC', c.s]].map(([l,v],i)=>(
-            <div key={l} className="bg-ink2 border border-line px-2 py-3 text-center">
-              <div className={"font-mono font-bold text-[26px] text-fg " + (i===3 ? 'text-amber' : '')}>{pad(v)}</div>
-              <div className="text-[9px] text-muted font-mono tracking-[0.16em] mt-1">{l}</div>
+        {/* 2x2 photo grid */}
+        <div className="grid grid-cols-2 gap-2 mb-6">
+          {grid.map((src,i)=>(
+            <div key={i} className="relative aspect-square overflow-hidden rounded-lg border border-line">
+              <img src={src} alt="" className="w-full h-full object-cover"/>
             </div>
           ))}
         </div>
 
-        {/* Spots meter */}
-        <div className="bg-ink2 border border-line p-4 mb-6">
-          <div className="flex justify-between items-center mb-2 text-[11px]">
-            <span className="text-muted font-mono uppercase tracking-[0.14em]">05 / 15 FRI 19:00</span>
-            <span className="text-amber font-mono">15 / 20 신청완료</span>
-          </div>
-          <div className="h-1.5 bg-ink3 overflow-hidden">
-            <div className="h-full bg-amber" style={{ width: '75%', boxShadow:'0 0 12px #FFB347' }}></div>
-          </div>
-          <div className="mt-3 flex gap-1.5">
-            {Array.from({length:20}).map((_,i)=>(
-              <div key={i} className={"flex-1 h-6 border " + (i<15 ? 'bg-amber/80 border-amber' : 'border-line2 bg-ink3')}></div>
-            ))}
-          </div>
+        {/* detail rows */}
+        <div className="space-y-2.5 mb-7">
+          {rows.map(([k,v],i)=>(
+            <div key={i} className="flex items-center gap-3">
+              <div className="flex-shrink-0 min-w-[78px] text-center bg-fg text-deep text-[11.5px] font-bold py-1.5 px-3 rounded-full">{k}</div>
+              <div className="flex-1 text-[12.5px] text-fg2 leading-[1.55]">{v}</div>
+            </div>
+          ))}
         </div>
 
         <button onClick={onCTA}
-          className="mt-6 pulse shimmer w-full bg-amber text-deep font-bold text-[15px] py-4 rounded-md active:scale-[0.99] transition">
-          잔여 3석, 지금 잡기 →
+          className="pulse shimmer w-full bg-amber text-deep font-bold text-[15px] py-4 rounded-md active:scale-[0.99] transition">
+          지금 바로 신청하기 →
         </button>
         </div>
       </section>
