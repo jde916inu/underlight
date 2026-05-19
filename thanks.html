@@ -17,7 +17,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '986459453871241');
 fbq('track', 'PageView');
-fbq('track', 'CompleteRegistration', { value: 36800, currency: 'KRW' });
+fbq('track', 'CompleteRegistration', { value: 32000, currency: 'KRW' });
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=986459453871241&ev=CompleteRegistration&noscript=1"
@@ -31,29 +31,31 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=CompleteRegistration&nosc
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-5TE0MYT5QF');
-  gtag('event', 'sign_up', { method: 'smore_form', value: 36800, currency: 'KRW' });
+  gtag('event', 'sign_up', { method: 'smore_form', value: 32000, currency: 'KRW' });
 </script>
 <!-- End GA4 -->
 
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: #0B0B0F; color: #F5F1E8; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  html, body { background: #FFFFFF; color: #1A1408; font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  body { background: linear-gradient(180deg, #FFFFFF 0%, #FAF7F0 100%); }
   .wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
-  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid rgba(255,179,71,.4); border-radius: 999px; color: #FFB347; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 28px; font-family: ui-monospace, 'JetBrains Mono', monospace; }
-  .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #FFB347; box-shadow: 0 0 12px #FFB347; }
-  h1 { font-size: 30px; font-weight: 800; line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 16px; }
-  h1 .accent { color: #FFB347; }
-  p.lead { font-size: 15px; line-height: 1.7; color: #D9D3C2; max-width: 340px; margin-bottom: 36px; }
-  .card { width: 100%; max-width: 360px; border: 1px solid #2A2A36; background: rgba(19, 19, 26, .7); padding: 22px 20px; margin-bottom: 28px; text-align: left; }
-  .card .label { font-size: 10.5px; color: #FFB347; font-family: ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
-  .row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-top: 1px solid #2A2A36; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid rgba(199,120,0,.35); border-radius: 999px; color: #C77800; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 28px; font-family: ui-monospace, 'JetBrains Mono', monospace; background: rgba(255,179,71,.08); }
+  .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #C77800; box-shadow: 0 0 12px rgba(199,120,0,.5); }
+  h1 { font-size: 30px; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 16px; color: #1A1408; }
+  h1 .accent { color: #C77800; }
+  p.lead { font-size: 15px; line-height: 1.7; color: #3F3621; max-width: 340px; margin-bottom: 36px; }
+  p.lead b { color: #1A1408; font-weight: 700; }
+  .card { width: 100%; max-width: 360px; border: 1px solid #E5E0D2; background: #FFFFFF; border-radius: 12px; padding: 22px 20px; margin-bottom: 28px; text-align: left; box-shadow: 0 2px 16px rgba(26,20,8,.04); }
+  .card .label { font-size: 10.5px; color: #C77800; font-family: ui-monospace, monospace; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px; font-weight: 700; }
+  .row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-top: 1px solid #F2EDE2; }
   .row:first-of-type { border-top: none; padding-top: 4px; }
-  .row .num { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,179,71,.12); color: #FFB347; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace; }
-  .row .txt { font-size: 13px; color: #F5F1E8; line-height: 1.6; }
-  .row .txt b { color: #FFB347; font-weight: 600; }
-  .btn { display: inline-block; background: transparent; color: #8E8676; border: 1px solid #2A2A36; padding: 12px 22px; font-size: 12.5px; text-decoration: none; transition: all .2s; }
-  .btn:hover { color: #F5F1E8; border-color: #5C5648; }
-  .foot { margin-top: 32px; font-size: 11px; color: #5C5648; font-family: ui-monospace, monospace; letter-spacing: .12em; }
+  .row .num { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,179,71,.18); color: #C77800; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace; }
+  .row .txt { font-size: 13.5px; color: #1A1408; line-height: 1.6; }
+  .row .txt b { color: #C77800; font-weight: 700; }
+  .btn { display: inline-block; background: transparent; color: #3F3621; border: 1px solid #E5E0D2; border-radius: 999px; padding: 12px 22px; font-size: 12.5px; font-weight: 600; text-decoration: none; transition: all .2s; }
+  .btn:hover { color: #1A1408; border-color: #C77800; background: rgba(255,179,71,.05); }
+  .foot { margin-top: 32px; font-size: 11px; color: #8E8676; font-family: ui-monospace, monospace; letter-spacing: .12em; }
 </style>
 </head>
 <body>
@@ -67,7 +69,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=CompleteRegistration&nosc
 
     <p class="lead">
       신청해주셔서 감사해요. 빠르게 확인하고<br>
-      <b style="color:#F5F1E8">문자로 상세 안내</b>를 보내드릴게요.
+      <b>문자로 상세 안내</b>를 보내드릴게요.
     </p>
 
     <div class="card">
