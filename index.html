@@ -505,8 +505,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <div className="flex gap-3 items-start">
                 <div className="flex-shrink-0 w-7 h-7 rounded-full bg-azure/15 border border-azure/40 flex items-center justify-center text-azure text-[11px] font-bold font-mono">2</div>
                 <div className="flex-1 pt-0.5">
-                  <div className="text-[13.5px] font-bold text-fg leading-[1.35] mb-0.5">사진과 자기소개 확인</div>
-                  <div className="text-[12px] text-muted leading-[1.6]">저희 소개팅의 취지와 맞는지 2차 검토</div>
+                  <div className="text-[13.5px] font-bold text-fg leading-[1.35] mb-0.5">저희 소개팅과 결이 맞는지 2차 검토</div>
+                  <div className="text-[12px] text-muted leading-[1.6]">사진과 자기소개를 보고 함께할 분인지 확인해요</div>
                 </div>
               </div>
               <div className="flex gap-3 items-start">
@@ -530,10 +530,9 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     const rows = [
       { k:'가격',         v:['100만원 ↑',    '5~10만원/회', '최저가 25,000원'] },
       { k:'심사',         v:['있음 (느슨)',   '아무나 OK',    '✅ 3단계 심사'] },
-      { k:'만남 방식',     v:['1:1 어색',     '정해진 그룹',  '검증된 30명 그룹'] },
-      { k:'참여자 품질',   v:['△',            '복불복',       '✅ 검증된 분만'] },
+      { k:'참여자 퀄리티',  v:['△',            '복불복',       '✅ 검증된 분만'] },
       { k:'사후 매칭',     v:['일부 유료',    '❌',          '✅ 1:1 매칭 안내'] },
-      { k:'동네',         v:['서울',         '서울·랜덤',    '일산·파주·김포'] },
+      { k:'지역',         v:['서울',         '서울·랜덤',    '일산·파주·김포'] },
     ];
     return (
       <section className="reveal px-5 py-14 border-t border-line" data-screen-label="02c Compare">
@@ -565,7 +564,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
 
         <p className="mt-5 text-[12.5px] text-fg2 leading-[1.7] text-center">
-          시간 낭비 ❌ &nbsp;·&nbsp; 결정사 부담 ❌ &nbsp;·&nbsp; <span className="text-amber font-bold">검증 + 동네 + 그룹</span> ✓
+          시간 낭비 ❌ &nbsp;·&nbsp; 결정사 부담 ❌ &nbsp;·&nbsp; <span className="text-amber font-bold">검증 + 지역 + 그룹</span> ✓
         </p>
       </section>
     );
@@ -577,7 +576,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-14 border-t border-b border-line text-center" data-screen-label="02b Bridge">
         <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-4">─── Underlight ───</div>
         <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.35] mb-4">
-          동네에서 <span className="text-amber">괜찮은 사람</span>을<br/>
+          지역에서 <span className="text-amber">괜찮은 사람</span>을<br/>
           만날 수 있는 곳.<br/>
           저희가 준비해드리겠습니다.
         </h2>
@@ -607,7 +606,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   function Pain(){
     const questions = [
       { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?', sub:'외모가 마음에 안들거나.. 결이 안맞거나..' },
-      { emoji:'🤔', q:'동네엔 괜찮은 사람을 만날 곳이 없으셨나요?', sub:'친구들은 다 서울에 있어서 슬퍼요..' },
+      { emoji:'🤔', q:'지역엔 괜찮은 사람을 만날 곳이 없으셨나요?', sub:'친구들은 다 서울에 있어서 슬퍼요..' },
     ];
     const voices = [];
     return (
@@ -999,7 +998,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function LoveStories(){
     const why = [
-      { k:'01', t:'거리', d:'같은 동네 사는 사람들끼리 뭉친다는 게 장점!' },
+      { k:'01', t:'거리', d:'같은 지역 사는 사람들끼리 뭉친다는 게 장점!' },
       { k:'02', t:'가치관', d:'결이 비슷한 분들끼리 모이니, 이야기만 해도 통하는 사람을 빠르게 알아봐요.' },
       { k:'03', t:'분위기', d:'호스트가 만드는 4단계 흐름 위에서, 어색함이 사라지는 데 30분이면 충분해요. 가까워지는 건 그 다음 일.' },
     ];
@@ -1058,7 +1057,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               ))}
             </div>
             <div className="text-[12px] text-fg2">
-              <span className="text-amber font-bold font-mono">14쌍</span>이 동네에서 만나 연애 중
+              <span className="text-amber font-bold font-mono">14쌍</span>이 지역에서 만나 연애 중
             </div>
           </div>
         </div>
@@ -1068,10 +1067,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function Testimonials(){
     const list = [
-      { tag:'', name:'지윤', age:'31 · 일산서구', body:'같은 동네 사는데 평소엔 마주칠 일 없던 분. 자연스럽게 알아갈 수 있어서 좋았어요.', img:window.__resources.mb8 },
+      { tag:'', name:'지윤', age:'31 · 일산서구', body:'같은 지역 사는데 평소엔 마주칠 일 없던 분. 자연스럽게 알아갈 수 있어서 좋았어요.', img:window.__resources.mb8 },
       { tag:'', name:'재훈', age:'28 · 파주', body:'소개팅 두 번 망하고 포기했었는데, 30명이 한 자리에 있으니까 부담이 확 줄었어요. 마음에 든 분도 자연스럽게 알아볼 수 있고.', img:window.__resources.m4 },
       { tag:'', name:'서연', age:'27 · 일산동구', body:'쪽지로 마음 전하는 게 정말 좋았어요. 거절 걱정 없이 솔직하게 보낼 수 있고, 양쪽 다 보내서 매칭됐을 때 정말 설레요.', img:window.__resources.m9 },
-      { tag:'', name:'민지', age:'33 · 김포', body:'결정사 1:1은 너무 부담스러웠는데, 여긴 자연스럽게 여러 분 만나면서 결을 보는 게 편하더라고요. 동네에 이런 자리가 있다는 게 감사.', img:window.__resources.m6 },
+      { tag:'', name:'민지', age:'33 · 김포', body:'결정사 1:1은 너무 부담스러웠는데, 여긴 자연스럽게 여러 분 만나면서 결을 보는 게 편하더라고요. 지역에 이런 자리가 있다는 게 감사.', img:window.__resources.m6 },
       { tag:'', name:'태오', age:'29 · 일산동구', body:'호스트가 흐름을 워낙 잘 만들어주셔서, 처음 보는 분들이랑 30분만 지나니까 어색함이 다 사라지더라구요. 결국 마지막엔 쪽지까지 보냈어요.', img:window.__resources.m8 },
     ];
     const ref = useRef(null);
@@ -1081,7 +1080,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <div className="text-[11px] text-amber font-mono uppercase tracking-[0.2em] mb-3">03 / 후기</div>
           <h2 className="text-[26px] font-extrabold tracking-[-0.01em] leading-[1.2]">
             이미 <span className="text-amber">84명</span>이<br/>
-            동네에서 경험했습니다.
+            지역에서 경험했습니다.
           </h2>
         </div>
 
