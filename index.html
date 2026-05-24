@@ -1132,10 +1132,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     const list = [
       { name:'지윤', age:'31 · 일산서구', body:'같은 동네인데 평소엔 마주칠 일 없던 분이었어요. 자연스럽게 알아갈 수 있어서 좋았어요.', img:'./assets/testimonial-1.png' },
       { name:'서연', age:'27 · 일산동구', body:'시그널 투표로 마음 전하는 게 정말 좋았어요. 양쪽 다 보내서 매칭됐을 때 진짜 설레요!', img:'./assets/testimonial-2.png' },
-      { name:'민준', age:'29 · 파주시',   body:'어색할 줄 알았는데 프로필 카드 보면서 얘기하니까 처음부터 편했어요.', img:'./assets/testimonial-3.png' },
-      { name:'하은', age:'28 · 김포시',   body:'분위기가 진짜 좋아요. 카페가 너무 예쁘고 호스트 분이 세심하게 챙겨주세요.', img:'./assets/testimonial-4.png' },
-      { name:'태현', age:'30 · 일산동구', body:'10분씩 돌아가니까 부담 없이 다양한 분들과 대화할 수 있어서 좋았어요.', img:'./assets/testimonial-3.png' },
-      { name:'예린', age:'26 · 일산서구', body:'여성분들이 먼저 나갈 수 있게 해주셔서 마음 편하게 끝까지 즐겼어요.', img:'./assets/testimonial-1.png' },
+      { name:'하은', age:'28 · 김포시',   body:'분위기가 너무 좋아요. 카페가 예쁘고 호스트분이 세심하게 챙겨주세요.', img:'./assets/testimonial-3.png' },
     ];
     const ref = useRef(null);
     return (
@@ -1338,7 +1335,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── App ─────── */
   function App(){
     useReveal();
-    useTestiPan();
     const cta = () => {
       if (typeof fbq === 'function') fbq('track', 'Lead');
       if (typeof gtag === 'function') gtag('event', 'generate_lead', { value: 1, currency: 'KRW' });
@@ -1353,7 +1349,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <Pain />
           <Bridge />
           <CompareTable />
-          <Testimonials />
           <Programs />
           <Host />
           <Urgency onCTA={cta} />
