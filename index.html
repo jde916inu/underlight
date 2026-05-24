@@ -282,20 +282,19 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       #FFFFFF;
     overflow: clip;
   }
-  /* ── Sticky stack scroll (catchtimes-style) ──
-     Hero & FAQ pin to viewport; surrounding sections slide up over them. */
-  .page-shell [data-screen-label="01 Hero"],
-  .page-shell [data-screen-label="07 FAQ"]{
+  /* ── Sticky Hero (catchtimes-style) ──
+     Hero pins to viewport; following sections slide up over it. */
+  .page-shell [data-screen-label="01 Hero"]{
     position: sticky;
     top: 0;
-    min-height: 100vh;
+    min-height: 100svh;
     z-index: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-  /* Every other section needs solid bg + raised z-index to occlude the pinned ones */
-  .page-shell > *:not([data-screen-label="01 Hero"]):not([data-screen-label="07 FAQ"]){
+  /* Every other section needs solid bg + raised z-index to occlude Hero */
+  .page-shell > *:not([data-screen-label="01 Hero"]){
     position: relative;
     z-index: 2;
     background: #FFFFFF;
@@ -394,13 +393,13 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* Hero parallax + covered-state fade (driven by JS-set CSS var --cover) */
   [data-screen-label="01 Hero"] > *:not(.absolute):not(.hero-grid):not(.light-streak){
-    transform: translateY(calc(var(--cover, 0) * -28px)) scale(calc(1 - var(--cover, 0) * 0.04));
-    opacity: calc(1 - var(--cover, 0) * 0.5);
-    transition: transform .15s linear, opacity .15s linear;
+    transform: translateY(calc(var(--cover, 0) * -16px));
+    opacity: calc(1 - var(--cover, 0) * 0.35);
+    transition: transform .12s linear, opacity .12s linear;
   }
   [data-screen-label="01 Hero"] img{
-    transform: translateY(calc(var(--cover, 0) * 40px)) scale(calc(1 + var(--cover, 0) * 0.06));
-    transition: transform .15s linear;
+    transform: translateY(calc(var(--cover, 0) * 24px)) scale(calc(1 + var(--cover, 0) * 0.04));
+    transition: transform .12s linear;
   }
 
   /* Custom select-like price pill */
