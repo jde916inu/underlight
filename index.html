@@ -343,6 +343,20 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   .scroll-x{ scroll-snap-type: x mandatory; scrollbar-width: none }
   .scroll-x::-webkit-scrollbar{display:none}
   .scroll-x > *{ scroll-snap-align: start }
+  .testi-scroll{
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .testi-scroll::-webkit-scrollbar{ display:none }
+  .testi-card{
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease;
+  }
+  .testi-card:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px rgba(199,120,0,.18); }
   /* sticky cta gradient veil */
   .cta-veil{
     background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 35%, #FFFFFF 100%);
@@ -399,6 +413,50 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   const { useState, useEffect, useRef, useMemo } = React;
 
   const TALLY_URL = "https://tally.so/r/VLvb0a";
+
+  /* ─────── Scroll-driven horizontal pan for testimonials ─────── */
+  function useTestiPan(){
+    useEffect(()=>{
+      const section = document.querySelector('[data-screen-label="05 Testimonials"]');
+      const track = section && section.querySelector('.testi-scroll');
+      if(!section || !track) return;
+      let raf = 0;
+      let userScrolling = false;
+      let userTimer = 0;
+      const onUser = () => {
+        userScrolling = true;
+        clearTimeout(userTimer);
+        userTimer = setTimeout(()=>{ userScrolling = false; }, 900);
+      };
+      track.addEventListener('pointerdown', onUser);
+      track.addEventListener('touchstart', onUser, { passive:true });
+      track.addEventListener('wheel', onUser, { passive:true });
+      const update = () => {
+        raf = 0;
+        if(userScrolling) return;
+        const rect = section.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const total = rect.height + vh;
+        const p = Math.min(1, Math.max(0, (vh - rect.top) / total));
+        const max = track.scrollWidth - track.clientWidth;
+        if(max <= 0) return;
+        track.scrollLeft = Math.round(max * p);
+      };
+      const onScroll = () => { if(!raf) raf = requestAnimationFrame(update); };
+      window.addEventListener('scroll', onScroll, { passive:true });
+      window.addEventListener('resize', onScroll);
+      update();
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+        track.removeEventListener('pointerdown', onUser);
+        track.removeEventListener('touchstart', onUser);
+        track.removeEventListener('wheel', onUser);
+        clearTimeout(userTimer);
+        if(raf) cancelAnimationFrame(raf);
+      };
+    },[]);
+  }
 
   /* ─────── Reveal hook (with safe fallback) ─────── */
   function useReveal(){
@@ -1072,8 +1130,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function Testimonials(){
     const list = [
-      { tag:'', name:'지윤', age:'31 · 일산서구', body:'같은 지역 사는데 평소엔 마주칠 일 없던 분. 자연스럽게 알아갈 수 있어서 좋았어요.', img:window.__resources.mb8 },
-      { tag:'', name:'서연', age:'27 · 일산동구', body:'시그널 투표로 마음 전하는 게 정말 좋았어요. 거절 걱정 없이 솔직하게 보낼 수 있고, 양쪽 다 보내서 매칭됐을 때 정말 설레요.', img:window.__resources.m9 },
+      { name:'지윤', age:'31 · 일산서구', body:'같은 동네인데 평소엔 마주칠 일 없던 분이었어요. 자연스럽게 알아갈 수 있어서 좋았어요.', img:'./assets/testimonial-1.png' },
+      { name:'서연', age:'27 · 일산동구', body:'시그널 투표로 마음 전하는 게 정말 좋았어요. 양쪽 다 보내서 매칭됐을 때 진짜 설레요!', img:'./assets/testimonial-2.png' },
+      { name:'민준', age:'29 · 파주시',   body:'어색할 줄 알았는데 프로필 카드 보면서 얘기하니까 처음부터 편했어요.', img:'./assets/testimonial-3.png' },
+      { name:'하은', age:'28 · 김포시',   body:'분위기가 진짜 좋아요. 카페가 너무 예쁘고 호스트 분이 세심하게 챙겨주세요.', img:'./assets/testimonial-4.png' },
+      { name:'태현', age:'30 · 일산동구', body:'10분씩 돌아가니까 부담 없이 다양한 분들과 대화할 수 있어서 좋았어요.', img:'./assets/testimonial-3.png' },
+      { name:'예린', age:'26 · 일산서구', body:'여성분들이 먼저 나갈 수 있게 해주셔서 마음 편하게 끝까지 즐겼어요.', img:'./assets/testimonial-1.png' },
     ];
     const ref = useRef(null);
     return (
@@ -1084,28 +1146,29 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             설레는 후기로 가득한<br/>
             <span className="text-amber">언더라이트</span>!
           </h2>
+          <p className="mt-3 text-[12px] text-muted font-mono">→ 옆으로 넘겨보세요</p>
         </div>
 
-        <div ref={ref} className="scroll-x flex gap-3 overflow-x-auto px-5 pb-2">
+        <div ref={ref} className="testi-scroll flex gap-3 overflow-x-auto pl-5 pr-5 pb-3">
           {list.map((t,i)=>(
-            <div key={i} className="flex-shrink-0 w-[280px] border border-line bg-ink2 overflow-hidden">
-              <div className="relative h-[140px] overflow-hidden">
-                <img src={t.img} alt="" className="w-full h-full object-cover ph-warm" style={{filter:'contrast(1.05) saturate(1.05) brightness(.85)'}}/>
-                <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.1) 30%, rgba(250,247,240,.95) 100%)'}}></div>
-              </div>
-              <div className="p-5 pt-3">
-                <div className="font-display text-amber text-[32px] leading-none mb-2">"</div>
-                <p className="text-[14px] text-fg2 leading-[1.65] min-h-[112px]">{t.body}</p>
-                <div className="mt-4 pt-4 border-t border-line flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-line2 flex items-center justify-center text-[12px] text-fg font-bold">{t.name[0]}</div>
+            <div key={i} className="testi-card flex-shrink-0 w-[260px] rounded-xl border border-line bg-ink2 overflow-hidden shadow-md">
+              <div className="relative h-[180px] overflow-hidden">
+                <img src={t.img} alt="" className="w-full h-full object-cover" style={{filter:'contrast(1.05) saturate(1.05) brightness(.9)'}}/>
+                <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%)'}}></div>
+                <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white">
                   <div>
-                    <div className="text-[13px] text-fg font-medium">{t.name}</div>
-                    <div className="text-[10.5px] text-muted">{t.age}</div>
+                    <div className="text-[13.5px] font-bold leading-tight">{t.name}</div>
+                    <div className="text-[10.5px] opacity-80 font-mono">{t.age}</div>
                   </div>
+                  <div className="text-amber text-[26px] font-display leading-none">"</div>
                 </div>
+              </div>
+              <div className="p-4">
+                <p className="text-[13.5px] text-fg2 leading-[1.65]">{t.body}</p>
               </div>
             </div>
           ))}
+          <div className="flex-shrink-0 w-2"></div>
         </div>
 
       </section>
@@ -1275,6 +1338,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── App ─────── */
   function App(){
     useReveal();
+    useTestiPan();
     const cta = () => {
       if (typeof fbq === 'function') fbq('track', 'Lead');
       if (typeof gtag === 'function') gtag('event', 'generate_lead', { value: 1, currency: 'KRW' });
