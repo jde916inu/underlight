@@ -373,20 +373,19 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     50%     { transform: translateX(4px); }
   }
   .cta-fancy{
-    background: linear-gradient(120deg, #C77800 0%, #A85F00 55%, #6B3A00 100%);
-    border: 1px solid rgba(255,200,120,.35);
-    color: #FFF6E2 !important;
-    animation: cta-glow 2.8s ease-in-out infinite;
+    background: linear-gradient(120deg, #F0B45A 0%, #E89A35 45%, #D97F1E 100%);
+    border: 1px solid rgba(255,255,255,.28);
+    animation: cta-glow 2.6s ease-in-out infinite;
   }
   .cta-fancy::before{
     content:""; position:absolute; inset:0; pointer-events:none;
-    background: linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 60%);
+    background: linear-gradient(180deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 60%);
     border-radius: inherit;
   }
   .cta-fancy::after{
     content:""; position:absolute; top:0; left:0; width:35%; height:100%; pointer-events:none;
-    background: linear-gradient(110deg, transparent 20%, rgba(255,220,160,.35) 50%, transparent 80%);
-    animation: cta-sheen 3.6s ease-in-out infinite;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.55) 50%, transparent 80%);
+    animation: cta-sheen 3.4s ease-in-out infinite;
   }
   .cta-arrow{ animation: cta-arrow 1.6s ease-in-out infinite; }
 </style>
@@ -1262,7 +1261,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <span className="text-fg2">잔여 <span className="text-amber font-bold">3</span>석</span>
           </div>
           <button onClick={onCTA}
-            className="cta-fancy w-full font-extrabold text-[15.5px] tracking-[0.02em] py-[18px] rounded-xl relative overflow-hidden active:scale-[0.99] transition">
+            className="cta-fancy w-full text-deep font-extrabold text-[15.5px] tracking-[0.02em] py-[18px] rounded-xl relative overflow-hidden active:scale-[0.99] transition">
             <span className="relative z-10 flex items-center justify-center gap-2">
               <span>지금 바로 얼리버드 혜택받고 사전예약하기</span>
               <span className="cta-arrow inline-block">→</span>
