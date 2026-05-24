@@ -1226,22 +1226,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   function Sticky({ onCTA }){
     return (
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 cta-veil pt-6 pb-4 px-3 pointer-events-none">
-        <div className="pointer-events-auto bg-ink2/90 backdrop-blur-md border border-line rounded-md p-2 flex items-center gap-2 shadow-2xl">
-          <div className="px-3 flex-1 min-w-0">
-            <div className="text-[9.5px] text-muted font-mono uppercase tracking-[0.16em] flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-amber blink"></span>
-              잔여 3석 · 매주 금·토
-            </div>
-            <div className="text-[13px] font-bold text-fg flex items-baseline gap-1.5 truncate">
-              <span className="text-[10px] text-muted">최저가</span>
-              <span className="text-amber font-mono">25,000<span className="text-[11px] text-muted">원</span></span>
-            </div>
-          </div>
-          <button onClick={onCTA}
-            className="pulse shimmer flex-shrink-0 bg-amber text-deep font-bold text-[13px] tracking-[0.04em] py-3 px-5 rounded">
-            신청하기 →
-          </button>
-        </div>
+        <button onClick={onCTA}
+          className="pointer-events-auto pulse shimmer w-full bg-amber text-deep font-extrabold text-[15px] tracking-[0.02em] py-4 rounded-md shadow-2xl active:scale-[0.99] transition">
+          지금 바로 얼리버드 혜택받고 사전예약하기 →
+        </button>
       </div>
     );
   }
