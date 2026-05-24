@@ -357,6 +357,37 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* Custom select-like price pill */
   .ring-amber-glow{ box-shadow: 0 0 0 1px #FFB347, 0 0 28px rgba(255,179,71,.25) inset, 0 0 24px rgba(255,179,71,.15) }
+
+  /* Fancy bottom CTA button */
+  @keyframes cta-glow{
+    0%,100%{ box-shadow: 0 0 0 0 rgba(255,179,71,.55), 0 14px 36px rgba(255,140,40,.45), 0 6px 14px rgba(199,120,0,.35); }
+    50%    { box-shadow: 0 0 0 14px rgba(255,179,71,0),   0 18px 44px rgba(255,140,40,.55), 0 8px 18px rgba(199,120,0,.45); }
+  }
+  @keyframes cta-sheen{
+    0%   { transform: translateX(-120%) skewX(-20deg); }
+    60%  { transform: translateX(180%)  skewX(-20deg); }
+    100% { transform: translateX(180%)  skewX(-20deg); }
+  }
+  @keyframes cta-arrow{
+    0%,100% { transform: translateX(0); }
+    50%     { transform: translateX(4px); }
+  }
+  .cta-fancy{
+    background: linear-gradient(120deg, #FFC76B 0%, #FFB347 40%, #FF8C28 100%);
+    border: 1px solid rgba(255,255,255,.35);
+    animation: cta-glow 2.4s ease-in-out infinite;
+  }
+  .cta-fancy::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(180deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 55%);
+    border-radius: inherit;
+  }
+  .cta-fancy::after{
+    content:""; position:absolute; top:0; left:0; width:35%; height:100%; pointer-events:none;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.7) 50%, transparent 80%);
+    animation: cta-sheen 3.2s ease-in-out infinite;
+  }
+  .cta-arrow{ animation: cta-arrow 1.6s ease-in-out infinite; }
 </style>
 </head>
 <body class="grain">
@@ -1225,11 +1256,22 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Sticky Bottom CTA ─────── */
   function Sticky({ onCTA }){
     return (
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 cta-veil pt-6 pb-4 px-3 pointer-events-none">
-        <button onClick={onCTA}
-          className="pointer-events-auto pulse shimmer w-full bg-amber text-deep font-extrabold text-[15px] tracking-[0.02em] py-4 rounded-md shadow-2xl active:scale-[0.99] transition">
-          지금 바로 얼리버드 혜택받고 사전예약하기 →
-        </button>
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 cta-veil pt-8 pb-4 px-3 pointer-events-none">
+        <div className="pointer-events-auto flex flex-col items-center gap-2">
+          <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em]">
+            <span className="w-1.5 h-1.5 rounded-full bg-ember blink"></span>
+            <span className="text-ember font-bold">얼리버드 마감 임박</span>
+            <span className="text-muted">·</span>
+            <span className="text-fg2">잔여 <span className="text-amber font-bold">3</span>석</span>
+          </div>
+          <button onClick={onCTA}
+            className="cta-fancy w-full text-deep font-extrabold text-[15.5px] tracking-[0.02em] py-[18px] rounded-xl relative overflow-hidden active:scale-[0.99] transition">
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <span>지금 바로 얼리버드 혜택받고 사전예약하기</span>
+              <span className="cta-arrow inline-block">→</span>
+            </span>
+          </button>
+        </div>
       </div>
     );
   }
