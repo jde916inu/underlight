@@ -201,6 +201,7 @@ async function sendToSheet({ applicant, orderId, amount }) {
       region: applicant.region || '',
       drink: applicant.drink || '',
       avoidName: applicant.avoidName || '',
+      roundId: applicant.roundId || '',
       roundLabel: applicant.roundLabel || '',
       amount: Number(amount),
       companion: applicant.companion ? 'O' : '',
