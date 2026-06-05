@@ -139,6 +139,8 @@ async function sendMessages({ applicant, orderId, amount }) {
       '[언더라이트 신규신청]\n' +
       '이름: ' + (applicant.name || '-') + ' (' + genderTxt + ')\n' +
       line('년생', applicant.birthYear) +
+      line('키', applicant.height) +
+      line('매력', applicant.charm) +
       '연락처: ' + formatPhone(custPhone) + '\n' +
       line('직장/사업자', applicant.workplace) +
       line('거주지역', applicant.region) +
@@ -197,6 +199,8 @@ async function sendToSheet({ applicant, orderId, amount }) {
       gender: genderTxt,
       genderCode: applicant.gender || '',
       birthYear: applicant.birthYear || '',
+      height: applicant.height || '',
+      charm: applicant.charm || '',
       phone: formatPhone(onlyDigits(applicant.phone)),
       workplace: applicant.workplace || '',
       region: applicant.region || '',

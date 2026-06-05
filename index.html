@@ -480,12 +480,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       col = {
         round: find('회차'), date: find('날짜'), time: find('시간'), place: find('장소'),
         status: find('상태'), gender: find('성별'), age: find('나이'), height: find('키'),
-        job: find('직업'), remain: find('잔여','자리'),
+        job: find('직업'), remain: find('잔여','자리'), charm: find('매력','한마디'),
       };
       data = rows.slice(1);
     } else {
-      // 고정 순서: 회차,날짜,시간,장소,상태,성별,나이대,키,직업,잔여
-      col = { round:0, date:1, time:2, place:3, status:4, gender:5, age:6, height:7, job:8, remain:9 };
+      // 고정 순서: 회차,날짜,시간,장소,상태,성별,나이대,키,직업,잔여,매력
+      col = { round:0, date:1, time:2, place:3, status:4, gender:5, age:6, height:7, job:8, remain:9, charm:10 };
       data = rows;
     }
     const map = {}; const order = [];
@@ -504,9 +504,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       if (g('remain') && !round.remainF) round.remainF = g('remain');
       const chip = [g('age'), g('height'), g('job')].filter(Boolean).join('·');
       if (!chip) return;
+      const entry = { chip, charm: g('charm') };
       const gender = g('gender');
-      if (/남|^M/i.test(gender)) round.males.push(chip);
-      else if (/여|^F|^W/i.test(gender)) round.females.push(chip);
+      if (/남|^M/i.test(gender)) round.males.push(entry);
+      else if (/여|^F|^W/i.test(gender)) round.females.push(entry);
     });
     return order.map(k => map[k]);
   }
@@ -736,7 +737,15 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                         <span className="text-[13.5px] font-bold text-azure2">남성</span>
                         <span className="text-[11px] text-muted">{r.males.length}명</span>
                       </div>
-                      <div className="-mb-1.5">{r.males.map((m, j) => <Chip key={j} gender="M">{m}</Chip>)}</div>
+                      <div className="space-y-1.5">{r.males.map((m, j) => {
+                        const it = typeof m === 'string' ? {chip:m, charm:''} : m;
+                        return (
+                          <div key={j} className="flex items-center gap-2 flex-wrap">
+                            <Chip gender="M">{it.chip}</Chip>
+                            {it.charm && <span className="text-[12.5px] text-fg2">"{it.charm}"</span>}
+                          </div>
+                        );
+                      })}</div>
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5 mb-2.5">
@@ -744,7 +753,15 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                         <span className="text-[13.5px] font-bold text-ember2">여성</span>
                         <span className="text-[11px] text-muted">{r.females.length}명</span>
                       </div>
-                      <div className="-mb-1.5">{r.females.map((f, j) => <Chip key={j} gender="F">{f}</Chip>)}</div>
+                      <div className="space-y-1.5">{r.females.map((f, j) => {
+                        const it = typeof f === 'string' ? {chip:f, charm:''} : f;
+                        return (
+                          <div key={j} className="flex items-center gap-2 flex-wrap">
+                            <Chip gender="F">{it.chip}</Chip>
+                            {it.charm && <span className="text-[12.5px] text-fg2">"{it.charm}"</span>}
+                          </div>
+                        );
+                      })}</div>
                     </div>
                   </div>
                 ) : (
@@ -1559,6 +1576,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     const [phone, setPhone]   = useState('');
     const [roundId, setRoundId] = useState(firstOpen ? firstOpen.id : '');
     const [birthYear, setBirthYear] = useState('');   // 년생 (예: 1995)
+    const [height, setHeight]       = useState('');   // 키
+    const [charm, setCharm]         = useState('');   // 본인의 매력 한마디
     const [workplace, setWorkplace] = useState('');   // 직장명/사업자명
     const [region, setRegion]       = useState('');   // 거주지역
     const [avoidName, setAvoidName] = useState('');   // 겹치고 싶지 않은 지인
@@ -1596,8 +1615,9 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     };
 
     const validBirth = /^\d{4}$/.test(birthYear) && +birthYear >= 1950 && +birthYear <= 2010;
+    const validHeight = /^\d{2,3}$/.test(height) && +height >= 130 && +height <= 220;
     const valid = gender && name.trim().length >= 2 &&
-      phone.replace(/\D/g,'').length === 11 && validBirth && workplace.trim() &&
+      phone.replace(/\D/g,'').length === 11 && validBirth && validHeight && charm.trim() && workplace.trim() &&
       region && drink && photoFile && docFile && roundId && agreeParty && agreePrivacy;
 
     // 파일 → (이미지면 압축) base64
@@ -1653,7 +1673,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           name: name.trim(), phone: phoneDigits, gender,
           roundId, roundLabel: round ? round.label : roundId, amount: price,
           companion, companionName: companion ? companionName.trim() : '',
-          birthYear, workplace: workplace.trim(), region, avoidName: avoidName.trim(), drink,
+          birthYear, height, charm: charm.trim(), workplace: workplace.trim(), region, avoidName: avoidName.trim(), drink,
           photoUrl, docUrl,
         }));
         const toss = TossPayments(TOSS_CLIENT_KEY);
@@ -1729,6 +1749,21 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <div className="text-[12.5px] font-bold text-fg2 mb-1.5">년생</div>
             <input value={birthYear} onChange={e=>setBirthYear(e.target.value.replace(/\D/g,'').slice(0,4))} inputMode="numeric" placeholder="예: 1995"
               className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+          </div>
+
+          {/* 키 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">키 (cm)</div>
+            <input value={height} onChange={e=>setHeight(e.target.value.replace(/\D/g,'').slice(0,3))} inputMode="numeric" placeholder="예: 175"
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+          </div>
+
+          {/* 매력 한마디 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">본인의 매력을 한마디로 한다면?</div>
+            <input value={charm} onChange={e=>setCharm(e.target.value.slice(0,30))} placeholder="예: 다정하고 잘 웃어요"
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+            <div className="text-[11px] text-muted mt-1.5">라인업에 공개돼요 (최대 30자)</div>
           </div>
 
           {/* 직장명/사업자명 */}
