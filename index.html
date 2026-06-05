@@ -681,21 +681,21 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
     const Badge = ({status, remainF}) => {
       if(status==='closed') return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-fg2/8 text-muted">마감</span>;
-      if(status==='open')   return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-amber/15 text-amber font-bold">여성 {remainF||1}자리 🔥</span>;
+      if(status==='open')   return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-amber/15 text-amber font-bold">여성 {remainF||1}자리</span>;
       return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-ink3 text-muted">오픈 예정</span>;
     };
 
     return (
       <section className="px-5 pt-8 pb-12 bg-gradient-to-b from-ink to-ink2" data-screen-label="01a Lineup">
         <div className="inline-flex items-center gap-1.5 text-[12px] text-amber font-bold bg-amber/10 px-3 py-1 rounded-full mb-3">
-          <span>💕</span> 이번주 라인업
+          이번주 라인업
         </div>
         <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-2">
-          이번주 <span className="text-amber">참가자 라인업</span> ✨
+          이번주 <span className="text-amber">참가자 라인업</span>
         </h2>
         <p className="text-[13px] text-muted leading-[1.7] mb-7">
           심사를 통과한 분들만 살짝 공개해요.<br/>
-          <span className="text-fg2">닉네임은 개인정보 보호를 위해 비공개 🤍</span>
+          <span className="text-fg2">닉네임은 개인정보 보호를 위해 비공개</span>
         </p>
 
         {rounds === null && (
@@ -711,8 +711,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 (isOpen ? "ring-2 ring-amber/35 shadow-[0_6px_24px_rgba(199,120,0,0.10)]"
                         : "border border-line/70 shadow-[0_2px_14px_rgba(0,0,0,0.04)]")}>
 
-                <div className="flex items-center gap-1.5 mb-4">
-                  <span className="text-[15px]">{isOpen ? '🗓️' : '📌'}</span>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className={"w-2.5 h-2.5 rounded-full " + (isOpen ? "bg-amber" : "bg-line2")}></span>
                   <span className="font-bold text-fg text-[15px]">{r.date}</span>
                   <span className="text-muted text-[12.5px]">{r.time} · {r.place}</span>
                   <Badge status={r.status} remainF={r.remainF}/>
@@ -722,7 +722,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center gap-1.5 mb-2.5">
-                        <span className="text-[16px]">💙</span>
+                        <span className="w-2 h-2 rounded-full bg-azure"></span>
                         <span className="text-[13.5px] font-bold text-azure2">남성</span>
                         <span className="text-[11px] text-muted">{r.males.length}명</span>
                       </div>
@@ -730,7 +730,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5 mb-2.5">
-                        <span className="text-[16px]">💗</span>
+                        <span className="w-2 h-2 rounded-full bg-ember"></span>
                         <span className="text-[13.5px] font-bold text-ember2">여성</span>
                         <span className="text-[11px] text-muted">{r.females.length}명</span>
                       </div>
@@ -739,7 +739,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                   </div>
                 ) : (
                   <div className="text-center py-7 text-muted text-[13px]">
-                    곧 라인업이 공개돼요 ✨
+                    곧 라인업이 공개돼요
                   </div>
                 )}
               </div>
@@ -748,7 +748,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
 
         <p className="mt-6 text-[12px] text-muted text-center leading-[1.7]">
-          표기 = <span className="text-fg2">나이대 · 키 · 직업군</span> &nbsp;·&nbsp; 참가자 전원 <span className="text-amber">신원·직업 검증</span> 완료 ✓
+          표기 = <span className="text-fg2">나이대 · 키 · 직업군</span> &nbsp;·&nbsp; 참가자 전원 <span className="text-amber">신원·직업 검증</span> 완료
         </p>
       </section>
     );
@@ -878,8 +878,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Pain & Empathy ─────── */
   function Pain(){
     const questions = [
-      { emoji:'⏰', q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?', sub:'막상 마음에 안들거나..' },
-      { emoji:'🤔', q:'지역엔 괜찮은 사람을 만날 곳이 없으셨나요?', sub:'친구들은 다 서울에 있어서 슬퍼요..' },
+      { q:'소개팅 나갔는데 별로인 분 나와서 시간 낭비하셨나요?', sub:'막상 마음에 안들거나..' },
+      { q:'지역엔 괜찮은 사람을 만날 곳이 없으셨나요?', sub:'친구들은 다 서울에 있어서 슬퍼요..' },
     ];
     const voices = [];
     return (
@@ -894,12 +894,9 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         {/* 3 question cards */}
         <div className="space-y-3 mb-8">
           {questions.map((it,i)=>(
-            <div key={i} className="border border-line bg-ink2/60 p-5 flex items-start gap-4">
-              <div className="text-[26px] leading-none flex-shrink-0">{it.emoji}</div>
-              <div className="flex-1 min-w-0">
-                <div className="text-[15.5px] font-extrabold text-fg leading-[1.35]">{it.q}</div>
-                {it.sub && <div className="text-[12.5px] text-muted leading-[1.6] mt-1">{it.sub}</div>}
-              </div>
+            <div key={i} className="border border-line bg-ink2/60 rounded-2xl p-5">
+              <div className="text-[15.5px] font-extrabold text-fg leading-[1.35]">{it.q}</div>
+              {it.sub && <div className="text-[12.5px] text-muted leading-[1.6] mt-1">{it.sub}</div>}
             </div>
           ))}
         </div>
@@ -991,11 +988,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── Programs (4 sessions infographic) ─────── */
   function Programs(){
     const sessions = [
-      { n:'01', name:'프로필 카드 작성', icon:'📝', tone:'amber', tag:'INTRO',
+      { n:'01', name:'프로필 카드 작성', tone:'amber', tag:'INTRO',
         desc:'직업 · 관심사 · 이상형을 카드에 적어요.' },
-      { n:'02', name:'10분 로테이션 대화', icon:'💬', tone:'amber', tag:'TALK',
+      { n:'02', name:'10분 로테이션 대화', tone:'amber', tag:'TALK',
         desc:'한 분당 10분씩, 로테이션으로 모든 분과 1:1로 이야기 나눠요. 프로필 카드를 보면서 이야기하기 때문에 어색하지 않아요.' },
-      { n:'03', name:'시그널 매칭', icon:'💘', tone:'ember', tag:'MATCH',
+      { n:'03', name:'시그널 매칭', tone:'ember', tag:'MATCH',
         desc:'대화가 끝난 후 어플로 시그널 투표 및 간단한 한 마디 메세지를 보내요.' },
     ];
     return (
@@ -1023,13 +1020,13 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 <div className={"absolute -left-[26px] top-3 w-4 h-4 rounded-full border-2 bg-ink border-" + s.tone}></div>
                 <div className="border border-line bg-ink2 p-4 rounded-xl">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[20px] shadow-sm"
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-extrabold font-mono shadow-sm"
                       style={{background: s.tone==='ember' ? 'rgba(199,52,56,.12)' : 'rgba(199,120,0,.12)',
-                              border: '1px solid ' + (s.tone==='ember' ? 'rgba(199,52,56,.30)' : 'rgba(199,120,0,.30)')}}>{s.icon}</div>
+                              border: '1px solid ' + (s.tone==='ember' ? 'rgba(199,52,56,.30)' : 'rgba(199,120,0,.30)'),
+                              color: s.tone==='ember' ? '#9F2A2F' : '#C77800'}}>{s.n}</div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className={"text-[10px] font-mono tracking-[0.18em] text-" + s.tone}>{s.tag}</span>
-                        <span className="text-[10px] text-muted font-mono">— {s.n}</span>
                       </div>
                       <div className="text-[17px] font-extrabold text-fg tracking-[-0.01em] leading-tight">{s.name}</div>
                     </div>
@@ -1616,22 +1613,22 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <div style={{width:'44px', height:'5px', background:'rgba(0,0,0,.12)', borderRadius:'999px', margin:'0 auto 18px'}}></div>
 
           <div className="flex items-center justify-between mb-1">
-            <h3 className="text-[20px] font-extrabold text-fg">💌 참가 신청</h3>
+            <h3 className="text-[20px] font-extrabold text-fg">참가 신청</h3>
             <button onClick={onClose} className="text-muted text-[20px] leading-none w-8 h-8 rounded-full bg-ink2/60 flex items-center justify-center">×</button>
           </div>
-          <p className="text-[12.5px] text-muted mb-5">심사 통과 후 회차 안내를 카카오톡으로 보내드려요 🤍</p>
+          <p className="text-[12.5px] text-muted mb-5">심사 통과 후 회차 안내를 카카오톡으로 보내드려요.</p>
 
           {/* 성별 */}
           <div className="mb-4">
             <div className="text-[12.5px] font-bold text-fg2 mb-2">성별</div>
             <div className="grid grid-cols-2 gap-2.5">
-              {[['M','남성','💙'],['F','여성','💗']].map(([g,lbl,sym]) => (
+              {[['M','남성'],['F','여성']].map(([g,lbl]) => (
                 <button key={g} onClick={()=>setGender(g)}
                   className={"py-3.5 rounded-2xl border-2 text-[14px] font-bold transition " +
                     (gender===g
                       ? (g==='M' ? "border-azure bg-azure/15 text-azure" : "border-ember bg-ember/15 text-ember")
                       : "border-line text-muted bg-ink2/40")}>
-                  <span className="mr-1 text-[16px]">{sym}</span>{lbl}
+                  {lbl}
                   <span className="block text-[11.5px] mt-1 opacity-80">{PRICES[g].toLocaleString()}원</span>
                 </button>
               ))}
@@ -1640,22 +1637,22 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
           {/* 이름 */}
           <div className="mb-3">
-            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">✍️ 이름</div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">이름</div>
             <input value={name} onChange={e=>setName(e.target.value)} placeholder="실명을 입력해주세요"
               className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
           </div>
 
           {/* 전화번호 */}
           <div className="mb-3">
-            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">📱 휴대폰 번호</div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">휴대폰 번호</div>
             <input value={phone} onChange={e=>setPhone(fmtPhone(e.target.value))} inputMode="numeric" placeholder="010-0000-0000"
               className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
-            <div className="text-[11px] text-muted mt-1.5">매칭·회차 안내가 이 번호의 카카오톡으로 발송돼요 💬</div>
+            <div className="text-[11px] text-muted mt-1.5">매칭·회차 안내가 이 번호의 카카오톡으로 발송됩니다.</div>
           </div>
 
           {/* 회차 */}
           <div className="mb-4">
-            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">🗓️ 참가 회차</div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">참가 회차</div>
             <div className="space-y-2">
               {ROUNDS.map(r => (
                 <button key={r.id} disabled={r.soldout} onClick={()=>setRoundId(r.id)}
@@ -1665,8 +1662,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                       : "border-line text-fg2 bg-ink2/40")}>
                   <span>{r.label}</span>
                   {r.soldout
-                    ? <span className="text-[11px]">마감 🙏</span>
-                    : <span className="text-[15px]">{roundId===r.id ? '💛' : '🤍'}</span>}
+                    ? <span className="text-[11px]">마감</span>
+                    : <span className="text-[14px]">{roundId===r.id ? '●' : '○'}</span>}
                 </button>
               ))}
             </div>
@@ -1677,7 +1674,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <label className="flex items-start gap-2 cursor-pointer">
               <input type="checkbox" checked={companion} onChange={e=>setCompanion(e.target.checked)} className="mt-0.5 accent-amber"/>
               <span className="text-[13px] text-fg2 leading-[1.5]">
-                👫 <b className="text-amber">친구와 함께 신청</b>해요
+                <b className="text-amber">친구와 함께 신청</b>해요
                 <span className="text-muted"> · 1인당 {COMPANION_DISCOUNT.toLocaleString()}원 할인</span>
               </span>
             </label>
@@ -1697,12 +1694,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               </div>
               {discount > 0 && (
                 <div className="flex justify-between py-1 text-amber">
-                  <span>👫 동반 할인</span>
+                  <span>동반 할인</span>
                   <span>-{discount.toLocaleString()}원</span>
                 </div>
               )}
               <div className="flex justify-between py-2 mt-1 border-t border-line font-bold text-fg text-[15px]">
-                <span>💰 최종 결제금액</span>
+                <span>최종 결제금액</span>
                 <span>{price.toLocaleString()}원</span>
               </div>
             </div>
@@ -1724,10 +1721,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             className={"w-full py-4 rounded-full font-extrabold text-[15px] flex items-center justify-center gap-2 transition " +
               (valid && !busy ? "bg-amber text-deep active:scale-[0.98] shadow-[0_6px_18px_rgba(199,120,0,.28)]" : "bg-amber/40 text-deep/60")}>
             {busy ? '결제창 여는 중…'
-              : price ? ('💝 ' + price.toLocaleString() + '원 · 결제하고 신청하기')
-              : '성별을 먼저 선택해주세요 🙌'}
+              : price ? (price.toLocaleString() + '원 · 결제하고 신청하기')
+              : '성별을 먼저 선택해주세요'}
           </button>
-          <div className="text-[11px] text-muted text-center mt-3">🔒 토스페이먼츠 안전결제 · 카드 / 간편결제</div>
+          <div className="text-[11px] text-muted text-center mt-3">토스페이먼츠 안전결제 · 카드 / 간편결제</div>
         </div>
       </div>
     );
