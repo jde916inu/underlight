@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
   try {
     const body = await readJson(req);
-    const { paymentKey, orderId, amount, applicant = {} } = body || {};
+    const { paymentKey, orderId, amount, applicant = {}, fbp = '', fbc = '', eventSourceUrl = '' } = body || {};
 
     if (!paymentKey || !orderId || !amount) {
       res.status(400).json({ success: false, message: '결제 정보가 누락되었습니다.' });
@@ -64,6 +64,17 @@ module.exports = async (req, res) => {
     } catch (e) {
       messaging = { sent: false, reason: String(e && e.message || e) };
       console.error('[alimtalk] 발송 실패:', e);
+    }
+
+    // ── 3) Meta 전환 API (서버 전송) — 실패해도 결제는 성공 처리 ──
+    try {
+      await sendMetaCapi({
+        orderId, amount: Number(amount), applicant, fbp, fbc, eventSourceUrl,
+        clientIp: (req.headers['x-forwarded-for'] || '').split(',')[0].trim(),
+        userAgent: req.headers['user-agent'] || '',
+      });
+    } catch (e) {
+      console.error('[meta capi] 전송 실패:', e);
     }
 
     res.status(200).json({ success: true, messaging });
@@ -155,6 +166,59 @@ async function solapiSend({ API_KEY, API_SECRET, messages }) {
   const data = await r.json();
   if (!r.ok) throw new Error('solapi: ' + (data && (data.errorMessage || JSON.stringify(data))));
   return data;
+}
+
+// ─── Meta 전환 API(CAPI) 서버 전송 ───────────────────────────
+//   환경변수: META_CAPI_TOKEN (필수), META_PIXEL_ID (선택, 기본값 아래)
+//   클라이언트 픽셀 Purchase와 같은 event_id(orderId)로 중복제거됨.
+async function sendMetaCapi({ orderId, amount, applicant, fbp, fbc, eventSourceUrl, clientIp, userAgent }) {
+  const TOKEN = process.env.META_CAPI_TOKEN;
+  const PIXEL_ID = process.env.META_PIXEL_ID || '986459453871241';
+  if (!TOKEN) return; // 토큰 없으면 조용히 건너뜀
+
+  const phone = normalizeKrPhoneForMeta(applicant.phone);
+  const user_data = {};
+  if (phone) user_data.ph = [sha256(phone)];
+  if (applicant.name) user_data.fn = [sha256(String(applicant.name).trim().toLowerCase())];
+  if (clientIp)  user_data.client_ip_address = clientIp;
+  if (userAgent) user_data.client_user_agent = userAgent;
+  if (fbp) user_data.fbp = fbp;
+  if (fbc) user_data.fbc = fbc;
+
+  const payload = {
+    data: [{
+      event_name: 'Purchase',
+      event_time: Math.floor(Date.now() / 1000),
+      event_id: orderId,                 // 클라이언트 fbq eventID와 동일 → 중복제거
+      action_source: 'website',
+      event_source_url: eventSourceUrl || undefined,
+      user_data,
+      custom_data: {
+        value: Number(amount),
+        currency: 'KRW',
+        content_name: applicant.roundLabel || '',
+      },
+    }],
+  };
+
+  const url = `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${encodeURIComponent(TOKEN)}`;
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!r.ok) {
+    const t = await r.text();
+    throw new Error('capi: ' + t);
+  }
+}
+function sha256(v) { return crypto.createHash('sha256').update(String(v)).digest('hex'); }
+function normalizeKrPhoneForMeta(v) {
+  let d = onlyDigits(v);
+  if (!d) return '';
+  if (d.startsWith('0')) d = '82' + d.slice(1); // 010... → 8210...
+  else if (!d.startsWith('82')) d = '82' + d;
+  return d;
 }
 
 // ─── 유틸 ────────────────────────────────────────────────────

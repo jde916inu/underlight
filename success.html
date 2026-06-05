@@ -148,10 +148,16 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"/></n
     var applicant = {};
     try { applicant = JSON.parse(sessionStorage.getItem('ul_apply_' + orderId) || '{}'); } catch(e){}
 
+    // Meta 매칭 품질용 쿠키 (서버 CAPI로 함께 전달)
+    function getCookie(n){ var m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; }
+
     fetch('/api/confirm', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ paymentKey: paymentKey, orderId: orderId, amount: Number(amount), applicant: applicant })
+      body: JSON.stringify({
+        paymentKey: paymentKey, orderId: orderId, amount: Number(amount), applicant: applicant,
+        fbp: getCookie('_fbp'), fbc: getCookie('_fbc'), eventSourceUrl: location.href
+      })
     })
     .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
     .then(function(res){
@@ -164,8 +170,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"/></n
         '<div class="row"><span class="k">회차</span><span class="v">'+(applicant.roundLabel||'-')+'</span></div>'+
         '<div class="row"><span class="k">결제금액</span><span class="v">'+Number(amount).toLocaleString()+'원'+companion+'</span></div>';
       show('done');
-      // 전환 추적 (광고 최적화용)
-      if(typeof fbq === 'function') fbq('track','Purchase',{value:Number(amount),currency:'KRW'});
+      // 전환 추적 (광고 최적화용) — eventID로 서버 CAPI와 중복제거
+      if(typeof fbq === 'function') fbq('track','Purchase',{value:Number(amount),currency:'KRW'},{eventID:orderId});
       if(typeof gtag === 'function') gtag('event','purchase',{value:Number(amount),currency:'KRW',transaction_id:orderId});
     })
     .catch(function(){ showFail('네트워크 오류가 발생했습니다.'); });
