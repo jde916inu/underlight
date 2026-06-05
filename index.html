@@ -431,7 +431,81 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     { id: "0606", label: "6/6 (금) 20:00 · 백석역 5분", soldout: false },
     { id: "0613", label: "6/13 (토) 20:00 · 백석역 5분", soldout: false },
   ];
+
+  // ▼ 라인업 데이터를 불러올 구글시트 CSV 주소 (세팅법은 구글시트_라인업_세팅.md 참고)
+  //    비워두면 아래 FALLBACK_ROUNDS(예시 데이터)가 표시됩니다.
+  const SHEET_CSV_URL = "";
   /* ═══════════════════════════════════════════════════ */
+
+  // 시트 연결 전 보여줄 예시 데이터 (시트 주소 넣으면 자동으로 대체됨)
+  const FALLBACK_ROUNDS = [
+    { date:'5/30 (금)', time:'20:00', place:'백석역 5분', status:'closed',
+      males:['30초·182·대기업','30초·178·의사','30중·180·사업가','20후·184·전문직','30초·175·IT개발','30중·183·금융권'],
+      females:['20후·165·승무원','30초·168·마케터','20후·163·간호사','30초·170·교사','20후·167·디자이너','30중·166·공기업'] },
+    { date:'5/31 (토)', time:'20:00', place:'백석역 5분', status:'closed',
+      males:['30초·181·대기업','30초·185·전문직','30중·179·IT','20후·177·공무원','30초·184·금융','30중·176·사업가'],
+      females:['20후·164·MD','30초·169·간호사','30초·163·강사','20후·166·승무원','30초·165·공무원'] },
+    { date:'6/6 (금)', time:'20:00', place:'백석역 5분', status:'soon', males:[], females:[] },
+  ];
+
+  /* ── 구글시트 CSV 파싱 + 회차별 그룹핑 ───────────────────── */
+  function parseCSV(text){
+    const rows = []; let row = [], field = '', inQ = false;
+    for (let i=0; i<text.length; i++){
+      const c = text[i];
+      if (inQ){
+        if (c === '"'){ if (text[i+1] === '"'){ field += '"'; i++; } else inQ = false; }
+        else field += c;
+      } else {
+        if (c === '"') inQ = true;
+        else if (c === ',') { row.push(field); field = ''; }
+        else if (c === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
+        else if (c === '\r'){ /* skip */ }
+        else field += c;
+      }
+    }
+    if (field.length || row.length){ row.push(field); rows.push(row); }
+    return rows.filter(r => r.some(c => String(c).trim() !== ''));
+  }
+
+  function buildRounds(text){
+    const rows = parseCSV(text);
+    if (rows.length < 2) return [];
+    const header = rows[0].map(h => String(h).trim());
+    const find = (...names) => header.findIndex(h => names.some(n => h.replace(/\s/g,'').includes(n)));
+    const col = {
+      round: find('회차'), date: find('날짜'), time: find('시간'), place: find('장소'),
+      status: find('상태'), gender: find('성별'), age: find('나이'), height: find('키'),
+      job: find('직업'), remain: find('잔여','자리'),
+    };
+    const map = {}; const order = [];
+    rows.slice(1).forEach(r => {
+      const g = (s) => col[s] >= 0 ? String(r[col[s]] || '').trim() : '';
+      const key = g('round') || g('date');
+      if (!key) return;
+      if (!map[key]){
+        map[key] = {
+          date: g('date') || key, time: g('time'), place: g('place'),
+          status: normStatus(g('status')), males: [], females: [], remainF: g('remain'),
+        };
+        order.push(key);
+      }
+      const round = map[key];
+      if (g('remain') && !round.remainF) round.remainF = g('remain');
+      const chip = [g('age'), g('height'), g('job')].filter(Boolean).join('·');
+      if (!chip) return;
+      const gender = g('gender');
+      if (/남|^M/i.test(gender)) round.males.push(chip);
+      else if (/여|^F|^W/i.test(gender)) round.females.push(chip);
+    });
+    return order.map(k => map[k]);
+  }
+  function normStatus(s){
+    s = String(s||'').trim();
+    if (/마감|종료|closed/i.test(s)) return 'closed';
+    if (/모집|오픈|진행|open/i.test(s)) return 'open';
+    return 'soon';
+  }
 
   const TALLY_URL = "https://tally.so/r/VLvb0a";
 
@@ -581,36 +655,16 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   /* ─────── Lineup (회차별 참가자 라인업) ─────── */
   function Lineup(){
-    const rounds = [
-      {
-        date: '5/30 (금)', time: '20:00', place: '백석역 5분',
-        status: 'closed',
-        males: [
-          '30초·182·대기업','30초·178·의사','30중·180·사업가',
-          '20후·184·전문직','30초·175·IT개발','30중·183·금융권',
-        ],
-        females: [
-          '20후·165·승무원','30초·168·마케터','20후·163·간호사',
-          '30초·170·교사','20후·167·디자이너','30중·166·공기업',
-        ],
-      },
-      {
-        date: '5/31 (토)', time: '20:00', place: '백석역 5분',
-        status: 'closed',
-        males: [
-          '30초·181·대기업','30초·185·전문직','30중·179·IT',
-          '20후·177·공무원','30초·184·금융','30중·176·사업가',
-        ],
-        females: [
-          '20후·164·MD','30초·169·간호사','30초·163·강사',
-          '20후·166·승무원','30초·165·공무원',
-        ],
-      },
-      {
-        date: '6/6 (금)', time: '20:00', place: '백석역 5분',
-        status: 'soon',
-      },
-    ];
+    const [rounds, setRounds] = useState(null); // null=로딩중
+
+    useEffect(() => {
+      if (!SHEET_CSV_URL || /여기에|^$/.test(SHEET_CSV_URL)) { setRounds(FALLBACK_ROUNDS); return; }
+      const url = SHEET_CSV_URL + (SHEET_CSV_URL.includes('?') ? '&' : '?') + '_=' + Date.now();
+      fetch(url)
+        .then(r => { if (!r.ok) throw new Error('sheet'); return r.text(); })
+        .then(text => { const rs = buildRounds(text); setRounds(rs.length ? rs : FALLBACK_ROUNDS); })
+        .catch(() => setRounds(FALLBACK_ROUNDS));
+    }, []);
 
     const Chip = ({children, gender}) => (
       <span className={"inline-block text-[12px] px-3 py-1.5 mr-1.5 mb-1.5 rounded-full font-medium " +
@@ -640,9 +694,14 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <span className="text-fg2">닉네임은 개인정보 보호를 위해 비공개 🤍</span>
         </p>
 
+        {rounds === null && (
+          <div className="text-center py-10 text-muted text-[13px]">라인업 불러오는 중…</div>
+        )}
+
         <div className="space-y-4">
-          {rounds.map((r, i) => {
+          {(rounds || []).map((r, i) => {
             const isOpen = r.status === 'open';
+            const hasPeople = (r.males && r.males.length) || (r.females && r.females.length);
             return (
               <div key={i} className={"rounded-3xl bg-white p-5 transition " +
                 (isOpen ? "ring-2 ring-amber/35 shadow-[0_6px_24px_rgba(199,120,0,0.10)]"
@@ -655,7 +714,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                   <Badge status={r.status} remainF={r.remainF}/>
                 </div>
 
-                {r.males ? (
+                {hasPeople ? (
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center gap-1.5 mb-2.5">
