@@ -195,6 +195,7 @@ async function sendToSheet({ applicant, orderId, amount }) {
     body: JSON.stringify({
       name: applicant.name || '',
       gender: genderTxt,
+      genderCode: applicant.gender || '',
       birthYear: applicant.birthYear || '',
       phone: formatPhone(onlyDigits(applicant.phone)),
       workplace: applicant.workplace || '',

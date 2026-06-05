@@ -434,7 +434,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   // ▼ 라인업 데이터를 불러올 구글시트 CSV 주소 (세팅법은 구글시트_라인업_세팅.md 참고)
   //    비워두면 아래 FALLBACK_ROUNDS(예시 데이터)가 표시됩니다.
-  const SHEET_CSV_URL = "";
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSdh4zcoIsfuLwCy7erUO2xDlXi_qkH5dMEVZKZLTfUm3suLviZD0y9lqga6DuVDHNhSxpc7lMhbtcI/pub?gid=306783592&single=true&output=csv";
   /* ═══════════════════════════════════════════════════ */
 
   // 시트 연결 전 보여줄 예시 데이터 (시트 주소 넣으면 자동으로 대체됨)
@@ -470,16 +470,26 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function buildRounds(text){
     const rows = parseCSV(text);
-    if (rows.length < 2) return [];
-    const header = rows[0].map(h => String(h).trim());
-    const find = (...names) => header.findIndex(h => names.some(n => h.replace(/\s/g,'').includes(n)));
-    const col = {
-      round: find('회차'), date: find('날짜'), time: find('시간'), place: find('장소'),
-      status: find('상태'), gender: find('성별'), age: find('나이'), height: find('키'),
-      job: find('직업'), remain: find('잔여','자리'),
-    };
+    if (!rows.length) return [];
+    // 헤더 행이 있으면 이름매칭, 없으면(자동기록 시트) 고정 순서로 읽음
+    const hasHeader = /회차|날짜|상태|성별|나이|직업/.test((rows[0] || []).join('|'));
+    let col, data;
+    if (hasHeader) {
+      const header = rows[0].map(h => String(h).trim());
+      const find = (...names) => header.findIndex(h => names.some(n => h.replace(/\s/g,'').includes(n)));
+      col = {
+        round: find('회차'), date: find('날짜'), time: find('시간'), place: find('장소'),
+        status: find('상태'), gender: find('성별'), age: find('나이'), height: find('키'),
+        job: find('직업'), remain: find('잔여','자리'),
+      };
+      data = rows.slice(1);
+    } else {
+      // 고정 순서: 회차,날짜,시간,장소,상태,성별,나이대,키,직업,잔여
+      col = { round:0, date:1, time:2, place:3, status:4, gender:5, age:6, height:7, job:8, remain:9 };
+      data = rows;
+    }
     const map = {}; const order = [];
-    rows.slice(1).forEach(r => {
+    data.forEach(r => {
       const g = (s) => col[s] >= 0 ? String(r[col[s]] || '').trim() : '';
       const key = g('round') || g('date');
       if (!key) return;
@@ -714,7 +724,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 <div className="flex items-center gap-2 mb-4">
                   <span className={"w-2.5 h-2.5 rounded-full " + (isOpen ? "bg-amber" : "bg-line2")}></span>
                   <span className="font-bold text-fg text-[15px]">{r.date}</span>
-                  <span className="text-muted text-[12.5px]">{r.time} · {r.place}</span>
+                  {(r.time || r.place) && <span className="text-muted text-[12.5px]">{[r.time, r.place].filter(Boolean).join(' · ')}</span>}
                   <Badge status={r.status} remainF={r.remainF}/>
                 </div>
 
