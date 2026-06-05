@@ -1610,29 +1610,29 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 display:'flex', alignItems:'flex-end', justifyContent:'center'}}>
         <div onClick={e=>e.stopPropagation()}
           className="bg-ink border-t border-amber/40"
-          style={{width:'100%', maxWidth:'440px', borderTopLeftRadius:'18px', borderTopRightRadius:'18px',
+          style={{width:'100%', maxWidth:'440px', borderTopLeftRadius:'28px', borderTopRightRadius:'28px',
                   maxHeight:'92vh', overflowY:'auto', padding:'22px 20px 28px'}}>
           {/* 핸들 */}
-          <div style={{width:'40px', height:'4px', background:'rgba(255,255,255,.2)', borderRadius:'2px', margin:'0 auto 18px'}}></div>
+          <div style={{width:'44px', height:'5px', background:'rgba(0,0,0,.12)', borderRadius:'999px', margin:'0 auto 18px'}}></div>
 
           <div className="flex items-center justify-between mb-1">
-            <h3 className="text-[19px] font-extrabold text-fg">참가 신청</h3>
-            <button onClick={onClose} className="text-muted text-[22px] leading-none px-2">×</button>
+            <h3 className="text-[20px] font-extrabold text-fg">💌 참가 신청</h3>
+            <button onClick={onClose} className="text-muted text-[20px] leading-none w-8 h-8 rounded-full bg-ink2/60 flex items-center justify-center">×</button>
           </div>
-          <p className="text-[12px] text-muted mb-5">심사 통과 후 회차 안내를 카카오톡으로 보내드려요.</p>
+          <p className="text-[12.5px] text-muted mb-5">심사 통과 후 회차 안내를 카카오톡으로 보내드려요 🤍</p>
 
           {/* 성별 */}
           <div className="mb-4">
-            <div className="text-[12px] font-bold text-fg2 mb-2">성별</div>
-            <div className="grid grid-cols-2 gap-2">
-              {[['M','남성','♂'],['F','여성','♀']].map(([g,lbl,sym]) => (
+            <div className="text-[12.5px] font-bold text-fg2 mb-2">성별</div>
+            <div className="grid grid-cols-2 gap-2.5">
+              {[['M','남성','💙'],['F','여성','💗']].map(([g,lbl,sym]) => (
                 <button key={g} onClick={()=>setGender(g)}
-                  className={"py-3 border text-[14px] font-bold transition " +
+                  className={"py-3.5 rounded-2xl border-2 text-[14px] font-bold transition " +
                     (gender===g
                       ? (g==='M' ? "border-azure bg-azure/15 text-azure" : "border-ember bg-ember/15 text-ember")
                       : "border-line text-muted bg-ink2/40")}>
-                  <span className="mr-1">{sym}</span>{lbl}
-                  <span className="block text-[11px] font-mono mt-1 opacity-80">{PRICES[g].toLocaleString()}원</span>
+                  <span className="mr-1 text-[16px]">{sym}</span>{lbl}
+                  <span className="block text-[11.5px] mt-1 opacity-80">{PRICES[g].toLocaleString()}원</span>
                 </button>
               ))}
             </div>
@@ -1640,69 +1640,69 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
           {/* 이름 */}
           <div className="mb-3">
-            <div className="text-[12px] font-bold text-fg2 mb-1.5">이름</div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">✍️ 이름</div>
             <input value={name} onChange={e=>setName(e.target.value)} placeholder="실명을 입력해주세요"
-              className="w-full bg-ink2/60 border border-line text-fg text-[14px] px-3 py-3 outline-none focus:border-amber/60"/>
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
           </div>
 
           {/* 전화번호 */}
           <div className="mb-3">
-            <div className="text-[12px] font-bold text-fg2 mb-1.5">휴대폰 번호</div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">📱 휴대폰 번호</div>
             <input value={phone} onChange={e=>setPhone(fmtPhone(e.target.value))} inputMode="numeric" placeholder="010-0000-0000"
-              className="w-full bg-ink2/60 border border-line text-fg text-[14px] px-3 py-3 outline-none focus:border-amber/60"/>
-            <div className="text-[11px] text-muted mt-1">매칭·회차 안내가 이 번호의 카카오톡으로 발송됩니다.</div>
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+            <div className="text-[11px] text-muted mt-1.5">매칭·회차 안내가 이 번호의 카카오톡으로 발송돼요 💬</div>
           </div>
 
           {/* 회차 */}
           <div className="mb-4">
-            <div className="text-[12px] font-bold text-fg2 mb-1.5">참가 회차</div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">🗓️ 참가 회차</div>
             <div className="space-y-2">
               {ROUNDS.map(r => (
                 <button key={r.id} disabled={r.soldout} onClick={()=>setRoundId(r.id)}
-                  className={"w-full flex items-center justify-between px-3 py-3 border text-[13px] transition " +
+                  className={"w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border-2 text-[13px] transition " +
                     (r.soldout ? "border-line text-muted/50 bg-ink2/20 cursor-not-allowed"
                       : roundId===r.id ? "border-amber bg-amber/10 text-amber font-bold"
                       : "border-line text-fg2 bg-ink2/40")}>
                   <span>{r.label}</span>
                   {r.soldout
-                    ? <span className="text-[10px] font-mono">마감</span>
-                    : <span className="text-[14px]">{roundId===r.id ? '●' : '○'}</span>}
+                    ? <span className="text-[11px]">마감 🙏</span>
+                    : <span className="text-[15px]">{roundId===r.id ? '💛' : '🤍'}</span>}
                 </button>
               ))}
             </div>
           </div>
 
           {/* 동반 참여 */}
-          <div className="mb-4 border border-line bg-ink2/40 p-3">
+          <div className="mb-4 border border-line bg-ink2/40 rounded-2xl p-3.5">
             <label className="flex items-start gap-2 cursor-pointer">
-              <input type="checkbox" checked={companion} onChange={e=>setCompanion(e.target.checked)} className="mt-0.5"/>
+              <input type="checkbox" checked={companion} onChange={e=>setCompanion(e.target.checked)} className="mt-0.5 accent-amber"/>
               <span className="text-[13px] text-fg2 leading-[1.5]">
-                <b className="text-amber">친구와 함께 신청</b>해요
+                👫 <b className="text-amber">친구와 함께 신청</b>해요
                 <span className="text-muted"> · 1인당 {COMPANION_DISCOUNT.toLocaleString()}원 할인</span>
               </span>
             </label>
             {companion && (
               <input value={companionName} onChange={e=>setCompanionName(e.target.value)}
                 placeholder="같이 오는 분 이름 (선택)"
-                className="w-full mt-2.5 bg-ink2/60 border border-line text-fg text-[13px] px-3 py-2.5 outline-none focus:border-amber/60"/>
+                className="w-full mt-2.5 bg-ink2/60 border border-line rounded-xl text-fg text-[13px] px-3.5 py-2.5 outline-none focus:border-amber/60"/>
             )}
           </div>
 
           {/* 금액 요약 */}
           {gender && (
-            <div className="mb-4 text-[13px]">
+            <div className="mb-4 text-[13px] bg-ink2/50 rounded-2xl px-4 py-3">
               <div className="flex justify-between py-1 text-fg2">
                 <span>참가비 ({gender==='M'?'남성':'여성'})</span>
                 <span>{basePrice.toLocaleString()}원</span>
               </div>
               {discount > 0 && (
                 <div className="flex justify-between py-1 text-amber">
-                  <span>동반 할인</span>
+                  <span>👫 동반 할인</span>
                   <span>-{discount.toLocaleString()}원</span>
                 </div>
               )}
               <div className="flex justify-between py-2 mt-1 border-t border-line font-bold text-fg text-[15px]">
-                <span>최종 결제금액</span>
+                <span>💰 최종 결제금액</span>
                 <span>{price.toLocaleString()}원</span>
               </div>
             </div>
@@ -1710,24 +1710,24 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
           {/* 동의 */}
           <label className="flex items-start gap-2 mb-4 cursor-pointer">
-            <input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)} className="mt-0.5"/>
+            <input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)} className="mt-0.5 accent-amber"/>
             <span className="text-[12px] text-muted leading-[1.5]">
               개인정보 수집·이용 및 <span className="text-fg2">결제·환불 정책</span>에 동의합니다.
               심사 미통과 시 전액 환불됩니다.
             </span>
           </label>
 
-          {err && <div className="text-[12px] text-ember bg-ember/10 border border-ember/30 px-3 py-2 mb-3">{err}</div>}
+          {err && <div className="text-[12px] text-ember bg-ember/10 border border-ember/30 rounded-xl px-3.5 py-2.5 mb-3">{err}</div>}
 
           {/* 결제 버튼 */}
           <button onClick={pay} disabled={busy}
-            className={"w-full py-4 font-bold text-[15px] flex items-center justify-center gap-2 transition " +
-              (valid && !busy ? "bg-amber text-deep active:scale-[0.99]" : "bg-amber/40 text-deep/60")}>
+            className={"w-full py-4 rounded-full font-extrabold text-[15px] flex items-center justify-center gap-2 transition " +
+              (valid && !busy ? "bg-amber text-deep active:scale-[0.98] shadow-[0_6px_18px_rgba(199,120,0,.28)]" : "bg-amber/40 text-deep/60")}>
             {busy ? '결제창 여는 중…'
-              : price ? (price.toLocaleString() + '원 · 결제하고 신청하기')
-              : '성별을 선택해주세요'}
+              : price ? ('💝 ' + price.toLocaleString() + '원 · 결제하고 신청하기')
+              : '성별을 먼저 선택해주세요 🙌'}
           </button>
-          <div className="text-[11px] text-muted text-center mt-3">토스페이먼츠 안전결제 · 카드 / 간편결제</div>
+          <div className="text-[11px] text-muted text-center mt-3">🔒 토스페이먼츠 안전결제 · 카드 / 간편결제</div>
         </div>
       </div>
     );
