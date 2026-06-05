@@ -15,8 +15,15 @@ module.exports = async (req, res) => {
     const body = await readJson(req);
     const { filename, contentType, dataBase64 } = body || {};
     if (!dataBase64) { res.status(400).json({ error: '파일 데이터가 없습니다.' }); return; }
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
-      res.status(500).json({ error: '서버에 BLOB_READ_WRITE_TOKEN이 설정되지 않았습니다.' });
+    // 토큰: 기본 이름 우선, 없으면 *_READ_WRITE_TOKEN 형태 자동 탐색
+    var token = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+      var key = Object.keys(process.env).find(k => /READ_WRITE_TOKEN$/.test(k));
+      if (key) token = process.env[key];
+    }
+    if (!token) {
+      var blobKeys = Object.keys(process.env).filter(k => /BLOB|TOKEN/i.test(k));
+      res.status(500).json({ error: 'BLOB 토큰 미설정', foundEnvKeys: blobKeys });
       return;
     }
     const buffer = Buffer.from(dataBase64, 'base64');
@@ -28,7 +35,7 @@ module.exports = async (req, res) => {
       access: 'public',
       addRandomSuffix: true,          // 추측 불가능한 URL
       contentType: contentType || 'application/octet-stream',
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+      token: token,
     });
     res.status(200).json({ url: blob.url });
   } catch (e) {
