@@ -614,73 +614,79 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     ];
 
     const Chip = ({children, gender}) => (
-      <span className={"inline-block text-[11px] font-mono px-2 py-1 mr-1 mb-1 border " +
+      <span className={"inline-block text-[12px] px-3 py-1.5 mr-1.5 mb-1.5 rounded-full font-medium " +
         (gender==='M'
-          ? "border-azure/40 text-azure bg-azure/5"
-          : "border-ember/40 text-ember bg-ember/5")}>
+          ? "bg-azure/10 text-azure2"
+          : "bg-ember/10 text-ember2")}>
         {children}
       </span>
     );
 
     const Badge = ({status, remainF}) => {
-      if(status==='closed') return <span className="ml-2 inline-block text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 bg-fg2/15 text-fg2 border border-fg2/30">모집 마감</span>;
-      if(status==='open')   return <span className="ml-2 inline-block text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 bg-amber/15 text-amber border border-amber/50">여성 {remainF||1}자리</span>;
-      return <span className="ml-2 inline-block text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 bg-ink2 text-muted border border-line">오픈 예정</span>;
+      if(status==='closed') return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-fg2/8 text-muted">마감</span>;
+      if(status==='open')   return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-amber/15 text-amber font-bold">여성 {remainF||1}자리 🔥</span>;
+      return <span className="ml-auto shrink-0 inline-block text-[11px] px-3 py-1 rounded-full bg-ink3 text-muted">오픈 예정</span>;
     };
 
     return (
       <section className="px-5 pt-8 pb-12 bg-gradient-to-b from-ink to-ink2" data-screen-label="01a Lineup">
-        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-3">─── This Week's Lineup ───</div>
-        <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-2">
+        <div className="inline-flex items-center gap-1.5 text-[12px] text-amber font-bold bg-amber/10 px-3 py-1 rounded-full mb-3">
+          <span>💕</span> 이번주 라인업
+        </div>
+        <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-2">
           이번주 <span className="text-amber">참가자 라인업</span>
         </h2>
-        <p className="text-[12.5px] text-muted leading-[1.7] mb-7">
-          심사를 통과한 분들만 공개합니다.<br/>
-          <span className="text-fg2">개인정보 보호를 위해 닉네임은 비공개</span>
+        <p className="text-[13px] text-muted leading-[1.7] mb-7">
+          심사를 통과한 분들만 살짝 공개해요.<br/>
+          <span className="text-fg2">닉네임은 개인정보 보호를 위해 비공개 🤍</span>
         </p>
 
-        <div className="space-y-5">
-          {rounds.map((r, i) => (
-            <div key={i} className="border border-line bg-paper/95 p-5 relative overflow-hidden">
-              {/* corner gold */}
-              <span className="absolute top-0 left-0 w-2 h-2 border-t border-l border-amber/70"></span>
-              <span className="absolute top-0 right-0 w-2 h-2 border-t border-r border-amber/70"></span>
-              <span className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-amber/70"></span>
-              <span className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-amber/70"></span>
+        <div className="space-y-4">
+          {rounds.map((r, i) => {
+            const isOpen = r.status === 'open';
+            return (
+              <div key={i} className={"rounded-3xl bg-white p-5 transition " +
+                (isOpen ? "ring-2 ring-amber/35 shadow-[0_6px_24px_rgba(199,120,0,0.10)]"
+                        : "border border-line/70 shadow-[0_2px_14px_rgba(0,0,0,0.04)]")}>
 
-              <div className="flex items-center mb-3">
-                <span className="text-amber font-mono text-[12px] mr-2">♢</span>
-                <span className="font-bold text-fg text-[14.5px]">{r.date}</span>
-                <span className="text-muted text-[12px] mx-2">·</span>
-                <span className="text-fg2 text-[12.5px]">{r.time}</span>
-                <span className="text-muted text-[12px] mx-2">·</span>
-                <span className="text-fg2 text-[12.5px]">{r.place}</span>
-                <Badge status={r.status} remainF={r.remainF}/>
-              </div>
-
-              {r.males ? (
-                <>
-                  <div className="mt-4">
-                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-azure mb-2">♂ MEN</div>
-                    <div>{r.males.map((m, j) => <Chip key={j} gender="M">{m}</Chip>)}</div>
-                  </div>
-                  <div className="mt-4">
-                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-ember mb-2">♀ WOMEN</div>
-                    <div>{r.females.map((f, j) => <Chip key={j} gender="F">{f}</Chip>)}</div>
-                  </div>
-                </>
-              ) : (
-                <div className="text-center py-6 text-muted text-[12.5px]">
-                  곧 라인업이 공개됩니다.
+                <div className="flex items-center gap-2 mb-4">
+                  <span className={"w-2.5 h-2.5 rounded-full " + (isOpen ? "bg-amber" : "bg-line2")}></span>
+                  <span className="font-bold text-fg text-[15px]">{r.date}</span>
+                  <span className="text-muted text-[12.5px]">{r.time} · {r.place}</span>
+                  <Badge status={r.status} remainF={r.remainF}/>
                 </div>
-              )}
-            </div>
-          ))}
+
+                {r.males ? (
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center gap-1.5 mb-2.5">
+                        <span className="w-2 h-2 rounded-full bg-azure"></span>
+                        <span className="text-[13px] font-bold text-azure2">남성</span>
+                        <span className="text-[11px] text-muted">{r.males.length}명</span>
+                      </div>
+                      <div className="-mb-1.5">{r.males.map((m, j) => <Chip key={j} gender="M">{m}</Chip>)}</div>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5 mb-2.5">
+                        <span className="w-2 h-2 rounded-full bg-ember"></span>
+                        <span className="text-[13px] font-bold text-ember2">여성</span>
+                        <span className="text-[11px] text-muted">{r.females.length}명</span>
+                      </div>
+                      <div className="-mb-1.5">{r.females.map((f, j) => <Chip key={j} gender="F">{f}</Chip>)}</div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-7 text-muted text-[13px]">
+                    곧 라인업이 공개돼요 ✨
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        <p className="mt-6 text-[11.5px] text-muted text-center leading-[1.7]">
-          * 표기 = <span className="text-fg2">나이대 · 키 · 직업군</span> 순<br/>
-          * 모든 참가자는 <span className="text-amber">신원·직업 검증</span>을 완료한 분입니다
+        <p className="mt-6 text-[12px] text-muted text-center leading-[1.7]">
+          표기 = <span className="text-fg2">나이대 · 키 · 직업군</span> &nbsp;·&nbsp; 참가자 전원 <span className="text-amber">신원·직업 검증</span> 완료 ✓
         </p>
       </section>
     );
