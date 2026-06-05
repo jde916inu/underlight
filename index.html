@@ -615,7 +615,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="relative px-5 pt-8 pb-12 overflow-hidden" data-screen-label="01 Hero">
         {/* Backdrop atmospheric photo */}
         <div className="absolute inset-0 pointer-events-none">
-          <img src="./assets/date-b.png" alt="" className="w-full h-full object-cover" style={{opacity:.75, filter:'saturate(0.95)'}}/>
+          <img src="./assets/event-hero.jpg" alt="" className="w-full h-full object-cover" style={{opacity:.82, filter:'saturate(0.95)'}}/>
           <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.15) 0%, rgba(255,255,255,.45) 60%, rgba(255,255,255,.92) 100%)'}}></div>
           <div className="absolute inset-0" style={{background:'radial-gradient(600px 300px at 12% 10%, rgba(255,179,71,.10), transparent 60%), radial-gradient(500px 300px at 90% 80%, rgba(255,94,98,.10), transparent 60%)'}}></div>
         </div>
@@ -643,9 +643,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         <div className="mt-8 relative">
           <button
             onClick={onCTA}
-            className="pulse shimmer w-full bg-amber text-deep font-bold text-[15px] py-4 rounded-md flex items-center justify-center gap-2 active:scale-[0.99] transition relative">
-            <span>지금 바로 인연 만들기</span>
-            <span className="text-[11px] font-mono opacity-70 border-l border-deep/30 pl-2 ml-1">잔여 3석</span>
+            className="cta-fancy w-full text-deep font-extrabold text-[15.5px] tracking-[0.02em] py-[18px] rounded-xl relative overflow-hidden active:scale-[0.99] transition">
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <span>지금 바로 신청하기</span>
+              <span className="cta-arrow inline-block">→</span>
+            </span>
           </button>
         </div>
 
@@ -756,7 +758,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       <section className="reveal px-5 py-12" data-screen-label="01b Concept">
         <div className="relative border border-amber/30 bg-gradient-to-b from-ink2 to-ink overflow-hidden rounded-md">
           <div className="absolute inset-0 pointer-events-none">
-            <img src="./assets/date-a.png" alt="" className="w-full h-full object-cover" style={{opacity:.4, filter:'saturate(0.85)'}}/>
+            <img src="./assets/event-concept.jpg" alt="" className="w-full h-full object-cover" style={{opacity:.5, filter:'saturate(0.85)'}}/>
             <div className="absolute inset-0" style={{background:'linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.85) 70%, rgba(255,255,255,.95) 100%)'}}></div>
           </div>
           <div className="relative p-7">
@@ -1376,9 +1378,9 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     ];
     const grid = [
       './assets/talk.png',
-      './assets/date-a.png',
+      './assets/event-1.jpg',
       './assets/hands.png',
-      './assets/date-b.png',
+      './assets/event-2.jpg',
     ];
     return (
       <section className="reveal px-5 py-16 relative overflow-hidden bg-ink2/30" data-screen-label="06 Urgency">
@@ -1505,16 +1507,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 cta-veil pt-8 pb-4 px-3 pointer-events-none">
         <div className="pointer-events-auto flex flex-col items-center gap-2">
-          <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.18em]">
-            <span className="w-1.5 h-1.5 rounded-full bg-ember blink"></span>
-            <span className="text-ember font-bold">얼리버드 마감 임박</span>
-            <span className="text-muted">·</span>
-            <span className="text-fg2">잔여 <span className="text-amber font-bold">3</span>석</span>
-          </div>
           <button onClick={onCTA}
             className="cta-fancy w-full text-deep font-extrabold text-[15.5px] tracking-[0.02em] py-[18px] rounded-xl relative overflow-hidden active:scale-[0.99] transition">
             <span className="relative z-10 flex items-center justify-center gap-2">
-              <span>지금 바로 얼리버드 혜택받고 사전예약하기</span>
+              <span>지금 바로 신청하기</span>
               <span className="cta-arrow inline-block">→</span>
             </span>
           </button>
