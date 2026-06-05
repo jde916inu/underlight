@@ -1384,10 +1384,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       ['참여비',   '신청서에서 이벤트 가격 확인해주세요!'],
     ];
     const grid = [
-      './assets/event-concept.jpg', // IMG_1419
-      './assets/event-1.jpg',       // IMG_1422
-      './assets/event-2.jpg',       // IMG_1429
-      './assets/event-hero.jpg',    // IMG_1420
+      './assets/grid-a.jpg', // IMG_1419
+      './assets/grid-b.jpg', // IMG_1422
+      './assets/grid-c.jpg', // IMG_1429
+      './assets/grid-d.jpg', // IMG_1420
     ];
     return (
       <section className="reveal px-5 py-16 relative overflow-hidden bg-ink2/30" data-screen-label="06 Urgency">
@@ -1421,8 +1421,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         </div>
 
         <button onClick={onCTA}
-          className="pulse shimmer w-full bg-amber text-deep font-bold text-[15px] py-4 rounded-md active:scale-[0.99] transition">
-          지금 바로 신청하기 →
+          className="cta-fancy w-full text-deep font-extrabold text-[15.5px] tracking-[0.02em] py-[18px] rounded-xl relative overflow-hidden active:scale-[0.99] transition">
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            <span>지금 바로 신청하기</span>
+            <span className="cta-arrow inline-block">→</span>
+          </span>
         </button>
         </div>
       </section>
@@ -1432,9 +1435,13 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   /* ─────── FAQ (mini) ─────── */
   function MiniFAQ(){
     const items = [
-      ['혼자 가도 어색하지 않나요?', '프로필 카드를 보고 이야기하기 때문에 내향형도 어색함 없이 대화할 수 있어요.'],
-      ['음료는 어떤 게 나와요?', '커피·차 등 다양하게 준비돼 있어요. 핑거푸드도 함께 제공돼요.'],
-      ['일산 어디서 모이나요?', '백석역 5분 내 거리라 찾아오시기 편할 거예요. 신청해 주시면 정확한 위치를 바로 안내해 드리겠습니다.'],
+      ['어떤 분들이 오나요?', '직업·신원 검증을 통과한 분들만 모셔요. 주로 20대 후반~30대 초반이고, 매 회차 남녀 성비를 1:1로 맞춥니다.'],
+      ['혼자 가도 어색하지 않나요?', '프로필 카드를 보고 이야기하기 때문에 내향형도 어색함 없이 대화할 수 있어요. 진행도 운영진이 자연스럽게 도와드려요.'],
+      ['결제했는데 심사에서 떨어지거나 참석이 어려우면요?', '심사 미통과 시 전액 환불해 드려요. 참석이 어려운 경우에도 회차 전에 알려주시면 환불 또는 다음 회차 변경을 도와드립니다.'],
+      ['매칭이 안 되면 어떻게 되나요?', '후기를 남겨주시면 다음 회차에 시그널 기회를 한 번 더 드려요. 다시 매칭되면 운영진이 익명 톡방을 열어드립니다.'],
+      ['여성 안전은 어떻게 챙기나요?', '모든 참가자는 사전 검증을 거치고, 모임 종료 후 여성분들이 먼저 나가실 수 있도록 진행해요. 닉네임으로만 진행되어 개인정보도 보호됩니다.'],
+      ['친구랑 같이 신청해도 되나요?', '네! 함께 신청하시면 1인당 3,000원 할인해 드려요. 신청 시 \'동반 참여\'에 체크해 주세요.'],
+      ['일산 어디서 모이나요?', '백석역 도보 5분 거리예요. 신청해 주시면 정확한 위치를 개별 안내해 드립니다.'],
     ];
     const [open, setOpen] = useState(0);
     return (
@@ -1749,7 +1756,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <Host />
           <Urgency onCTA={cta} />
           <MiniFAQ />
-          <FinalCTA onCTA={cta} />
           <Foot />
         </div>
         <Sticky onCTA={cta} />
