@@ -691,7 +691,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <span>💕</span> 이번주 라인업
         </div>
         <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.25] mb-2">
-          이번주 <span className="text-amber">참가자 라인업</span>
+          이번주 <span className="text-amber">참가자 라인업</span> ✨
         </h2>
         <p className="text-[13px] text-muted leading-[1.7] mb-7">
           심사를 통과한 분들만 살짝 공개해요.<br/>
@@ -711,8 +711,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 (isOpen ? "ring-2 ring-amber/35 shadow-[0_6px_24px_rgba(199,120,0,0.10)]"
                         : "border border-line/70 shadow-[0_2px_14px_rgba(0,0,0,0.04)]")}>
 
-                <div className="flex items-center gap-2 mb-4">
-                  <span className={"w-2.5 h-2.5 rounded-full " + (isOpen ? "bg-amber" : "bg-line2")}></span>
+                <div className="flex items-center gap-1.5 mb-4">
+                  <span className="text-[15px]">{isOpen ? '🗓️' : '📌'}</span>
                   <span className="font-bold text-fg text-[15px]">{r.date}</span>
                   <span className="text-muted text-[12.5px]">{r.time} · {r.place}</span>
                   <Badge status={r.status} remainF={r.remainF}/>
@@ -722,16 +722,16 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                   <div className="space-y-4">
                     <div>
                       <div className="flex items-center gap-1.5 mb-2.5">
-                        <span className="w-2 h-2 rounded-full bg-azure"></span>
-                        <span className="text-[13px] font-bold text-azure2">남성</span>
+                        <span className="text-[16px]">💙</span>
+                        <span className="text-[13.5px] font-bold text-azure2">남성</span>
                         <span className="text-[11px] text-muted">{r.males.length}명</span>
                       </div>
                       <div className="-mb-1.5">{r.males.map((m, j) => <Chip key={j} gender="M">{m}</Chip>)}</div>
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5 mb-2.5">
-                        <span className="w-2 h-2 rounded-full bg-ember"></span>
-                        <span className="text-[13px] font-bold text-ember2">여성</span>
+                        <span className="text-[16px]">💗</span>
+                        <span className="text-[13.5px] font-bold text-ember2">여성</span>
                         <span className="text-[11px] text-muted">{r.females.length}명</span>
                       </div>
                       <div className="-mb-1.5">{r.females.map((f, j) => <Chip key={j} gender="F">{f}</Chip>)}</div>
