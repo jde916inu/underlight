@@ -1525,6 +1525,22 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
+  /* ─────── 파일 선택 필드 ─────── */
+  function FileField({ file, onPick, accept, hint }){
+    const id = useMemo(() => 'f' + Math.random().toString(36).slice(2,8), []);
+    return (
+      <div>
+        <input id={id} type="file" accept={accept} className="hidden"
+          onChange={e => onPick(e.target.files && e.target.files[0] ? e.target.files[0] : null)} />
+        <label htmlFor={id}
+          className="flex items-center gap-2 w-full bg-ink2/60 border border-line border-dashed rounded-2xl px-4 py-3 cursor-pointer">
+          <span className="text-[12.5px] text-amber font-bold whitespace-nowrap">파일 선택</span>
+          <span className={"text-[12px] truncate " + (file ? "text-fg2" : "text-muted")}>{file ? file.name : hint}</span>
+        </label>
+      </div>
+    );
+  }
+
   /* ─────── 신청 + 결제 모달 ─────── */
   function ApplyModal({ open, onClose }){
     const firstOpen = ROUNDS.find(r => !r.soldout);
@@ -1532,11 +1548,22 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     const [name, setName]     = useState('');
     const [phone, setPhone]   = useState('');
     const [roundId, setRoundId] = useState(firstOpen ? firstOpen.id : '');
+    const [birthYear, setBirthYear] = useState('');   // 년생 (예: 1995)
+    const [workplace, setWorkplace] = useState('');   // 직장명/사업자명
+    const [region, setRegion]       = useState('');   // 거주지역
+    const [avoidName, setAvoidName] = useState('');   // 겹치고 싶지 않은 지인
+    const [drink, setDrink]         = useState('');   // 음료
+    const [photoFile, setPhotoFile] = useState(null); // 본인사진
+    const [docFile, setDocFile]     = useState(null); // 신원확인 서류
     const [companion, setCompanion]       = useState(false);  // 동반 참여 여부
     const [companionName, setCompanionName] = useState('');   // 같이 오는 분
-    const [agree, setAgree]   = useState(false);
+    const [agreeParty, setAgreeParty]     = useState(false);  // 파티 이용 약관
+    const [agreePrivacy, setAgreePrivacy] = useState(false);  // 개인정보 동의
     const [busy, setBusy]     = useState(false);
     const [err, setErr]       = useState('');
+
+    const REGIONS = ['일산', '김포', '파주', '그외지역'];
+    const DRINKS = ['아메리카노 (핫)', '아메리카노 (아이스)', '얼그레이 티 (핫)', '얼그레이 티 (아이스)', '캐모마일 티 (핫)', '캐모마일 티 (아이스)', '아이스티'];
 
     useEffect(() => {
       if (open) { document.body.style.overflow = 'hidden'; }
@@ -1558,24 +1585,66 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       return d.slice(0,3) + '-' + d.slice(3,7) + '-' + d.slice(7);
     };
 
+    const validBirth = /^\d{4}$/.test(birthYear) && +birthYear >= 1950 && +birthYear <= 2010;
     const valid = gender && name.trim().length >= 2 &&
-      phone.replace(/\D/g,'').length === 11 && roundId && agree;
+      phone.replace(/\D/g,'').length === 11 && validBirth && workplace.trim() &&
+      region && drink && photoFile && docFile && roundId && agreeParty && agreePrivacy;
+
+    // 파일 → (이미지면 압축) base64
+    const fileToUpload = (file) => new Promise((resolve, reject) => {
+      if (!/^image\//.test(file.type)) {
+        const r = new FileReader();
+        r.onload = () => resolve({ b64: String(r.result).split(',')[1], type: file.type || 'application/octet-stream', name: file.name || 'file' });
+        r.onerror = reject; r.readAsDataURL(file); return;
+      }
+      const img = new Image(); const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const max = 1600; let w = img.width, h = img.height;
+        if (w > max || h > max) { const s = max / Math.max(w, h); w = Math.round(w*s); h = Math.round(h*s); }
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        const dataUrl = c.toDataURL('image/jpeg', 0.82);
+        resolve({ b64: dataUrl.split(',')[1], type: 'image/jpeg', name: (file.name || 'photo').replace(/\.\w+$/, '') + '.jpg' });
+      };
+      img.onerror = reject; img.src = url;
+    });
+    const uploadFile = async (file) => {
+      const f = await fileToUpload(file);
+      const res = await fetch('/api/upload', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: f.name, contentType: f.type, dataBase64: f.b64 }) });
+      const j = await res.json();
+      if (!res.ok || !j.url) throw new Error(j.error || '업로드 실패');
+      return j.url;
+    };
 
     const pay = async () => {
       setErr('');
-      if (!valid) { setErr('모든 항목을 입력하고 약관에 동의해주세요.'); return; }
+      if (!valid) { setErr('필수 항목·첨부파일·약관 동의를 모두 완료해주세요.'); return; }
       if (typeof TossPayments !== 'function') { setErr('결제 모듈을 불러오지 못했습니다. 새로고침 후 다시 시도해주세요.'); return; }
       if (TOSS_CLIENT_KEY.includes('여기에')) { setErr('⚠ 토스 클라이언트 키가 아직 설정되지 않았어요. (관리자: index.html의 TOSS_CLIENT_KEY 입력)'); return; }
       setBusy(true);
       try {
+        // 1) 첨부파일 업로드
+        let photoUrl = '', docUrl = '';
+        try {
+          photoUrl = await uploadFile(photoFile);
+          docUrl = await uploadFile(docFile);
+        } catch (ue) {
+          setBusy(false);
+          setErr('첨부파일 업로드에 실패했어요. 파일을 다시 확인해주세요. (' + (ue.message || ue) + ')');
+          return;
+        }
         if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
         const orderId = 'UL_' + roundId + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
         const phoneDigits = phone.replace(/\D/g, '');
-        // 결제 후 success 페이지에서 알림톡 발송에 쓸 신청자 정보 보관
+        // 결제 후 success 페이지에서 알림톡/관리자 발송에 쓸 신청자 정보 보관
         sessionStorage.setItem('ul_apply_' + orderId, JSON.stringify({
           name: name.trim(), phone: phoneDigits, gender,
           roundId, roundLabel: round ? round.label : roundId, amount: price,
           companion, companionName: companion ? companionName.trim() : '',
+          birthYear, workplace: workplace.trim(), region, avoidName: avoidName.trim(), drink,
+          photoUrl, docUrl,
         }));
         const toss = TossPayments(TOSS_CLIENT_KEY);
         const payment = toss.payment({ customerKey: TossPayments.ANONYMOUS });
@@ -1645,6 +1714,64 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             <div className="text-[11px] text-muted mt-1.5">매칭·회차 안내가 이 번호의 카카오톡으로 발송됩니다.</div>
           </div>
 
+          {/* 년생 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">년생</div>
+            <input value={birthYear} onChange={e=>setBirthYear(e.target.value.replace(/\D/g,'').slice(0,4))} inputMode="numeric" placeholder="예: 1995"
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+          </div>
+
+          {/* 직장명/사업자명 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">직장명 / 사업자명</div>
+            <input value={workplace} onChange={e=>setWorkplace(e.target.value)} placeholder="재직 중인 회사 또는 사업자명"
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+          </div>
+
+          {/* 거주지역 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">거주지역</div>
+            <div className="grid grid-cols-4 gap-2">
+              {REGIONS.map(rg => (
+                <button key={rg} onClick={()=>setRegion(rg)}
+                  className={"py-2.5 rounded-xl border-2 text-[12px] font-bold transition " +
+                    (region===rg ? "border-amber bg-amber/10 text-amber" : "border-line text-muted bg-ink2/40")}>{rg}</button>
+              ))}
+            </div>
+          </div>
+
+          {/* 음료 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">드시고 싶은 음료</div>
+            <div className="grid grid-cols-2 gap-2">
+              {DRINKS.map(d => (
+                <button key={d} onClick={()=>setDrink(d)}
+                  className={"py-2.5 px-2 rounded-xl border-2 text-[12px] font-bold transition " +
+                    (drink===d ? "border-amber bg-amber/10 text-amber" : "border-line text-muted bg-ink2/40")}>{d}</button>
+              ))}
+            </div>
+          </div>
+
+          {/* 본인 사진 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">본인 사진</div>
+            <FileField file={photoFile} onPick={setPhotoFile} accept="image/*" hint="얼굴이 잘 나온 사진 1장" />
+          </div>
+
+          {/* 신원확인 서류 */}
+          <div className="mb-3">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">신원확인 서류</div>
+            <FileField file={docFile} onPick={setDocFile} accept="image/*,application/pdf" hint="재직증명서·사업자등록증·자격증 중 1개 (심사용)" />
+            <div className="text-[11px] text-muted mt-1.5">심사용으로만 사용되며 외부에 공개되지 않아요.</div>
+          </div>
+
+          {/* 겹치고 싶지 않은 지인 */}
+          <div className="mb-4">
+            <div className="text-[12.5px] font-bold text-fg2 mb-1.5">겹치고 싶지 않은 지인 <span className="text-muted font-normal">(선택)</span></div>
+            <input value={avoidName} onChange={e=>setAvoidName(e.target.value)} placeholder="아는 사람과 안 겹치게 — 이름 기입"
+              className="w-full bg-ink2/60 border border-line rounded-2xl text-fg text-[14px] px-4 py-3.5 outline-none focus:border-amber/60"/>
+          </div>
+
           {/* 회차 */}
           <div className="mb-4">
             <div className="text-[12.5px] font-bold text-fg2 mb-1.5">참가 회차</div>
@@ -1700,14 +1827,34 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             </div>
           )}
 
-          {/* 동의 */}
-          <label className="flex items-start gap-2 mb-4 cursor-pointer">
-            <input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)} className="mt-0.5 accent-amber"/>
-            <span className="text-[12px] text-muted leading-[1.5]">
-              개인정보 수집·이용 및 <span className="text-fg2">결제·환불 정책</span>에 동의합니다.
-              심사 미통과 시 전액 환불됩니다.
-            </span>
-          </label>
+          {/* 동의 1: 파티 이용 약관 */}
+          <div className="mb-3 border border-line rounded-2xl p-4">
+            <div className="text-[13px] font-bold text-fg mb-2">파티 이용 약관에 동의해주세요 <span className="text-ember">*</span></div>
+            <ul className="text-[11.5px] text-muted leading-[1.65] space-y-1.5 mb-3">
+              <li>▶ 예정일 D-7부터 환불 및 날짜 변경은 불가합니다.</li>
+              <li>▶ 진행 중 스탭이 현장을 촬영하며 홍보에 활용될 수 있습니다. 얼굴이 노출되지 않도록 모자이크(블러) 처리합니다.</li>
+              <li>▶ 행사 중 발생한 사고의 민·형사상 책임은 본인에게 있으며, 물품 손괴 시 원가배상을 원칙으로 합니다.</li>
+            </ul>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={agreeParty} onChange={e=>setAgreeParty(e.target.checked)} className="accent-amber"/>
+              <span className="text-[12.5px] text-fg2 font-bold">예, 동의합니다</span>
+            </label>
+          </div>
+
+          {/* 동의 2: 개인정보 수집·이용 */}
+          <div className="mb-4 border border-line rounded-2xl p-4">
+            <div className="text-[13px] font-bold text-fg mb-2">개인정보 수집 및 이용에 관한 동의 <span className="text-ember">*</span></div>
+            <ul className="text-[11.5px] text-muted leading-[1.65] space-y-1.5 mb-3">
+              <li>▶ 수집·이용 목적: 소개팅 진행 및 CS 안내 등</li>
+              <li>▶ 수집 항목: 신청서 내 항목</li>
+              <li>▶ 보유·이용 기간: 선발자 안내 후 3년</li>
+              <li>▶ 마케팅 활용·광고 수신: 이벤트 소식·빈자리 알림·고객 혜택 등</li>
+            </ul>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={agreePrivacy} onChange={e=>setAgreePrivacy(e.target.checked)} className="accent-amber"/>
+              <span className="text-[12.5px] text-fg2 font-bold">예, 동의합니다</span>
+            </label>
+          </div>
 
           {err && <div className="text-[12px] text-ember bg-ember/10 border border-ember/30 rounded-xl px-3.5 py-2.5 mb-3">{err}</div>}
 
@@ -1715,7 +1862,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <button onClick={pay} disabled={busy}
             className={"w-full py-4 rounded-full font-extrabold text-[15px] flex items-center justify-center gap-2 transition " +
               (valid && !busy ? "bg-amber text-deep active:scale-[0.98] shadow-[0_6px_18px_rgba(199,120,0,.28)]" : "bg-amber/40 text-deep/60")}>
-            {busy ? '결제창 여는 중…'
+            {busy ? '처리 중…'
               : price ? (price.toLocaleString() + '원 · 결제하고 신청하기')
               : '성별을 먼저 선택해주세요'}
           </button>

@@ -77,6 +77,13 @@ module.exports = async (req, res) => {
       console.error('[meta capi] 전송 실패:', e);
     }
 
+    // ── 4) 구글시트 자동 기록 (실패해도 결제는 성공 처리) ──
+    try {
+      await sendToSheet({ applicant, orderId, amount: Number(amount) });
+    } catch (e) {
+      console.error('[gsheet] 기록 실패:', e);
+    }
+
     res.status(200).json({ success: true, messaging });
   } catch (e) {
     console.error('[confirm] 오류:', e);
@@ -127,13 +134,21 @@ async function sendMessages({ applicant, orderId, amount }) {
     const companionLine = applicant.companion
       ? '동반: O' + (applicant.companionName ? ' (' + applicant.companionName + ')' : '') + '\n'
       : '';
+    const line = (label, v) => v ? (label + ': ' + v + '\n') : '';
     const adminText =
       '[언더라이트 신규신청]\n' +
       '이름: ' + (applicant.name || '-') + ' (' + genderTxt + ')\n' +
+      line('년생', applicant.birthYear) +
       '연락처: ' + formatPhone(custPhone) + '\n' +
+      line('직장/사업자', applicant.workplace) +
+      line('거주지역', applicant.region) +
+      line('음료', applicant.drink) +
+      line('피하고싶은지인', applicant.avoidName) +
       '회차: ' + (applicant.roundLabel || '-') + '\n' +
       companionLine +
       '결제: ' + Number(amount).toLocaleString() + '원\n' +
+      line('사진', applicant.photoUrl) +
+      line('서류', applicant.docUrl) +
       '주문: ' + orderId;
     messages.push({
       to: onlyDigits(ADMIN_PHONE),
@@ -166,6 +181,35 @@ async function solapiSend({ API_KEY, API_SECRET, messages }) {
   const data = await r.json();
   if (!r.ok) throw new Error('solapi: ' + (data && (data.errorMessage || JSON.stringify(data))));
   return data;
+}
+
+// ─── 구글시트 자동 기록 (Apps Script 웹훅) ────────────────────
+//   환경변수: GSHEET_WEBHOOK_URL (구글 Apps Script 웹앱 배포 URL)
+async function sendToSheet({ applicant, orderId, amount }) {
+  const url = process.env.GSHEET_WEBHOOK_URL;
+  if (!url) return; // 미설정 시 건너뜀
+  const genderTxt = applicant.gender === 'M' ? '남성' : applicant.gender === 'F' ? '여성' : '';
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: applicant.name || '',
+      gender: genderTxt,
+      birthYear: applicant.birthYear || '',
+      phone: formatPhone(onlyDigits(applicant.phone)),
+      workplace: applicant.workplace || '',
+      region: applicant.region || '',
+      drink: applicant.drink || '',
+      avoidName: applicant.avoidName || '',
+      roundLabel: applicant.roundLabel || '',
+      amount: Number(amount),
+      companion: applicant.companion ? 'O' : '',
+      companionName: applicant.companionName || '',
+      photoUrl: applicant.photoUrl || '',
+      docUrl: applicant.docUrl || '',
+      orderId,
+    }),
+  });
 }
 
 // ─── Meta 전환 API(CAPI) 서버 전송 ───────────────────────────
