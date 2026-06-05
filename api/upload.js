@@ -22,8 +22,7 @@ module.exports = async (req, res) => {
       if (key) token = process.env[key];
     }
     if (!token) {
-      var blobKeys = Object.keys(process.env).filter(k => /BLOB|TOKEN/i.test(k));
-      res.status(500).json({ error: 'BLOB 토큰 미설정', foundEnvKeys: blobKeys });
+      res.status(500).json({ error: '서버에 BLOB_READ_WRITE_TOKEN이 설정되지 않았습니다.' });
       return;
     }
     const buffer = Buffer.from(dataBase64, 'base64');
