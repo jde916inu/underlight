@@ -407,10 +407,31 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 <body class="grain">
   <div id="root"></div>
 
-  
+  <!-- 토스페이먼츠 결제 SDK -->
+  <script src="https://js.tosspayments.com/v2/standard"></script>
+
 <script>window.__resources = {"m6":"./assets/date-b.png","m8":"./assets/date-a.png","m5":"./assets/date-b.png","m7":"./assets/date-b.png","m4":"./assets/date-a.png","mb8":"./assets/date-b.png","m9":"./assets/date-a.png"};</script>
 <script type="text/babel" data-presets="env,react">
   const { useState, useEffect, useRef, useMemo } = React;
+
+  /* ═══════════════════════════════════════════════════
+     결제 설정 — 여기 값만 바꾸면 됩니다
+     ═══════════════════════════════════════════════════ */
+  // ▼ 토스페이먼츠 회원가입 후 [내 개발정보]에서 테스트 클라이언트 키를 복사해 붙여넣으세요
+  const TOSS_CLIENT_KEY = "test_ck_여기에_본인_테스트_클라이언트키_붙여넣기";
+
+  // ▼ 성별 참가비 (원). 여성 무료로 하려면 F: 0 (단, 0원이면 결제창 대신 무료신청 처리됨)
+  const PRICES = { M: 50000, F: 35000 };
+
+  // ▼ 동반 참여(친구와 함께) 시 1인당 할인 금액 (원)
+  const COMPANION_DISCOUNT = 3000;
+
+  // ▼ 신청 받을 회차 목록 (soldout:true 면 마감 표시 + 선택 불가)
+  const ROUNDS = [
+    { id: "0606", label: "6/6 (금) 20:00 · 백석역 5분", soldout: false },
+    { id: "0613", label: "6/13 (토) 20:00 · 백석역 5분", soldout: false },
+  ];
+  /* ═══════════════════════════════════════════════════ */
 
   const TALLY_URL = "https://tally.so/r/VLvb0a";
 
@@ -554,6 +575,113 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           </button>
         </div>
 
+      </section>
+    );
+  }
+
+  /* ─────── Lineup (회차별 참가자 라인업) ─────── */
+  function Lineup(){
+    const rounds = [
+      {
+        date: '5/30 (금)', time: '20:00', place: '백석역 5분',
+        status: 'closed',
+        males: [
+          '30초·182·대기업','30초·178·의사','30중·180·사업가',
+          '20후·184·전문직','30초·175·IT개발','30중·183·금융권',
+        ],
+        females: [
+          '20후·165·승무원','30초·168·마케터','20후·163·간호사',
+          '30초·170·교사','20후·167·디자이너','30중·166·공기업',
+        ],
+      },
+      {
+        date: '5/31 (토)', time: '20:00', place: '백석역 5분',
+        status: 'open',
+        males: [
+          '30초·181·대기업','30초·185·전문직','30중·179·IT',
+          '20후·177·공무원','30초·184·금융','30중·176·사업가',
+        ],
+        females: [
+          '20후·164·MD','30초·169·간호사','30초·163·강사',
+          '20후·166·승무원','30초·165·공무원',
+        ],
+        remainF: 1,
+      },
+      {
+        date: '6/6 (금)', time: '20:00', place: '백석역 5분',
+        status: 'soon',
+      },
+    ];
+
+    const Chip = ({children, gender}) => (
+      <span className={"inline-block text-[11px] font-mono px-2 py-1 mr-1 mb-1 border " +
+        (gender==='M'
+          ? "border-azure/40 text-azure bg-azure/5"
+          : "border-ember/40 text-ember bg-ember/5")}>
+        {children}
+      </span>
+    );
+
+    const Badge = ({status, remainF}) => {
+      if(status==='closed') return <span className="ml-2 inline-block text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 bg-fg2/15 text-fg2 border border-fg2/30">모집 마감</span>;
+      if(status==='open')   return <span className="ml-2 inline-block text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 bg-amber/15 text-amber border border-amber/50">여성 {remainF||1}자리</span>;
+      return <span className="ml-2 inline-block text-[10px] font-mono uppercase tracking-[0.12em] px-2 py-1 bg-ink2 text-muted border border-line">오픈 예정</span>;
+    };
+
+    return (
+      <section className="px-5 pt-8 pb-12 bg-gradient-to-b from-ink to-ink2" data-screen-label="01a Lineup">
+        <div className="text-[11px] text-amber font-mono uppercase tracking-[0.22em] mb-3">─── This Week's Lineup ───</div>
+        <h2 className="text-[24px] font-extrabold tracking-[-0.01em] leading-[1.22] mb-2">
+          이번주 <span className="text-amber">참가자 라인업</span>
+        </h2>
+        <p className="text-[12.5px] text-muted leading-[1.7] mb-7">
+          심사를 통과한 분들만 공개합니다.<br/>
+          <span className="text-fg2">개인정보 보호를 위해 닉네임은 비공개</span>
+        </p>
+
+        <div className="space-y-5">
+          {rounds.map((r, i) => (
+            <div key={i} className="border border-line bg-paper/95 p-5 relative overflow-hidden">
+              {/* corner gold */}
+              <span className="absolute top-0 left-0 w-2 h-2 border-t border-l border-amber/70"></span>
+              <span className="absolute top-0 right-0 w-2 h-2 border-t border-r border-amber/70"></span>
+              <span className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-amber/70"></span>
+              <span className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-amber/70"></span>
+
+              <div className="flex items-center mb-3">
+                <span className="text-amber font-mono text-[12px] mr-2">♢</span>
+                <span className="font-bold text-fg text-[14.5px]">{r.date}</span>
+                <span className="text-muted text-[12px] mx-2">·</span>
+                <span className="text-fg2 text-[12.5px]">{r.time}</span>
+                <span className="text-muted text-[12px] mx-2">·</span>
+                <span className="text-fg2 text-[12.5px]">{r.place}</span>
+                <Badge status={r.status} remainF={r.remainF}/>
+              </div>
+
+              {r.males ? (
+                <>
+                  <div className="mt-4">
+                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-azure mb-2">♂ MEN</div>
+                    <div>{r.males.map((m, j) => <Chip key={j} gender="M">{m}</Chip>)}</div>
+                  </div>
+                  <div className="mt-4">
+                    <div className="text-[11px] font-mono uppercase tracking-[0.14em] text-ember mb-2">♀ WOMEN</div>
+                    <div>{r.females.map((f, j) => <Chip key={j} gender="F">{f}</Chip>)}</div>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-6 text-muted text-[12.5px]">
+                  곧 라인업이 공개됩니다.
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-6 text-[11.5px] text-muted text-center leading-[1.7]">
+          * 표기 = <span className="text-fg2">나이대 · 키 · 직업군</span> 순<br/>
+          * 모든 참가자는 <span className="text-amber">신원·직업 검증</span>을 완료한 분입니다
+        </p>
       </section>
     );
   }
@@ -1332,18 +1460,220 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     );
   }
 
+  /* ─────── 신청 + 결제 모달 ─────── */
+  function ApplyModal({ open, onClose }){
+    const firstOpen = ROUNDS.find(r => !r.soldout);
+    const [gender, setGender] = useState(null);     // 'M' | 'F'
+    const [name, setName]     = useState('');
+    const [phone, setPhone]   = useState('');
+    const [roundId, setRoundId] = useState(firstOpen ? firstOpen.id : '');
+    const [companion, setCompanion]       = useState(false);  // 동반 참여 여부
+    const [companionName, setCompanionName] = useState('');   // 같이 오는 분
+    const [agree, setAgree]   = useState(false);
+    const [busy, setBusy]     = useState(false);
+    const [err, setErr]       = useState('');
+
+    useEffect(() => {
+      if (open) { document.body.style.overflow = 'hidden'; }
+      else { document.body.style.overflow = ''; }
+      return () => { document.body.style.overflow = ''; };
+    }, [open]);
+
+    if (!open) return null;
+
+    const basePrice = gender ? PRICES[gender] : null;
+    const discount = companion ? COMPANION_DISCOUNT : 0;
+    const price = basePrice == null ? null : Math.max(0, basePrice - discount);
+    const round = ROUNDS.find(r => r.id === roundId);
+
+    const fmtPhone = (v) => {
+      const d = v.replace(/\D/g, '').slice(0, 11);
+      if (d.length < 4) return d;
+      if (d.length < 8) return d.slice(0,3) + '-' + d.slice(3);
+      return d.slice(0,3) + '-' + d.slice(3,7) + '-' + d.slice(7);
+    };
+
+    const valid = gender && name.trim().length >= 2 &&
+      phone.replace(/\D/g,'').length === 11 && roundId && agree;
+
+    const pay = async () => {
+      setErr('');
+      if (!valid) { setErr('모든 항목을 입력하고 약관에 동의해주세요.'); return; }
+      if (typeof TossPayments !== 'function') { setErr('결제 모듈을 불러오지 못했습니다. 새로고침 후 다시 시도해주세요.'); return; }
+      if (TOSS_CLIENT_KEY.includes('여기에')) { setErr('⚠ 토스 클라이언트 키가 아직 설정되지 않았어요. (관리자: index.html의 TOSS_CLIENT_KEY 입력)'); return; }
+      setBusy(true);
+      try {
+        if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
+        const orderId = 'UL_' + roundId + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+        const phoneDigits = phone.replace(/\D/g, '');
+        // 결제 후 success 페이지에서 알림톡 발송에 쓸 신청자 정보 보관
+        sessionStorage.setItem('ul_apply_' + orderId, JSON.stringify({
+          name: name.trim(), phone: phoneDigits, gender,
+          roundId, roundLabel: round ? round.label : roundId, amount: price,
+          companion, companionName: companion ? companionName.trim() : '',
+        }));
+        const toss = TossPayments(TOSS_CLIENT_KEY);
+        const payment = toss.payment({ customerKey: TossPayments.ANONYMOUS });
+        await payment.requestPayment({
+          method: 'CARD',
+          amount: { currency: 'KRW', value: price },
+          orderId,
+          orderName: '언더라이트 ' + (round ? round.label : '') + ' 참가비',
+          successUrl: window.location.origin + '/success',
+          failUrl: window.location.origin + '/index.html',
+          customerName: name.trim(),
+          customerMobilePhone: phoneDigits,
+        });
+      } catch (e) {
+        setBusy(false);
+        if (e && e.code === 'USER_CANCEL') return; // 사용자가 결제창 닫음 — 조용히
+        setErr((e && e.message) || '결제를 시작하지 못했습니다.');
+      }
+    };
+
+    return (
+      <div onClick={onClose}
+        style={{position:'fixed', inset:0, zIndex:9999, background:'rgba(10,8,6,.72)', backdropFilter:'blur(3px)',
+                display:'flex', alignItems:'flex-end', justifyContent:'center'}}>
+        <div onClick={e=>e.stopPropagation()}
+          className="bg-ink border-t border-amber/40"
+          style={{width:'100%', maxWidth:'440px', borderTopLeftRadius:'18px', borderTopRightRadius:'18px',
+                  maxHeight:'92vh', overflowY:'auto', padding:'22px 20px 28px'}}>
+          {/* 핸들 */}
+          <div style={{width:'40px', height:'4px', background:'rgba(255,255,255,.2)', borderRadius:'2px', margin:'0 auto 18px'}}></div>
+
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="text-[19px] font-extrabold text-fg">참가 신청</h3>
+            <button onClick={onClose} className="text-muted text-[22px] leading-none px-2">×</button>
+          </div>
+          <p className="text-[12px] text-muted mb-5">심사 통과 후 회차 안내를 카카오톡으로 보내드려요.</p>
+
+          {/* 성별 */}
+          <div className="mb-4">
+            <div className="text-[12px] font-bold text-fg2 mb-2">성별</div>
+            <div className="grid grid-cols-2 gap-2">
+              {[['M','남성','♂'],['F','여성','♀']].map(([g,lbl,sym]) => (
+                <button key={g} onClick={()=>setGender(g)}
+                  className={"py-3 border text-[14px] font-bold transition " +
+                    (gender===g
+                      ? (g==='M' ? "border-azure bg-azure/15 text-azure" : "border-ember bg-ember/15 text-ember")
+                      : "border-line text-muted bg-ink2/40")}>
+                  <span className="mr-1">{sym}</span>{lbl}
+                  <span className="block text-[11px] font-mono mt-1 opacity-80">{PRICES[g].toLocaleString()}원</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 이름 */}
+          <div className="mb-3">
+            <div className="text-[12px] font-bold text-fg2 mb-1.5">이름</div>
+            <input value={name} onChange={e=>setName(e.target.value)} placeholder="실명을 입력해주세요"
+              className="w-full bg-ink2/60 border border-line text-fg text-[14px] px-3 py-3 outline-none focus:border-amber/60"/>
+          </div>
+
+          {/* 전화번호 */}
+          <div className="mb-3">
+            <div className="text-[12px] font-bold text-fg2 mb-1.5">휴대폰 번호</div>
+            <input value={phone} onChange={e=>setPhone(fmtPhone(e.target.value))} inputMode="numeric" placeholder="010-0000-0000"
+              className="w-full bg-ink2/60 border border-line text-fg text-[14px] px-3 py-3 outline-none focus:border-amber/60"/>
+            <div className="text-[11px] text-muted mt-1">매칭·회차 안내가 이 번호의 카카오톡으로 발송됩니다.</div>
+          </div>
+
+          {/* 회차 */}
+          <div className="mb-4">
+            <div className="text-[12px] font-bold text-fg2 mb-1.5">참가 회차</div>
+            <div className="space-y-2">
+              {ROUNDS.map(r => (
+                <button key={r.id} disabled={r.soldout} onClick={()=>setRoundId(r.id)}
+                  className={"w-full flex items-center justify-between px-3 py-3 border text-[13px] transition " +
+                    (r.soldout ? "border-line text-muted/50 bg-ink2/20 cursor-not-allowed"
+                      : roundId===r.id ? "border-amber bg-amber/10 text-amber font-bold"
+                      : "border-line text-fg2 bg-ink2/40")}>
+                  <span>{r.label}</span>
+                  {r.soldout
+                    ? <span className="text-[10px] font-mono">마감</span>
+                    : <span className="text-[14px]">{roundId===r.id ? '●' : '○'}</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 동반 참여 */}
+          <div className="mb-4 border border-line bg-ink2/40 p-3">
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input type="checkbox" checked={companion} onChange={e=>setCompanion(e.target.checked)} className="mt-0.5"/>
+              <span className="text-[13px] text-fg2 leading-[1.5]">
+                <b className="text-amber">친구와 함께 신청</b>해요
+                <span className="text-muted"> · 1인당 {COMPANION_DISCOUNT.toLocaleString()}원 할인</span>
+              </span>
+            </label>
+            {companion && (
+              <input value={companionName} onChange={e=>setCompanionName(e.target.value)}
+                placeholder="같이 오는 분 이름 (선택)"
+                className="w-full mt-2.5 bg-ink2/60 border border-line text-fg text-[13px] px-3 py-2.5 outline-none focus:border-amber/60"/>
+            )}
+          </div>
+
+          {/* 금액 요약 */}
+          {gender && (
+            <div className="mb-4 text-[13px]">
+              <div className="flex justify-between py-1 text-fg2">
+                <span>참가비 ({gender==='M'?'남성':'여성'})</span>
+                <span>{basePrice.toLocaleString()}원</span>
+              </div>
+              {discount > 0 && (
+                <div className="flex justify-between py-1 text-amber">
+                  <span>동반 할인</span>
+                  <span>-{discount.toLocaleString()}원</span>
+                </div>
+              )}
+              <div className="flex justify-between py-2 mt-1 border-t border-line font-bold text-fg text-[15px]">
+                <span>최종 결제금액</span>
+                <span>{price.toLocaleString()}원</span>
+              </div>
+            </div>
+          )}
+
+          {/* 동의 */}
+          <label className="flex items-start gap-2 mb-4 cursor-pointer">
+            <input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)} className="mt-0.5"/>
+            <span className="text-[12px] text-muted leading-[1.5]">
+              개인정보 수집·이용 및 <span className="text-fg2">결제·환불 정책</span>에 동의합니다.
+              심사 미통과 시 전액 환불됩니다.
+            </span>
+          </label>
+
+          {err && <div className="text-[12px] text-ember bg-ember/10 border border-ember/30 px-3 py-2 mb-3">{err}</div>}
+
+          {/* 결제 버튼 */}
+          <button onClick={pay} disabled={busy}
+            className={"w-full py-4 font-bold text-[15px] flex items-center justify-center gap-2 transition " +
+              (valid && !busy ? "bg-amber text-deep active:scale-[0.99]" : "bg-amber/40 text-deep/60")}>
+            {busy ? '결제창 여는 중…'
+              : price ? (price.toLocaleString() + '원 · 결제하고 신청하기')
+              : '성별을 선택해주세요'}
+          </button>
+          <div className="text-[11px] text-muted text-center mt-3">토스페이먼츠 안전결제 · 카드 / 간편결제</div>
+        </div>
+      </div>
+    );
+  }
+
   /* ─────── App ─────── */
   function App(){
     useReveal();
+    const [applyOpen, setApplyOpen] = useState(false);
     const cta = () => {
       if (typeof fbq === 'function') fbq('track', 'Lead');
       if (typeof gtag === 'function') gtag('event', 'generate_lead', { value: 1, currency: 'KRW' });
-      window.location.href = TALLY_URL;
+      setApplyOpen(true);
     };
 
     return (
       <>
         <div className="page-shell">
+          <Lineup />
           <Hero onCTA={cta} />
           <ConceptHero />
           <Pain />
@@ -1357,6 +1687,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <Foot />
         </div>
         <Sticky onCTA={cta} />
+        <ApplyModal open={applyOpen} onClose={()=>setApplyOpen(false)} />
       </>
     );
   }

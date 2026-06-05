@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>신청 완료 · Underlight</title>
+<style>
+  :root{
+    --ink:#15110d; --ink2:#1e1813; --line:rgba(255,255,255,.10);
+    --fg:#f4efe6; --fg2:#cdc3b4; --muted:#8a8073;
+    --amber:#e0a955; --ember:#d98a6a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; background:var(--ink); color:var(--fg);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:24px;}
+  .card{width:100%; max-width:420px; text-align:center;}
+  .badge{width:84px; height:84px; border-radius:50%; margin:0 auto 24px;
+    display:flex; align-items:center; justify-content:center; font-size:40px;
+    background:rgba(224,169,85,.12); border:1px solid rgba(224,169,85,.5);}
+  h1{font-size:24px; font-weight:800; margin:0 0 10px; letter-spacing:-.01em;}
+  p{font-size:14px; line-height:1.7; color:var(--fg2); margin:0 0 6px;}
+  .muted{color:var(--muted); font-size:12.5px;}
+  .box{margin:26px 0; border:1px solid var(--line); background:var(--ink2);
+    border-radius:12px; padding:18px 20px; text-align:left;}
+  .row{display:flex; justify-content:space-between; padding:7px 0; font-size:13.5px;}
+  .row + .row{border-top:1px solid var(--line);}
+  .row .k{color:var(--muted);}
+  .row .v{color:var(--fg); font-weight:600;}
+  .spin{width:46px; height:46px; border-radius:50%; margin:0 auto 22px;
+    border:3px solid rgba(255,255,255,.12); border-top-color:var(--amber);
+    animation:sp .8s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  .btn{display:inline-block; margin-top:22px; background:var(--amber); color:#1a1209;
+    font-weight:700; font-size:14px; text-decoration:none; padding:13px 28px; border-radius:8px;}
+  .err{color:var(--ember);}
+  .hide{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+
+    <!-- 처리 중 -->
+    <div id="loading">
+      <div class="spin"></div>
+      <h1>결제 확인 중…</h1>
+      <p class="muted">잠시만 기다려주세요. 창을 닫지 마세요.</p>
+    </div>
+
+    <!-- 성공 -->
+    <div id="done" class="hide">
+      <div class="badge">♡</div>
+      <h1>신청이 완료되었어요!</h1>
+      <p>결제가 정상 처리되었습니다.<br>심사 통과 후 <b style="color:var(--amber)">카카오톡</b>으로 회차 안내를 보내드릴게요.</p>
+      <div class="box" id="receipt"></div>
+      <p class="muted">문의: 카카오톡 채널 <b>@언더라이트</b></p>
+      <a class="btn" href="/index.html">홈으로</a>
+    </div>
+
+    <!-- 실패 -->
+    <div id="fail" class="hide">
+      <div class="badge" style="border-color:rgba(217,138,106,.5); background:rgba(217,138,106,.12)">!</div>
+      <h1>결제 확인에 문제가 생겼어요</h1>
+      <p class="err" id="failmsg">잠시 후 다시 시도해주세요.</p>
+      <p class="muted">이미 결제가 되었는데 이 화면이 보이면<br>카카오톡 채널 <b>@언더라이트</b>로 꼭 알려주세요. 바로 처리해드릴게요.</p>
+      <a class="btn" href="/index.html">홈으로</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function(){
+    var q = new URLSearchParams(location.search);
+    var paymentKey = q.get('paymentKey');
+    var orderId    = q.get('orderId');
+    var amount     = q.get('amount');
+
+    function show(id){ ['loading','done','fail'].forEach(function(x){
+      document.getElementById(x).classList.toggle('hide', x !== id); }); }
+    function showFail(msg){ if(msg) document.getElementById('failmsg').textContent = msg; show('fail'); }
+
+    if(!paymentKey || !orderId || !amount){ showFail('결제 정보가 올바르지 않습니다.'); return; }
+
+    // 결제 직전 저장해둔 신청자 정보
+    var applicant = {};
+    try { applicant = JSON.parse(sessionStorage.getItem('ul_apply_' + orderId) || '{}'); } catch(e){}
+
+    fetch('/api/confirm', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ paymentKey: paymentKey, orderId: orderId, amount: Number(amount), applicant: applicant })
+    })
+    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+    .then(function(res){
+      if(!res.ok || !res.j.success){ showFail(res.j && res.j.message); return; }
+      sessionStorage.removeItem('ul_apply_' + orderId);
+      var genderTxt = applicant.gender === 'M' ? '남성' : applicant.gender === 'F' ? '여성' : '-';
+      document.getElementById('receipt').innerHTML =
+        '<div class="row"><span class="k">신청자</span><span class="v">'+(applicant.name||'-')+' ('+genderTxt+')</span></div>'+
+        '<div class="row"><span class="k">회차</span><span class="v">'+(applicant.roundLabel||'-')+'</span></div>'+
+        '<div class="row"><span class="k">결제금액</span><span class="v">'+Number(amount).toLocaleString()+'원</span></div>';
+      show('done');
+      if(typeof fbq === 'function') fbq('track','Purchase',{value:Number(amount),currency:'KRW'});
+      if(typeof gtag === 'function') gtag('event','purchase',{value:Number(amount),currency:'KRW'});
+    })
+    .catch(function(){ showFail('네트워크 오류가 발생했습니다.'); });
+  })();
+</script>
+</body>
+</html>
