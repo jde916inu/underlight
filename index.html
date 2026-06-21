@@ -1607,6 +1607,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   function ApplyModal({ open, onClose }){
     const firstOpen = ROUNDS.find(r => !r.soldout);
     const [rounds, setRounds] = useState(ROUNDS);   // 회차: /api/rounds 동적 로드 (실패 시 하드코딩 폴백)
+    const [lineupRounds, setLineupRounds] = useState([]);  // 잔여석 계산용
     const [gender, setGender] = useState(null);     // 'M' | 'F'
     const [name, setName]     = useState('');
     const [phone, setPhone]   = useState('');
@@ -1641,7 +1642,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       if (!open) return;
       fetch('/api/rounds').then(r => r.json()).then(j => {
         if (j && j.rounds && j.rounds.length) {
-          // 숨김(hideLineup) 회차는 신청 폼에서도 제외 — 라인업·신청 모두 비공개
           const visible = j.rounds.filter(r => !r.hideLineup);
           setRounds(visible);
           setRoundId(prev => {
@@ -1651,7 +1651,37 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           });
         }
       }).catch(() => {});
+      fetch('/api/lineup').then(r => r.json()).then(j => {
+        setLineupRounds((j && j.rounds) || []);
+      }).catch(() => {});
     }, [open]);
+
+    // 날짜만 추출 (시간·장소 제거) — "6/26 (금) 20:40 · 풍산역 5분" → "6/26 (금)"
+    const roundDateOnly = (label) => {
+      const noPlace = label.split(' · ')[0].trim();
+      return noPlace.replace(/\s+\d{1,2}:\d{2}$/, '').trim();
+    };
+
+    // 얼리버드/잔여석 배지 — 이벤트 7일 전까지 얼리버드, 이후 잔여석
+    const ROUND_CAPACITY = 10;
+    const getRoundBadge = (r) => {
+      const m = r.label.match(/(\d{1,2})\/(\d{1,2})/);
+      if (!m) return null;
+      const year = new Date().getFullYear();
+      const eventDate = new Date(year, parseInt(m[1]) - 1, parseInt(m[2]));
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      if (eventDate < today) return null;
+      const daysToEvent = Math.ceil((eventDate - today) / 86400000);
+      const daysToDeadline = daysToEvent - 7;
+      if (daysToDeadline > 0) {
+        return { type: 'earlybird', text: `‼️할인 마감 D-${daysToDeadline}‼️` };
+      }
+      const lr = lineupRounds.find(x => x.roundId === r.id);
+      const cnt = gender === 'M' ? (lr ? lr.males.length : 0)
+                : gender === 'F' ? (lr ? lr.females.length : 0) : null;
+      if (cnt === null) return null;
+      return { type: 'seats', text: `🚨[잔여석 ${Math.max(0, ROUND_CAPACITY - cnt)}개] 곧 마감🚨` };
+    };
 
     if (!open) return null;
 
@@ -1903,18 +1933,24 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           <div className="mb-4">
             <div className="text-[12.5px] font-bold text-fg2 mb-1.5">참가 회차</div>
             <div className="space-y-2">
-              {rounds.map(r => (
-                <button key={r.id} disabled={r.soldout} onClick={()=>setRoundId(r.id)}
-                  className={"w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border-2 text-[13px] transition " +
-                    (r.soldout ? "border-line text-muted/50 bg-ink2/20 cursor-not-allowed"
-                      : roundId===r.id ? "border-amber bg-amber/10 text-amber font-bold"
-                      : "border-line text-fg2 bg-ink2/40")}>
-                  <span>{r.label}</span>
-                  {r.soldout
-                    ? <span className="text-[11px]">마감</span>
-                    : <span className="text-[14px]">{roundId===r.id ? '●' : '○'}</span>}
-                </button>
-              ))}
+              {rounds.map(r => {
+                const badge = getRoundBadge(r);
+                return (
+                  <button key={r.id} disabled={r.soldout} onClick={()=>setRoundId(r.id)}
+                    className={"w-full flex items-center justify-between px-4 py-3 rounded-2xl border-2 text-[13px] transition " +
+                      (r.soldout ? "border-line text-muted/50 bg-ink2/20 cursor-not-allowed"
+                        : roundId===r.id ? "border-amber bg-amber/10 text-amber font-bold"
+                        : "border-line text-fg2 bg-ink2/40")}>
+                    <div className="flex flex-col items-start gap-0.5">
+                      <span>{roundDateOnly(r.label)}</span>
+                      {badge && <span className={"text-[11px] font-bold " + (badge.type==='earlybird' ? "text-amber" : "text-ember")}>{badge.text}</span>}
+                    </div>
+                    {r.soldout
+                      ? <span className="text-[11px]">마감</span>
+                      : <span className="text-[14px]">{roundId===r.id ? '●' : '○'}</span>}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
