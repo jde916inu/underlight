@@ -104,15 +104,18 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"/></n
       <div class="badge">✓</div>
       <div class="eyebrow">신청 완료</div>
       <h1>언더라이트에<br>오신 걸 환영해요!</h1>
-      <p>결제가 정상적으로 처리됐어요.<br>심사 통과 후 <b class="amber">카카오톡</b>으로 회차 안내를 보내드릴게요.</p>
+      <p id="done-desc">결제가 정상적으로 처리됐어요.<br>심사 통과 후 <b class="amber">카카오톡</b>으로 회차 안내를 보내드릴게요.</p>
 
       <div class="box" id="receipt"></div>
+      <div class="box" id="bankbox" style="display:none; border-color:rgba(199,120,0,.4); background:#FFFBF3"></div>
 
       <div class="steps">
         <div class="t">다음 안내 순서예요</div>
-        <div class="step"><span class="n">1</span><span>운영진이 프로필을 검토해요 (1~2일)</span></div>
-        <div class="step"><span class="n">2</span><span>통과되면 카카오톡으로 상세 안내 도착</span></div>
-        <div class="step"><span class="n">3</span><span>회차 당일, 백석역에서 만나요.</span></div>
+        <div id="stepslist">
+          <div class="step"><span class="n">1</span><span>운영진이 프로필을 검토해요 (1~2일)</span></div>
+          <div class="step"><span class="n">2</span><span>통과되면 카카오톡으로 상세 안내 도착</span></div>
+          <div class="step"><span class="n">3</span><span>회차 당일, 풍산역에서 만나요.</span></div>
+        </div>
       </div>
 
       <p class="muted" style="margin-top:18px">문의: 카카오톡 채널 <b>@언더라이트</b></p>
@@ -133,14 +136,56 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"/></n
 
 <script>
   (function(){
+    // ▼ 입금받을 계좌 (계좌이체용) — 실제 정보로 교체
+    var BANK = { bank: '국민은행', account: '937702-00-357037', holder: '장*은' };
+
     var q = new URLSearchParams(location.search);
     var paymentKey = q.get('paymentKey');
     var orderId    = q.get('orderId');
     var amount     = q.get('amount');
+    var applied    = q.get('applied'); // 결제 없는 신청 완료 모드
 
     function show(id){ ['loading','done','fail'].forEach(function(x){
       document.getElementById(x).classList.toggle('hide', x !== id); }); }
     function showFail(msg){ if(msg) document.getElementById('failmsg').textContent = msg; show('fail'); }
+
+    function renderReceipt(applicant, amt){
+      var genderTxt = applicant.gender === 'M' ? '남성' : applicant.gender === 'F' ? '여성' : '-';
+      var companion = applicant.companion ? ' · 동반' : '';
+      var feeRow = amt ? '<div class="row"><span class="k">참가비</span><span class="v">'+Number(amt).toLocaleString()+'원'+companion+'</span></div>' : '';
+      document.getElementById('receipt').innerHTML =
+        '<div class="row"><span class="k">신청자</span><span class="v">'+(applicant.name||'-')+' ('+genderTxt+')</span></div>'+
+        '<div class="row"><span class="k">회차</span><span class="v">'+(applicant.roundLabel||'-')+'</span></div>'+
+        feeRow;
+    }
+
+    // ── 결제 없는 신청 완료 모드 (/api/apply 발송 후 이동) ──
+    if (applied) {
+      if(!orderId){ showFail('신청 정보가 올바르지 않습니다.'); return; }
+      var ap = {};
+      try { ap = JSON.parse(sessionStorage.getItem('ul_apply_' + orderId) || '{}'); } catch(e){}
+      sessionStorage.removeItem('ul_apply_' + orderId);
+      renderReceipt(ap, ap.amount);
+      var amt = Number(ap.amount) || 0;
+      // 계좌이체 입금 안내
+      var bb = document.getElementById('bankbox');
+      bb.style.display = 'block';
+      bb.innerHTML =
+        '<div style="font-weight:800;font-size:14px;margin-bottom:10px;color:#1A1408">💳 입금 안내</div>'+
+        '<div class="row"><span class="k">은행</span><span class="v">'+BANK.bank+'</span></div>'+
+        '<div class="row"><span class="k">계좌번호</span><span class="v">'+BANK.account+'</span></div>'+
+        '<div class="row"><span class="k">예금주</span><span class="v">'+BANK.holder+'</span></div>'+
+        (amt ? '<div class="row"><span class="k">입금액</span><span class="v" style="color:#C77800">'+amt.toLocaleString()+'원</span></div>' : '')+
+        '<div class="row"><span class="k">입금자명</span><span class="v">'+(ap.name||'-')+' (본인 이름)</span></div>';
+      document.getElementById('done-desc').innerHTML =
+        '신청이 접수됐어요.<br>아래 계좌로 <b class="amber">'+(amt ? amt.toLocaleString()+'원' : '참가비')+'</b>을 입금하시면 참석이 확정돼요.';
+      document.getElementById('stepslist').innerHTML =
+        '<div class="step"><span class="n">1</span><span>위 계좌로 <b>'+(ap.name||'본인 이름')+'</b> 이름으로 입금해주세요</span></div>'+
+        '<div class="step"><span class="n">2</span><span>입금이 확인되면 <b>카카오톡</b>으로 참석 확정 안내를 보내드려요</span></div>'+
+        '<div class="step"><span class="n">3</span><span>회차 당일, 풍산역에서 만나요</span></div>';
+      show('done');
+      return;
+    }
 
     if(!paymentKey || !orderId || !amount){ showFail('결제 정보가 올바르지 않습니다.'); return; }
 
