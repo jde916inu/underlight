@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
       .map(r => ({ r, d: roundDateFromLabel(r.date, year) }))
       .filter(x => x.d && x.d.getTime() >= today0.getTime() && !x.r.hideLineup)
       .sort((a, b) => a.d - b.d);
-    const rounds = dated.map(x => x.r);
+    const rounds = dated.slice(0, 2).map(x => x.r);
 
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({ rounds });
