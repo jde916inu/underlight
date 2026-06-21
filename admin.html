@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>언더라이트 · 신청 관리</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{ --amber:#C77800; --line:#E5E0D2; --fg:#1A1408; --fg2:#3F3621; --muted:#8E8676; --ink2:#FAF7F0; }
+  *{box-sizing:border-box;}
+  body{ margin:0; font-family:'Pretendard',system-ui,sans-serif; color:var(--fg); background:#FAF8F2; -webkit-font-smoothing:antialiased; }
+  header{ position:sticky; top:0; background:#fff; border-bottom:1px solid var(--line); padding:14px 18px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; z-index:5; }
+  header h1{ font-size:16px; margin:0; font-weight:800; }
+  header .count{ font-size:12px; color:var(--muted); }
+  header .sp{ flex:1; }
+  button, input{ font-family:inherit; }
+  .btn{ border:1px solid var(--line); background:#fff; color:var(--fg); font-weight:700; font-size:13px; padding:8px 14px; border-radius:9px; cursor:pointer; }
+  .btn:hover{ background:var(--ink2); }
+  .btn.amber{ background:var(--amber); color:#fff; border-color:var(--amber); }
+  .wrap{ padding:18px; }
+  .gate{ max-width:360px; margin:80px auto; background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px; text-align:center; }
+  .gate h2{ font-size:18px; margin:0 0 6px; }
+  .gate p{ font-size:13px; color:var(--muted); margin:0 0 18px; }
+  .gate input{ width:100%; border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:14px; outline:none; margin-bottom:12px; }
+  .gate input:focus{ border-color:var(--amber); }
+  .msg{ font-size:12.5px; color:#C73438; min-height:18px; margin-top:8px; }
+  .tablewrap{ overflow-x:auto; background:#fff; border:1px solid var(--line); border-radius:12px; }
+  table{ border-collapse:collapse; width:100%; font-size:12.5px; white-space:nowrap; }
+  th,td{ padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; }
+  th{ background:var(--ink2); color:var(--fg2); font-weight:700; position:sticky; top:0; font-size:11.5px; }
+  tr:hover td{ background:#FFFCF5; }
+  td.name{ font-weight:700; }
+  a.lk{ color:var(--amber); text-decoration:none; font-weight:700; }
+  a.lk:hover{ text-decoration:underline; }
+  .tag{ display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; }
+  .tag.m{ background:rgba(59,107,214,.12); color:#1F4FB3; }
+  .tag.f{ background:rgba(199,52,56,.12); color:#9F2A2F; }
+  .empty{ text-align:center; color:var(--muted); padding:50px 0; font-size:14px; }
+  button.del{ border:1px solid #E7C4C5; background:#fff; color:#9F2A2F; font-weight:700; font-size:11.5px; padding:5px 10px; border-radius:7px; cursor:pointer; }
+  button.del:hover{ background:#FDECEC; }
+  button.del:disabled{ opacity:.5; cursor:default; }
+  button.confirm{ border:1px solid #C8A24A; background:#FFF7E6; color:#9A6A00; font-weight:800; font-size:11.5px; padding:5px 12px; border-radius:7px; cursor:pointer; white-space:nowrap; }
+  button.confirm:hover{ background:#FFEFD0; }
+  button.confirm:disabled{ opacity:.5; cursor:default; }
+  button.unconfirm{ border:1px solid #D9D2C2; background:#fff; color:#7A7361; font-weight:700; font-size:11px; padding:4px 9px; border-radius:7px; cursor:pointer; white-space:nowrap; }
+  button.unconfirm:hover{ background:#F4F1EA; }
+  button.unconfirm:disabled{ opacity:.5; cursor:default; }
+  .okdot{ display:inline-block; font-size:11.5px; font-weight:800; color:#2F8F5B; background:#E8F6EE; padding:4px 10px; border-radius:999px; white-space:nowrap; }
+  .rpanel{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:14px; }
+  .rtitle{ font-size:13px; font-weight:800; margin-bottom:10px; }
+  .rchips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .rchip{ display:inline-flex; align-items:center; gap:8px; background:var(--ink2); border:1px solid var(--line); border-radius:999px; padding:6px 8px 6px 14px; font-size:12.5px; font-weight:700; }
+  .rchip.soldout{ opacity:.55; }
+  .rchip .rtog{ border:1px solid var(--line); background:#fff; color:var(--fg2); font-size:11px; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; }
+  .rchip.hidden{ opacity:.55; }
+  .rchip .rline{ border:1px solid #BFD2C2; background:#F1F7F2; color:#2F6B43; font-size:11px; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; }
+  .rchip .rdel{ border:none; background:none; color:#9F2A2F; font-size:14px; font-weight:800; cursor:pointer; line-height:1; padding:0 2px; }
+  .raddrow{ display:flex; flex-wrap:wrap; gap:8px; }
+  .raddrow input{ flex:1; min-width:110px; border:1px solid var(--line); border-radius:9px; padding:9px 11px; font-size:13px; outline:none; }
+  .raddrow input:focus{ border-color:var(--amber); }
+  .rempty{ font-size:12.5px; color:var(--muted); }
+  .lineup-round{ margin-bottom:14px; }
+  .lineup-round:last-child{ margin-bottom:0; }
+  .lineup-round-title{ font-size:12.5px; font-weight:800; color:var(--fg2); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+  .lineup-count{ font-size:11.5px; color:var(--muted); font-weight:600; }
+  .lineup-grid{ display:flex; flex-direction:column; }
+  .lineup-person{ display:flex; align-items:center; gap:8px; font-size:12.5px; padding:6px 0; border-bottom:1px solid var(--line); }
+  .lineup-person:last-child{ border-bottom:none; }
+  .lp-name{ font-weight:700; min-width:56px; }
+  .lp-round{ font-size:11px; color:var(--muted); }
+  .lp-sp{ flex:1; }
+  details.lineup-pending{ margin-top:10px; }
+  details.lineup-pending summary{ cursor:pointer; font-size:12px; color:var(--muted); padding:4px 0; }
+  button.btn-rm{ border:1px solid #E7C4C5; background:#fff; color:#9F2A2F; font-weight:700; font-size:11px; padding:3px 9px; border-radius:6px; cursor:pointer; white-space:nowrap; }
+  button.btn-rm:hover{ background:#FDECEC; }
+  button.btn-rm:disabled{ opacity:.5; cursor:default; }
+  button.btn-add{ border:1px solid #C8A24A; background:#FFF7E6; color:#9A6A00; font-weight:700; font-size:11px; padding:3px 9px; border-radius:6px; cursor:pointer; white-space:nowrap; }
+  button.btn-add:hover{ background:#FFEFD0; }
+  button.btn-add:disabled{ opacity:.5; cursor:default; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function(){
+  var app = document.getElementById('app');
+  var KEY_LS = 'ul_admin_key';
+
+  function getKey(){
+    var u = new URLSearchParams(location.search).get('key');
+    if (u) { localStorage.setItem(KEY_LS, u); return u; }
+    return localStorage.getItem(KEY_LS) || '';
+  }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function gate(msg){
+    app.innerHTML =
+      '<div class="gate">' +
+        '<h2>관리자 인증</h2>' +
+        '<p>관리자 키를 입력하세요.</p>' +
+        '<input id="k" type="password" placeholder="ADMIN KEY" autocomplete="off"/>' +
+        '<button class="btn amber" style="width:100%" id="go">확인</button>' +
+        '<div class="msg">' + (msg||'') + '</div>' +
+      '</div>';
+    document.getElementById('go').onclick = function(){
+      var v = document.getElementById('k').value.trim();
+      if(!v) return;
+      localStorage.setItem(KEY_LS, v);
+      load();
+    };
+    document.getElementById('k').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('go').click(); });
+  }
+
+  var COLS = [
+    ['submittedAt','신청시각'], ['name','이름'], ['gender','성별'], ['birthYear','년생'],
+    ['height','키'], ['charm','매력'], ['phone','연락처'], ['workplace','직장/사업자'],
+    ['region','거주지역'], ['drink','음료'], ['avoidName','피하고싶은지인'],
+    ['roundLabel','회차'], ['amount','참가비'], ['companion','동반'], ['companionName','동반자'],
+    ['photoUrl','사진'], ['docUrl','서류'], ['orderId','주문번호']
+  ];
+
+  function fmtTime(s){ try{ var d=new Date(s); return d.toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}); }catch(e){ return s||''; } }
+
+  function cell(row, k){
+    var v = row[k];
+    if (k==='submittedAt') return esc(fmtTime(v));
+    if (k==='gender') { var m = row.genderCode==='M'; return '<span class="tag '+(m?'m':'f')+'">'+esc(v||'-')+'</span>'; }
+    if (k==='amount') return v ? Number(v).toLocaleString()+'원' : '-';
+    if (k==='photoUrl' || k==='docUrl') return v ? '<a class="lk" href="'+esc(v)+'" target="_blank">열기 ↗</a>' : '-';
+    if (k==='phone') return v ? '<a class="lk" href="tel:'+esc(String(v).replace(/[^0-9]/g,''))+'">'+esc(v)+'</a>' : '-';
+    return esc(v==null||v===''?'-':v);
+  }
+
+  function toCSV(rows){
+    var head = COLS.map(function(c){return c[1];}).concat(['입금확정']);
+    var lines = [head.join(',')];
+    rows.forEach(function(r){
+      var cells = COLS.map(function(c){
+        var v = r[c[0]]; if(c[0]==='submittedAt') v=fmtTime(v);
+        v = String(v==null?'':v).replace(/"/g,'""');
+        return /[",\n]/.test(v) ? '"'+v+'"' : v;
+      });
+      cells.push(r.confirmed ? 'O' : '');   // 입금완료(라인업 확정) 여부
+      lines.push(cells.join(','));
+    });
+    return '﻿' + lines.join('\r\n');
+  }
+
+  function render(rows){
+    var header =
+      '<header>' +
+        '<h1>신청 관리</h1>' +
+        '<span class="count">'+rows.length+'건</span>' +
+        '<div class="sp"></div>' +
+        '<button class="btn" id="refresh">새로고침</button>' +
+        '<button class="btn" id="csv">CSV 내보내기</button>' +
+        '<button class="btn" id="logout">로그아웃</button>' +
+      '</header>';
+    var body;
+    if (!rows.length) {
+      body = '<div class="wrap"><div class="empty">아직 신청이 없어요.<br>신청이 들어오면 여기에 실시간으로 쌓여요.</div></div>';
+    } else {
+      var th = COLS.map(function(c){return '<th>'+c[1]+'</th>';}).join('') + '<th>입금</th><th>관리</th>';
+      var trs = rows.map(function(r){
+        var confirmCell = r.confirmed
+          ? '<span class="okdot">✓ 확정</span> <button class="unconfirm" data-id="'+esc(r.orderId)+'" data-name="'+esc(r.name||'')+'">라인업 제외</button>'
+          : '<button class="confirm" data-id="'+esc(r.orderId)+'" data-name="'+esc(r.name||'')+'">입금완료</button>';
+        return '<tr>'+COLS.map(function(c){
+          return '<td'+(c[0]==='name'?' class="name"':'')+'>'+cell(r,c[0])+'</td>';
+        }).join('')+'<td>'+confirmCell+'</td><td><button class="del" data-id="'+esc(r.orderId)+'">삭제</button></td></tr>';
+      }).join('');
+      body = '<div class="wrap"><div class="tablewrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div></div>';
+    }
+    app.innerHTML = header + '<div class="wrap" style="padding-bottom:0"><div id="roundspanel" class="rpanel"></div><div id="lineuppanel" class="rpanel"></div></div>' + body;
+    renderRounds();
+    renderLineup(rows);
+    Array.prototype.forEach.call(document.querySelectorAll('.del'), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute('data-id');
+        if(!confirm('이 신청을 삭제할까요?\n'+id)) return;
+        b.disabled = true; b.textContent = '삭제 중…';
+        fetch('/api/submissions?key='+encodeURIComponent(getKey())+'&orderId='+encodeURIComponent(id), { method:'DELETE' })
+          .then(function(r){ return r.json(); })
+          .then(function(){ load(); })
+          .catch(function(){ b.disabled=false; b.textContent='삭제'; alert('삭제 실패'); });
+      };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.confirm'), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute('data-id');
+        var nm = b.getAttribute('data-name') || '';
+        if(!confirm('['+nm+'] 입금 확인 → 참석확정 알림톡을 보낼까요?')) return;
+        b.disabled = true; b.textContent = '발송 중…';
+        fetch('/api/confirm-attend?key='+encodeURIComponent(getKey()), {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ orderId: id })
+        })
+        .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+        .then(function(res){
+          if(!res.ok){ b.disabled=false; b.textContent='입금완료'; alert('실패: '+((res.j&&res.j.error)||'')); return; }
+          var m = res.j.messaging || {};
+          if(!m.sent){ alert('확정 처리됐어요.\n(알림톡 미발송: '+(m.reason||'')+')\n솔라피 설정·템플릿 승인 후엔 자동 발송됩니다.'); }
+          load();
+        })
+        .catch(function(){ b.disabled=false; b.textContent='입금완료'; alert('네트워크 오류'); });
+      };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.unconfirm'), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute('data-id');
+        var nm = b.getAttribute('data-name') || '';
+        if(!confirm('['+nm+'] 라인업에서 제외할까요?\n신청 데이터는 그대로 남고, 공개 라인업에서만 빠집니다.\n(알림톡은 발송되지 않아요)')) return;
+        b.disabled = true; b.textContent = '제외 중…';
+        fetch('/api/confirm-attend?key='+encodeURIComponent(getKey()), {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ orderId: id, action:'unconfirm' })
+        })
+        .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+        .then(function(res){
+          if(!res.ok){ b.disabled=false; b.textContent='라인업 제외'; alert('실패: '+((res.j&&res.j.error)||'')); return; }
+          load();
+        })
+        .catch(function(){ b.disabled=false; b.textContent='라인업 제외'; alert('네트워크 오류'); });
+      };
+    });
+    document.getElementById('refresh').onclick = load;
+    document.getElementById('logout').onclick = function(){ localStorage.removeItem(KEY_LS); gate(''); };
+    document.getElementById('csv').onclick = function(){
+      var blob = new Blob([toCSV(rows)], {type:'text/csv;charset=utf-8'});
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+      a.download = 'underlight_신청_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+    };
+  }
+
+  function val(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
+  function each(sel, fn){ Array.prototype.forEach.call(document.querySelectorAll(sel), fn); }
+  function rpost(payload){
+    fetch('/api/rounds?key='+encodeURIComponent(getKey()), { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+      .then(function(res){ if(!res.ok){ alert('실패: '+((res.j&&res.j.error)||'')); return; } renderRounds(); })
+      .catch(function(){ alert('네트워크 오류'); });
+  }
+  function renderLineup(rows){
+    var el = document.getElementById('lineuppanel'); if(!el) return;
+
+    // 확정된 신청자 회차별 그룹화
+    var byRound = {};
+    var roundOrder = [];
+    var unconfirmed = [];
+
+    (rows || []).forEach(function(r){
+      if(r.confirmed){
+        var key = r.roundLabel || '회차 미정';
+        if(!byRound[key]){ byRound[key] = []; roundOrder.push(key); }
+        byRound[key].push(r);
+      } else {
+        unconfirmed.push(r);
+      }
+    });
+
+    var html = '<div class="rtitle">👥 라인업 관리</div>';
+
+    if(roundOrder.length === 0){
+      html += '<div class="rempty">아직 라인업에 올라간 참가자가 없어요.</div>';
+    } else {
+      roundOrder.forEach(function(key){
+        var people = byRound[key];
+        var males = people.filter(function(p){ return p.genderCode==='M'||p.gender==='남성'; });
+        var females = people.filter(function(p){ return p.genderCode==='F'||p.gender==='여성'; });
+        html += '<div class="lineup-round">';
+        html += '<div class="lineup-round-title">'+esc(key)+' <span class="lineup-count">남 '+males.length+' · 여 '+females.length+'</span></div>';
+        html += '<div class="lineup-grid">';
+        people.forEach(function(p){
+          var isMale = p.genderCode==='M'||p.gender==='남성';
+          var phone = String(p.phone||'').replace(/[^0-9]/g,'');
+          html += '<div class="lineup-person">';
+          html += '<span class="tag '+(isMale?'m':'f')+'">'+esc(p.gender||'-')+'</span>';
+          html += '<span class="lp-name">'+esc(p.name||'-')+'</span>';
+          html += '<a class="lk" href="tel:'+esc(phone)+'">'+esc(p.phone||'-')+'</a>';
+          html += '<div class="lp-sp"></div>';
+          html += '<button class="btn-rm" data-id="'+esc(p.orderId)+'" data-name="'+esc(p.name||'')+'">제외</button>';
+          html += '</div>';
+        });
+        html += '</div></div>';
+      });
+    }
+
+    if(unconfirmed.length > 0){
+      html += '<details class="lineup-pending"><summary>미확정 신청자 '+unconfirmed.length+'명 (라인업 추가)</summary>';
+      html += '<div class="lineup-grid" style="margin-top:8px">';
+      unconfirmed.forEach(function(p){
+        var isMale = p.genderCode==='M'||p.gender==='남성';
+        var phone = String(p.phone||'').replace(/[^0-9]/g,'');
+        html += '<div class="lineup-person">';
+        html += '<span class="tag '+(isMale?'m':'f')+'">'+esc(p.gender||'-')+'</span>';
+        html += '<span class="lp-name">'+esc(p.name||'-')+'</span>';
+        html += '<a class="lk" href="tel:'+esc(phone)+'">'+esc(p.phone||'-')+'</a>';
+        html += '<span class="lp-round">'+esc(p.roundLabel||'-')+'</span>';
+        html += '<div class="lp-sp"></div>';
+        html += '<button class="btn-add" data-id="'+esc(p.orderId)+'" data-name="'+esc(p.name||'')+'">추가</button>';
+        html += '</div>';
+      });
+      html += '</div></details>';
+    }
+
+    el.innerHTML = html;
+
+    Array.prototype.forEach.call(document.querySelectorAll('.btn-rm'), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute('data-id');
+        var nm = b.getAttribute('data-name')||'';
+        if(!confirm('['+nm+'] 라인업에서 제외할까요?\n신청 데이터는 그대로 남아요.')) return;
+        b.disabled=true; b.textContent='제외 중…';
+        fetch('/api/confirm-attend?key='+encodeURIComponent(getKey()), {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ orderId:id, action:'unconfirm' })
+        })
+        .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+        .then(function(res){ if(!res.ok){ b.disabled=false; b.textContent='제외'; alert('실패: '+((res.j&&res.j.error)||'')); return; } load(); })
+        .catch(function(){ b.disabled=false; b.textContent='제외'; alert('네트워크 오류'); });
+      };
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.btn-add'), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute('data-id');
+        var nm = b.getAttribute('data-name')||'';
+        if(!confirm('['+nm+'] 라인업에 추가할까요?\n(알림톡 발송 없이 마킹만 됩니다)')) return;
+        b.disabled=true; b.textContent='추가 중…';
+        fetch('/api/confirm-attend?key='+encodeURIComponent(getKey()), {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ orderId:id, action:'mark' })
+        })
+        .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+        .then(function(res){ if(!res.ok){ b.disabled=false; b.textContent='추가'; alert('실패: '+((res.j&&res.j.error)||'')); return; } load(); })
+        .catch(function(){ b.disabled=false; b.textContent='추가'; alert('네트워크 오류'); });
+      };
+    });
+  }
+
+  function renderRounds(){
+    var el = document.getElementById('roundspanel'); if(!el) return;
+    fetch('/api/rounds').then(function(r){return r.json();}).then(function(j){
+      var rs = (j && j.rounds) || [];
+      var chips = rs.map(function(r){
+        return '<div class="rchip'+(r.soldout?' soldout':'')+(r.hideLineup?' hidden':'')+'">'+
+          '<span>'+esc(r.label)+(r.soldout?' · 마감':'')+(r.hideLineup?' · 비공개':'')+'</span>'+
+          '<button class="rline" data-id="'+esc(r.id)+'" data-h="'+(r.hideLineup?'0':'1')+'">'+(r.hideLineup?'공개':'숨김')+'</button>'+
+          '<button class="rtog" data-id="'+esc(r.id)+'" data-so="'+(r.soldout?'0':'1')+'">'+(r.soldout?'재오픈':'마감')+'</button>'+
+          '<button class="rdel" data-id="'+esc(r.id)+'">✕</button>'+
+        '</div>';
+      }).join('');
+      el.innerHTML =
+        '<div class="rtitle">📅 회차 관리</div>'+
+        '<div class="rchips">'+(chips || '<span class="rempty">등록된 회차 없음</span>')+'</div>'+
+        '<div class="raddrow">'+
+          '<input id="rdate" placeholder="날짜  예: 6/20 (금)" />'+
+          '<input id="rtime" placeholder="시간  예: 20:30" />'+
+          '<input id="rplace" placeholder="장소  예: 풍산역 5분" />'+
+          '<button id="radd" class="btn amber">추가</button>'+
+        '</div>';
+      document.getElementById('radd').onclick = function(){
+        var date = val('rdate'); if(!date){ alert('날짜를 입력하세요'); return; }
+        rpost({ action:'add', date:date, time:val('rtime'), place:val('rplace') });
+      };
+      each('.rdel', function(b){ b.onclick = function(){ if(confirm('이 회차를 삭제할까요?')) rpost({ action:'delete', id:b.getAttribute('data-id') }); }; });
+      each('.rtog', function(b){ b.onclick = function(){ rpost({ action:'soldout', id:b.getAttribute('data-id'), soldout: b.getAttribute('data-so')==='1' }); }; });
+      each('.rline', function(b){ b.onclick = function(){ rpost({ action:'lineup', id:b.getAttribute('data-id'), hideLineup: b.getAttribute('data-h')==='1' }); }; });
+    }).catch(function(){ el.innerHTML = '회차 불러오기 실패'; });
+  }
+
+  function load(){
+    var key = getKey();
+    if(!key){ gate(''); return; }
+    app.innerHTML = '<div class="empty" style="margin-top:80px">불러오는 중…</div>';
+    fetch('/api/submissions?key='+encodeURIComponent(key))
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, status:r.status, j:j}; }); })
+      .then(function(res){
+        if(res.status===401){ localStorage.removeItem(KEY_LS); gate('키가 올바르지 않아요.'); return; }
+        if(!res.ok){ gate((res.j&&res.j.error)||'오류가 발생했어요.'); return; }
+        render(res.j.submissions || []);
+      })
+      .catch(function(){ gate('네트워크 오류. 다시 시도해주세요.'); });
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>
