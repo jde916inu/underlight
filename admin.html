@@ -495,34 +495,54 @@
     };
   }
 
+  function rpost(payload, btn){
+    if(btn){ btn.disabled=true; btn.textContent='처리 중…'; }
+    fetch('/api/rounds?key='+encodeURIComponent(getKey()), { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+      .then(function(res){
+        if(btn){ btn.disabled=false; btn.textContent='추가'; }
+        if(!res.ok){ alert('실패: '+((res.j&&res.j.error)||'')); return; }
+        drawRounds(res.j.rounds || []);
+      })
+      .catch(function(){
+        if(btn){ btn.disabled=false; btn.textContent='추가'; }
+        alert('네트워크 오류');
+      });
+  }
+
+  function drawRounds(rs){
+    var el = document.getElementById('roundspanel'); if(!el) return;
+    var chips = rs.map(function(r){
+      return '<div class="rchip'+(r.soldout?' soldout':'')+(r.hideLineup?' hidden':'')+'">'+
+        '<span>'+esc(r.label)+(r.soldout?' · 마감':'')+(r.hideLineup?' · 비공개':'')+'</span>'+
+        '<button class="rline" data-id="'+esc(r.id)+'" data-h="'+(r.hideLineup?'0':'1')+'">'+(r.hideLineup?'공개':'숨김')+'</button>'+
+        '<button class="rtog" data-id="'+esc(r.id)+'" data-so="'+(r.soldout?'0':'1')+'">'+(r.soldout?'재오픈':'마감')+'</button>'+
+        '<button class="rdel" data-id="'+esc(r.id)+'">✕</button>'+
+      '</div>';
+    }).join('');
+    el.innerHTML =
+      '<div class="rtitle">📅 회차 관리</div>'+
+      '<div class="rchips">'+(chips || '<span class="rempty">등록된 회차 없음</span>')+'</div>'+
+      '<div class="raddrow">'+
+        '<input id="rdate" placeholder="날짜  예: 6/20 (금)" />'+
+        '<input id="rtime" placeholder="시간  예: 20:30" />'+
+        '<input id="rplace" placeholder="장소  예: 풍산역 5분" />'+
+        '<button id="radd" class="btn amber">추가</button>'+
+      '</div>';
+    var raddbtn = document.getElementById('radd');
+    raddbtn.onclick = function(){
+      var date = val('rdate'); if(!date){ alert('날짜를 입력하세요'); return; }
+      rpost({ action:'add', date:date, time:val('rtime'), place:val('rplace') }, raddbtn);
+    };
+    each('.rdel', function(b){ b.onclick = function(){ if(confirm('이 회차를 삭제할까요?')) rpost({ action:'delete', id:b.getAttribute('data-id') }); }; });
+    each('.rtog', function(b){ b.onclick = function(){ rpost({ action:'soldout', id:b.getAttribute('data-id'), soldout: b.getAttribute('data-so')==='1' }); }; });
+    each('.rline', function(b){ b.onclick = function(){ rpost({ action:'lineup', id:b.getAttribute('data-id'), hideLineup: b.getAttribute('data-h')==='1' }); }; });
+  }
+
   function renderRounds(){
     var el = document.getElementById('roundspanel'); if(!el) return;
     fetch('/api/rounds').then(function(r){return r.json();}).then(function(j){
-      var rs = (j && j.rounds) || [];
-      var chips = rs.map(function(r){
-        return '<div class="rchip'+(r.soldout?' soldout':'')+(r.hideLineup?' hidden':'')+'">'+
-          '<span>'+esc(r.label)+(r.soldout?' · 마감':'')+(r.hideLineup?' · 비공개':'')+'</span>'+
-          '<button class="rline" data-id="'+esc(r.id)+'" data-h="'+(r.hideLineup?'0':'1')+'">'+(r.hideLineup?'공개':'숨김')+'</button>'+
-          '<button class="rtog" data-id="'+esc(r.id)+'" data-so="'+(r.soldout?'0':'1')+'">'+(r.soldout?'재오픈':'마감')+'</button>'+
-          '<button class="rdel" data-id="'+esc(r.id)+'">✕</button>'+
-        '</div>';
-      }).join('');
-      el.innerHTML =
-        '<div class="rtitle">📅 회차 관리</div>'+
-        '<div class="rchips">'+(chips || '<span class="rempty">등록된 회차 없음</span>')+'</div>'+
-        '<div class="raddrow">'+
-          '<input id="rdate" placeholder="날짜  예: 6/20 (금)" />'+
-          '<input id="rtime" placeholder="시간  예: 20:30" />'+
-          '<input id="rplace" placeholder="장소  예: 풍산역 5분" />'+
-          '<button id="radd" class="btn amber">추가</button>'+
-        '</div>';
-      document.getElementById('radd').onclick = function(){
-        var date = val('rdate'); if(!date){ alert('날짜를 입력하세요'); return; }
-        rpost({ action:'add', date:date, time:val('rtime'), place:val('rplace') });
-      };
-      each('.rdel', function(b){ b.onclick = function(){ if(confirm('이 회차를 삭제할까요?')) rpost({ action:'delete', id:b.getAttribute('data-id') }); }; });
-      each('.rtog', function(b){ b.onclick = function(){ rpost({ action:'soldout', id:b.getAttribute('data-id'), soldout: b.getAttribute('data-so')==='1' }); }; });
-      each('.rline', function(b){ b.onclick = function(){ rpost({ action:'lineup', id:b.getAttribute('data-id'), hideLineup: b.getAttribute('data-h')==='1' }); }; });
+      drawRounds((j && j.rounds) || []);
     }).catch(function(){ el.innerHTML = '회차 불러오기 실패'; });
   }
 
