@@ -272,9 +272,9 @@
 
     (rows || []).forEach(function(r){
       if(r.confirmed){
-        var key = r.roundLabel || '회차 미정';
-        if(!byRound[key]){ byRound[key] = []; roundOrder.push(key); }
-        byRound[key].push(r);
+        var key = r.roundId || r.roundLabel || '회차 미정';
+        if(!byRound[key]){ byRound[key] = { label: r.roundLabel || key, people: [] }; roundOrder.push(key); }
+        byRound[key].people.push(r);
       } else {
         unconfirmed.push(r);
       }
@@ -286,11 +286,13 @@
       html += '<div class="rempty">아직 라인업에 올라간 참가자가 없어요.</div>';
     } else {
       roundOrder.forEach(function(key){
-        var people = byRound[key];
+        var group = byRound[key];
+        var people = group.people;
+        var displayLabel = group.label;
         var males = people.filter(function(p){ return p.genderCode==='M'||p.gender==='남성'; });
         var females = people.filter(function(p){ return p.genderCode==='F'||p.gender==='여성'; });
         html += '<div class="lineup-round">';
-        html += '<div class="lineup-round-title">'+esc(key)+' <span class="lineup-count">남 '+males.length+' · 여 '+females.length+'</span></div>';
+        html += '<div class="lineup-round-title">'+esc(displayLabel)+' <span class="lineup-count">남 '+males.length+' · 여 '+females.length+'</span></div>';
         html += '<div class="lineup-grid">';
         people.forEach(function(p){
           var isMale = p.genderCode==='M'||p.gender==='남성';
