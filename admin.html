@@ -69,6 +69,7 @@
   .lineup-person{ display:flex; align-items:center; gap:8px; font-size:12.5px; padding:6px 0; border-bottom:1px solid var(--line); }
   .lineup-person:last-child{ border-bottom:none; }
   .lp-name{ font-weight:700; min-width:56px; }
+  .lp-job{ font-size:11.5px; color:var(--muted); }
   .lp-round{ font-size:11px; color:var(--muted); }
   .lp-sp{ flex:1; }
   details.lineup-pending{ margin-top:10px; }
@@ -297,6 +298,7 @@
           html += '<div class="lineup-person">';
           html += '<span class="tag '+(isMale?'m':'f')+'">'+esc(p.gender||'-')+'</span>';
           html += '<span class="lp-name">'+esc(p.name||'-')+'</span>';
+          html += '<span class="lp-job">'+esc(p.workplace||'-')+'</span>';
           html += '<a class="lk" href="tel:'+esc(phone)+'">'+esc(p.phone||'-')+'</a>';
           html += '<div class="lp-sp"></div>';
           html += '<button class="btn-rm" data-id="'+esc(p.orderId)+'" data-name="'+esc(p.name||'')+'">제외</button>';
@@ -315,6 +317,7 @@
         html += '<div class="lineup-person">';
         html += '<span class="tag '+(isMale?'m':'f')+'">'+esc(p.gender||'-')+'</span>';
         html += '<span class="lp-name">'+esc(p.name||'-')+'</span>';
+        html += '<span class="lp-job">'+esc(p.workplace||'-')+'</span>';
         html += '<a class="lk" href="tel:'+esc(phone)+'">'+esc(p.phone||'-')+'</a>';
         html += '<span class="lp-round">'+esc(p.roundLabel||'-')+'</span>';
         html += '<div class="lp-sp"></div>';
