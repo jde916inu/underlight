@@ -441,6 +441,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   // ▼ 동반 참여(친구와 함께) 시 1인당 할인 금액 (원)
   const COMPANION_DISCOUNT = 3000;
+  // ▼ 얼리버드 할인 금액 (이벤트 7일 이전 신청 시 자동 적용)
+  const EARLYBIRD_DISCOUNT = 3000;
 
   // ▼ 신청 받을 회차 목록 (soldout:true 면 마감 표시 + 선택 불가)
   const ROUNDS = [
@@ -1685,9 +1687,17 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     if (!open) return null;
 
     const basePrice = gender ? PRICES[gender] : null;
-    const discount = companion ? COMPANION_DISCOUNT : 0;
-    const price = basePrice == null ? null : Math.max(0, basePrice - discount);
     const round = rounds.find(r => r.id === roundId);
+    const isEarlybird = (() => {
+      if (!round) return false;
+      const m = round.label.match(/(\d{1,2})\/(\d{1,2})/);
+      if (!m) return false;
+      const eventDate = new Date(new Date().getFullYear(), parseInt(m[1]) - 1, parseInt(m[2]));
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      return Math.ceil((eventDate - today) / 86400000) > 7;
+    })();
+    const discount = (companion ? COMPANION_DISCOUNT : 0) + (isEarlybird ? EARLYBIRD_DISCOUNT : 0);
+    const price = basePrice == null ? null : Math.max(0, basePrice - discount);
 
     const fmtPhone = (v) => {
       const d = v.replace(/\D/g, '').slice(0, 11);
@@ -1976,10 +1986,16 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 <span>참가비 ({gender==='M'?'남성':'여성'})</span>
                 <span>{basePrice.toLocaleString()}원</span>
               </div>
-              {discount > 0 && (
+              {isEarlybird && (
+                <div className="flex justify-between py-1 text-amber">
+                  <span>‼️ 얼리버드 할인</span>
+                  <span>-{EARLYBIRD_DISCOUNT.toLocaleString()}원</span>
+                </div>
+              )}
+              {companion && (
                 <div className="flex justify-between py-1 text-amber">
                   <span>동반 할인</span>
-                  <span>-{discount.toLocaleString()}원</span>
+                  <span>-{COMPANION_DISCOUNT.toLocaleString()}원</span>
                 </div>
               )}
               <div className="flex justify-between py-2 mt-1 border-t border-line font-bold text-fg text-[15px]">
@@ -2024,6 +2040,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <span className="text-[13px] text-fg2 font-bold">참가비</span>
               <span className="text-right">
                 <span className="text-[18px] text-amber font-extrabold">{price.toLocaleString()}원</span>
+                {isEarlybird && <span className="block text-[11px] text-amber mt-0.5">‼️ 얼리버드 3,000원 할인 적용</span>}
                 {companion && <span className="block text-[11px] text-muted mt-0.5">동반 할인 3,000원 적용</span>}
               </span>
             </div>
