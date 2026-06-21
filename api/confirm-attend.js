@@ -99,6 +99,7 @@ async function sendConfirm(sub) {
         // 일시엔 날짜·시간만 (장소는 #{장소}로 별도 — 라벨에 박힌 옛 장소와 충돌 방지)
         '#{일시}': sub.roundLabel ? String(sub.roundLabel).split('·')[0].trim() : '',
         '#{장소}': venue,
+        '#{주차안내}': '주차공간이 협소하오니 대중교통 이용을 권장드립니다.',
       },
       disableSms: false,
     },
