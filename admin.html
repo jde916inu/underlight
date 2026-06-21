@@ -78,6 +78,23 @@
   button.btn-add{ border:1px solid #C8A24A; background:#FFF7E6; color:#9A6A00; font-weight:700; font-size:11px; padding:3px 9px; border-radius:6px; cursor:pointer; white-space:nowrap; }
   button.btn-add:hover{ background:#FFEFD0; }
   button.btn-add:disabled{ opacity:.5; cursor:default; }
+  .addform{ display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+  .addform-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .addform-row label{ font-size:11.5px; font-weight:700; color:var(--fg2); display:flex; flex-direction:column; gap:4px; flex:1; min-width:120px; }
+  .addform-row label.narrow{ min-width:80px; flex:0 0 auto; }
+  .addform-row input, .addform-row select{ border:1px solid var(--line); border-radius:9px; padding:8px 10px; font-size:13px; outline:none; font-family:inherit; width:100%; background:#fff; }
+  .addform-row input:focus, .addform-row select:focus{ border-color:var(--amber); }
+  .gender-btns{ display:flex; gap:6px; }
+  .gender-btn{ flex:1; border:1px solid var(--line); background:#fff; color:var(--fg2); font-weight:700; font-size:12.5px; padding:8px 0; border-radius:9px; cursor:pointer; }
+  .gender-btn.sel-m{ background:rgba(59,107,214,.12); border-color:#3B6BD6; color:#1F4FB3; }
+  .gender-btn.sel-f{ background:rgba(199,52,56,.12); border-color:#C73438; color:#9F2A2F; }
+  .addform-msg{ font-size:12.5px; min-height:18px; }
+  .addform-msg.ok{ color:#2F8F5B; }
+  .addform-msg.err{ color:#C73438; }
+  details.addpanel-wrap summary{ cursor:pointer; font-size:13px; font-weight:800; list-style:none; display:flex; align-items:center; gap:6px; }
+  details.addpanel-wrap summary::-webkit-details-marker{ display:none; }
+  details.addpanel-wrap summary::after{ content:'﹢'; font-size:16px; color:var(--amber); margin-left:auto; }
+  details.addpanel-wrap[open] summary::after{ content:'－'; }
 </style>
 </head>
 <body>
@@ -172,9 +189,10 @@
       }).join('');
       body = '<div class="wrap"><div class="tablewrap"><table><thead><tr>'+th+'</tr></thead><tbody>'+trs+'</tbody></table></div></div>';
     }
-    app.innerHTML = header + '<div class="wrap" style="padding-bottom:0"><div id="roundspanel" class="rpanel"></div><div id="lineuppanel" class="rpanel"></div></div>' + body;
+    app.innerHTML = header + '<div class="wrap" style="padding-bottom:0"><div id="roundspanel" class="rpanel"></div><div id="lineuppanel" class="rpanel"></div><div id="addpanel" class="rpanel"></div></div>' + body;
     renderRounds();
     renderLineup(rows);
+    renderAddPanel();
     Array.prototype.forEach.call(document.querySelectorAll('.del'), function(b){
       b.onclick = function(){
         var id = b.getAttribute('data-id');
@@ -337,6 +355,142 @@
         .catch(function(){ b.disabled=false; b.textContent='추가'; alert('네트워크 오류'); });
       };
     });
+  }
+
+  function renderAddPanel(){
+    var el = document.getElementById('addpanel'); if(!el) return;
+    var selGender = '';
+    var REGIONS = ['일산','김포','파주','그외지역'];
+    var DRINKS = ['아메리카노 (hot)','아메리카노 (ice)','자몽 티 (hot)','자몽 티 (ice)','사과 라벤더 티 (hot)','민트 티 (hot)','민트 티 (ice)'];
+
+    function regionOpts(){ return REGIONS.map(function(r){ return '<option value="'+esc(r)+'">'+esc(r)+'</option>'; }).join(''); }
+    function drinkOpts(){ return DRINKS.map(function(d){ return '<option value="'+esc(d)+'">'+esc(d)+'</option>'; }).join(''); }
+
+    el.innerHTML =
+      '<details class="addpanel-wrap">'+
+        '<summary>✏️ 참가자 직접 추가</summary>'+
+        '<div class="addform" id="addform">'+
+          '<div class="addform-row">'+
+            '<label>회차<select id="af-round"><option value="">-- 회차 선택 --</option></select></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label class="narrow">성별<div class="gender-btns"><button type="button" class="gender-btn" id="af-m">남성</button><button type="button" class="gender-btn" id="af-f">여성</button></div></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label>이름<input id="af-name" placeholder="홍길동"/></label>'+
+            '<label>전화번호<input id="af-phone" placeholder="010-0000-0000" maxlength="13"/></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label class="narrow">출생연도<input id="af-birth" placeholder="1995" maxlength="4"/></label>'+
+            '<label class="narrow">키(cm)<input id="af-height" placeholder="170" maxlength="3"/></label>'+
+            '<label>직장/사업자<input id="af-work" placeholder="직장명 또는 사업자"/></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label>거주지역<select id="af-region"><option value="">-- 선택 --</option>'+regionOpts()+'</select></label>'+
+            '<label>음료<select id="af-drink"><option value="">-- 선택 --</option>'+drinkOpts()+'</select></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label>매력 한마디 (선택)<input id="af-charm" placeholder="자유롭게"/></label>'+
+            '<label>피하고싶은 지인 (선택)<input id="af-avoid" placeholder="이름"/></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label style="flex-direction:row;align-items:center;gap:8px;flex:0 0 auto"><input type="checkbox" id="af-companion" style="width:auto"/> 동반 참여</label>'+
+            '<label id="af-companion-name-wrap" style="display:none">동반자 이름<input id="af-companion-name" placeholder="동반자 이름"/></label>'+
+          '</div>'+
+          '<div class="addform-row">'+
+            '<label style="flex-direction:row;align-items:center;gap:8px;flex:0 0 auto"><input type="checkbox" id="af-lineup"/> 저장 후 라인업 바로 추가</label>'+
+          '</div>'+
+          '<div class="addform-row"><button class="btn amber" id="af-submit">저장</button></div>'+
+          '<div class="addform-msg" id="af-msg"></div>'+
+        '</div>'+
+      '</details>';
+
+    // 회차 목록 채우기
+    fetch('/api/rounds').then(function(r){return r.json();}).then(function(j){
+      var sel = document.getElementById('af-round'); if(!sel) return;
+      (j.rounds||[]).forEach(function(r){
+        var o = document.createElement('option'); o.value = r.id; o.textContent = r.label; sel.appendChild(o);
+      });
+    }).catch(function(){});
+
+    // 성별 버튼
+    document.getElementById('af-m').onclick = function(){ selGender='M'; document.getElementById('af-m').className='gender-btn sel-m'; document.getElementById('af-f').className='gender-btn'; };
+    document.getElementById('af-f').onclick = function(){ selGender='F'; document.getElementById('af-f').className='gender-btn sel-f'; document.getElementById('af-m').className='gender-btn'; };
+
+    // 동반 토글
+    document.getElementById('af-companion').onchange = function(){
+      document.getElementById('af-companion-name-wrap').style.display = this.checked ? '' : 'none';
+    };
+
+    // 전화번호 자동 포맷
+    document.getElementById('af-phone').oninput = function(){
+      var d = this.value.replace(/\D/g,'').slice(0,11);
+      if(d.length<4) this.value=d;
+      else if(d.length<8) this.value=d.slice(0,3)+'-'+d.slice(3);
+      else this.value=d.slice(0,3)+'-'+d.slice(3,7)+'-'+d.slice(7);
+    };
+
+    function afVal(id){ var e=document.getElementById(id); return e?e.value.trim():''; }
+    function afMsg(txt,ok){ var e=document.getElementById('af-msg'); if(e){ e.textContent=txt; e.className='addform-msg '+(ok?'ok':'err'); } }
+
+    document.getElementById('af-submit').onclick = function(){
+      var roundSel = document.getElementById('af-round');
+      var roundId = roundSel ? roundSel.value : '';
+      var roundLabel = roundSel && roundSel.selectedIndex > 0 ? roundSel.options[roundSel.selectedIndex].text : '';
+      var name = afVal('af-name');
+      var phone = afVal('af-phone');
+      var birth = afVal('af-birth');
+      var height = afVal('af-height');
+
+      if(!roundId){ afMsg('회차를 선택하세요.'); return; }
+      if(!selGender){ afMsg('성별을 선택하세요.'); return; }
+      if(!name){ afMsg('이름을 입력하세요.'); return; }
+      if(phone.replace(/\D/g,'').length !== 11){ afMsg('전화번호 11자리를 입력하세요.'); return; }
+
+      var btn = document.getElementById('af-submit');
+      btn.disabled=true; btn.textContent='저장 중…';
+
+      var orderId = 'admin-' + Date.now();
+      var companion = document.getElementById('af-companion').checked;
+      var addLineup = document.getElementById('af-lineup').checked;
+
+      var applicant = {
+        name: name,
+        gender: selGender==='M'?'남성':'여성',
+        genderCode: selGender,
+        phone: phone,
+        birthYear: birth,
+        height: height,
+        charm: afVal('af-charm'),
+        workplace: afVal('af-work'),
+        region: afVal('af-region'),
+        drink: afVal('af-drink'),
+        avoidName: afVal('af-avoid'),
+        roundId: roundId,
+        roundLabel: roundLabel,
+        companion: companion,
+        companionName: companion ? afVal('af-companion-name') : '',
+        amount: 0,
+      };
+
+      fetch('/api/apply', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ orderId: orderId, applicant: applicant })
+      })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+      .then(function(res){
+        if(!res.ok){ btn.disabled=false; btn.textContent='저장'; afMsg('저장 실패: '+((res.j&&res.j.message)||'')); return; }
+        if(!addLineup){ btn.disabled=false; btn.textContent='저장'; afMsg(name+' 저장 완료!', true); load(); return; }
+        // 라인업 추가
+        fetch('/api/confirm-attend?key='+encodeURIComponent(getKey()), {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ orderId: orderId, action:'mark' })
+        })
+        .then(function(){ btn.disabled=false; btn.textContent='저장'; afMsg(name+' 저장 + 라인업 추가 완료!', true); load(); })
+        .catch(function(){ btn.disabled=false; btn.textContent='저장'; afMsg(name+' 저장 완료 (라인업 추가 실패)', false); load(); });
+      })
+      .catch(function(){ btn.disabled=false; btn.textContent='저장'; afMsg('네트워크 오류'); });
+    };
   }
 
   function renderRounds(){
