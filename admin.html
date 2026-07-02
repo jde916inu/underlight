@@ -65,6 +65,7 @@
   .lineup-round:last-child{ margin-bottom:0; }
   .lineup-round-title{ font-size:12.5px; font-weight:800; color:var(--fg2); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
   .lineup-count{ font-size:11.5px; color:var(--muted); font-weight:600; }
+  .lineup-revenue{ margin-left:auto; font-size:12px; font-weight:800; color:var(--amber); }
   .lineup-grid{ display:flex; flex-direction:column; }
   .lineup-person{ display:flex; align-items:center; gap:8px; font-size:12.5px; padding:6px 0; border-bottom:1px solid var(--line); }
   .lineup-person:last-child{ border-bottom:none; }
@@ -291,8 +292,9 @@
         var displayLabel = group.label;
         var males = people.filter(function(p){ return p.genderCode==='M'||p.gender==='남성'; });
         var females = people.filter(function(p){ return p.genderCode==='F'||p.gender==='여성'; });
+        var revenue = people.reduce(function(s,p){ return s + (Number(p.amount)||0); }, 0);
         html += '<div class="lineup-round">';
-        html += '<div class="lineup-round-title">'+esc(displayLabel)+' <span class="lineup-count">남 '+males.length+' · 여 '+females.length+'</span></div>';
+        html += '<div class="lineup-round-title">'+esc(displayLabel)+' <span class="lineup-count">남 '+males.length+' · 여 '+females.length+'</span><span class="lineup-revenue">'+revenue.toLocaleString()+'원</span></div>';
         html += '<div class="lineup-grid">';
         people.forEach(function(p){
           var isMale = p.genderCode==='M'||p.gender==='남성';
