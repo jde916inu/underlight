@@ -1644,7 +1644,16 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       if (!open) return;
       fetch('/api/rounds').then(r => r.json()).then(j => {
         if (j && j.rounds && j.rounds.length) {
-          const visible = j.rounds.filter(r => !r.hideLineup);
+          const today0 = new Date(); today0.setHours(0,0,0,0);
+          const visible = j.rounds.filter(r => {
+            if (r.hideLineup) return false;
+            const m = String(r.label||'').match(/(\d{1,2})\/(\d{1,2})/);
+            if (!m) return true;
+            const yr = today0.getFullYear();
+            let d = new Date(yr, parseInt(m[1],10)-1, parseInt(m[2],10));
+            if (d.getTime() < today0.getTime() - 180*24*60*60*1000) d = new Date(yr+1, parseInt(m[1],10)-1, parseInt(m[2],10));
+            return d.getTime() >= today0.getTime();
+          });
           setRounds(visible);
           setRoundId(prev => {
             if (visible.some(r => r.id === prev && !r.soldout)) return prev;
