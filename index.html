@@ -1645,15 +1645,19 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       fetch('/api/rounds').then(r => r.json()).then(j => {
         if (j && j.rounds && j.rounds.length) {
           const today0 = new Date(); today0.setHours(0,0,0,0);
-          const visible = j.rounds.filter(r => {
-            if (r.hideLineup) return false;
+          const parseRoundDate = r => {
             const m = String(r.label||'').match(/(\d{1,2})\/(\d{1,2})/);
-            if (!m) return true;
+            if (!m) return null;
             const yr = today0.getFullYear();
             let d = new Date(yr, parseInt(m[1],10)-1, parseInt(m[2],10));
             if (d.getTime() < today0.getTime() - 180*24*60*60*1000) d = new Date(yr+1, parseInt(m[1],10)-1, parseInt(m[2],10));
-            return d.getTime() >= today0.getTime();
-          });
+            return d;
+          };
+          const eligible = j.rounds.filter(r => !r.hideLineup);
+          const upcoming = eligible.filter(r => { const d = parseRoundDate(r); return !d || d.getTime() >= today0.getTime(); });
+          const past = eligible.filter(r => { const d = parseRoundDate(r); return d && d.getTime() < today0.getTime(); });
+          past.sort((a, b) => parseRoundDate(b) - parseRoundDate(a));
+          const visible = upcoming.length >= 3 ? upcoming : [...upcoming, ...past.slice(0, 3 - upcoming.length)];
           setRounds(visible);
           setRoundId(prev => {
             if (visible.some(r => r.id === prev && !r.soldout)) return prev;
