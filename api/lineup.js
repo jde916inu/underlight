@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
         map[rid] = { roundId: rid, date: m.date, time: m.time, place: m.place, status: 'open', males: [], females: [] };
       }
       // 공개용 칩: 나이대·키구간·직업 (정확한 수치 대신 구간으로 표기) + 한마디
-      const chip = [ageBand(s.birthYear, year), heightBand(s.height), s.workplace].filter(Boolean).join('·');
+      const chip = [ageBand(s.birthYear, year), heightBand(s.height), cleanJob(s.workplace)].filter(Boolean).join('·');
       if (!chip) continue;
       const entry = { chip, charm: (s.charm || '').trim() };
       const isMale = s.genderCode === 'M' || s.gender === '남성';
@@ -132,6 +132,10 @@ function parseRound(label) {
   var time = m ? m[1] : '';
   var date = time ? left.replace(/\s*\d{1,2}:\d{2}\s*$/, '').trim() : left;
   return { date: date, time: time, place: place };
+}
+function cleanJob(job) {
+  if (!job) return '';
+  return job.replace(/[\/\s]*현재\s*휴직.*$/i, '').trim();
 }
 function blobToken() {
   var t = process.env.BLOB_READ_WRITE_TOKEN;
