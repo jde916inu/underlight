@@ -135,7 +135,7 @@ function parseRound(label) {
 }
 function cleanJob(job) {
   if (!job) return '';
-  return job.replace(/[\/\s]*현재\s*휴직.*$/i, '').trim();
+  return job.replace(/[\/\s]*현재\s*.*$/i, '').trim();
 }
 function blobToken() {
   var t = process.env.BLOB_READ_WRITE_TOKEN;
