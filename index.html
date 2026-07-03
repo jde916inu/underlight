@@ -1653,11 +1653,11 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             if (d.getTime() < today0.getTime() - 180*24*60*60*1000) d = new Date(yr+1, parseInt(m[1],10)-1, parseInt(m[2],10));
             return d;
           };
-          const eligible = j.rounds.filter(r => !r.hideLineup);
-          const upcoming = eligible.filter(r => { const d = parseRoundDate(r); return !d || d.getTime() >= today0.getTime(); });
-          const past = eligible.filter(r => { const d = parseRoundDate(r); return d && d.getTime() < today0.getTime(); });
-          past.sort((a, b) => parseRoundDate(b) - parseRoundDate(a));
-          const visible = upcoming.length >= 3 ? upcoming : [...upcoming, ...past.slice(0, 3 - upcoming.length)];
+          const visible = j.rounds.filter(r => {
+            if (r.hideLineup) return false;
+            const d = parseRoundDate(r);
+            return !d || d.getTime() >= today0.getTime();
+          });
           setRounds(visible);
           setRoundId(prev => {
             if (visible.some(r => r.id === prev && !r.soldout)) return prev;
