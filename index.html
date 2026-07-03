@@ -627,15 +627,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
   function pad(n){ return String(n).padStart(2,'0') }
 
-  /* ─────── Top status bar ─────── */
-  function StatusStrip(){
-    return (
-      <div className="bg-amber/10 border-b border-amber/30 text-amber text-[11px] tracking-[0.18em] font-mono uppercase py-2 px-4 flex items-center justify-center gap-2 relative z-10">
-        <span className="w-1.5 h-1.5 rounded-full bg-amber flicker-dot"></span>
-        <span>일산 유일 외모승인제 로테이션 소개팅</span>
-      </div>
-    );
-  }
 
   /* ─────── Hero ─────── */
   function Hero({ onCTA }){
@@ -2093,7 +2084,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     return (
       <>
         <div className="page-shell">
-          <StatusStrip />
+
           <Lineup />
           <Hero onCTA={cta} />
           <ConceptHero />
