@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
       res.status(400).json({ ok: false, error: 'orderId and field required' }); return;
     }
 
-    const ALLOWED = ['charm', 'workplace', 'region', 'height', 'birthYear', 'drink', 'avoidName', 'companion', 'companionName', 'amount'];
+    const ALLOWED = ['charm', 'workplace', 'region', 'height', 'birthYear', 'drink', 'avoidName', 'companion', 'companionName', 'amount', 'gender', 'genderCode'];
     if (!ALLOWED.includes(field)) {
       res.status(400).json({ ok: false, error: 'field not allowed' }); return;
     }
