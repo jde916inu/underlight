@@ -43,6 +43,7 @@ module.exports = async (req, res) => {
     await put(targetBlob.pathname, Buffer.from(JSON.stringify(rec)), {
       access: 'public',
       addRandomSuffix: false,
+      allowOverwrite: true,
       contentType: 'application/json',
       token,
     });
