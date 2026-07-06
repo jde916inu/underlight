@@ -81,6 +81,9 @@
   button.btn-add{ border:1px solid #C8A24A; background:#FFF7E6; color:#9A6A00; font-weight:700; font-size:11px; padding:3px 9px; border-radius:6px; cursor:pointer; white-space:nowrap; }
   button.btn-add:hover{ background:#FFEFD0; }
   button.btn-add:disabled{ opacity:.5; cursor:default; }
+  button.btn-edit-charm{ border:1px solid #C4D4E8; background:#fff; color:#2A5F9A; font-weight:700; font-size:11px; padding:3px 9px; border-radius:6px; cursor:pointer; white-space:nowrap; }
+  button.btn-edit-charm:hover{ background:#EEF4FC; }
+  .lp-charm{ font-size:11.5px; color:var(--muted); font-style:italic; max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .addform{ display:flex; flex-direction:column; gap:10px; margin-top:10px; }
   .addform-row{ display:flex; flex-wrap:wrap; gap:8px; }
   .addform-row label{ font-size:11.5px; font-weight:700; color:var(--fg2); display:flex; flex-direction:column; gap:4px; flex:1; min-width:120px; }
@@ -303,8 +306,10 @@
           html += '<span class="tag '+(isMale?'m':'f')+'">'+esc(p.gender||'-')+'</span>';
           html += '<span class="lp-name">'+esc(p.name||'-')+'</span>';
           html += '<span class="lp-job">'+esc(p.workplace||'-')+'</span>';
+          html += '<span class="lp-charm" data-id="'+esc(p.orderId)+'">'+esc(p.charm||'-')+'</span>';
           html += '<a class="lk" href="tel:'+esc(phone)+'">'+esc(p.phone||'-')+'</a>';
           html += '<div class="lp-sp"></div>';
+          html += '<button class="btn-edit-charm" data-id="'+esc(p.orderId)+'" data-name="'+esc(p.name||'')+'" data-charm="'+esc(p.charm||'')+'">수정</button>';
           html += '<button class="btn-rm" data-id="'+esc(p.orderId)+'" data-name="'+esc(p.name||'')+'">제외</button>';
           html += '</div>';
         });
@@ -346,6 +351,30 @@
         .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
         .then(function(res){ if(!res.ok){ b.disabled=false; b.textContent='제외'; alert('실패: '+((res.j&&res.j.error)||'')); return; } load(); })
         .catch(function(){ b.disabled=false; b.textContent='제외'; alert('네트워크 오류'); });
+      };
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('.btn-edit-charm'), function(b){
+      b.onclick = function(){
+        var id = b.getAttribute('data-id');
+        var nm = b.getAttribute('data-name')||'';
+        var cur = b.getAttribute('data-charm')||'';
+        var newVal = prompt('['+nm+'] 매력 한마디 수정', cur);
+        if(newVal === null) return;
+        b.disabled=true; b.textContent='저장 중…';
+        fetch('/api/patch', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ adminKey: getKey(), orderId:id, field:'charm', value:newVal.trim() })
+        })
+        .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+        .then(function(res){
+          if(!res.ok){ b.disabled=false; b.textContent='수정'; alert('실패: '+((res.j&&res.j.error)||'')); return; }
+          b.setAttribute('data-charm', newVal.trim());
+          var charmEl = b.closest('.lineup-person').querySelector('.lp-charm');
+          if(charmEl) charmEl.textContent = newVal.trim() || '-';
+          b.disabled=false; b.textContent='수정';
+        })
+        .catch(function(){ b.disabled=false; b.textContent='수정'; alert('네트워크 오류'); });
       };
     });
 
