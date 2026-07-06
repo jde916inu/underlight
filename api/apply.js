@@ -138,10 +138,9 @@ async function sendMessages({ applicant, orderId, amount }) {
   if (immediate.length) {
     out.admin = await solapiSend({ API_KEY, API_SECRET, messages: immediate });
   }
-  // 고객 알림톡: 신청 시각 + 1시간 예약 발송
+  // 고객 알림톡: 즉시 발송
   if (scheduled.length) {
-    const scheduledDate = new Date(Date.now() + 60 * 60 * 1000).toISOString();
-    out.customer = await solapiSend({ API_KEY, API_SECRET, messages: scheduled, scheduledDate });
+    out.customer = await solapiSend({ API_KEY, API_SECRET, messages: scheduled });
   }
   return { sent: true, result: out };
 }
