@@ -1741,6 +1741,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       !region ? '거주지역을 선택해주세요.' :
       !drink ? '드시고 싶은 음료를 선택해주세요.' :
       !photoFile ? '본인 사진을 첨부해주세요.' :
+      !docFile ? '재직증명서 / 사업자등록증을 첨부해주세요.' :
       !agreeParty ? '파티 안내 동의에 체크해주세요.' :
       !agreePrivacy ? '개인정보 수집·이용 동의에 체크해주세요.' :
       ''
@@ -1784,7 +1785,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
         let photoUrl = '', docUrl = '';
         try {
           photoUrl = await uploadFile(photoFile);
-          if (docFile) docUrl = await uploadFile(docFile);
+          docUrl = await uploadFile(docFile);
         } catch (ue) {
           setBusy(false);
           setErr('첨부파일 업로드에 실패했어요. 파일을 다시 확인해주세요. (' + (ue.message || ue) + ')');
@@ -1954,7 +1955,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
 
           {/* 신원 확인 서류 */}
           <div className="mb-3">
-            <div className="text-[12.5px] font-bold text-fg2 mb-0.5">재직증명서 / 사업자등록증 <span className="text-muted font-normal">(선택)</span></div>
+            <div className="text-[12.5px] font-bold text-fg2 mb-0.5">재직증명서 / 사업자등록증</div>
             <div className="text-[11.5px] text-muted mb-1.5">사원증 · 명함 · 급여명세서 대체 가능 · 본인 신원 확인용</div>
             <FileField file={docFile} onPick={setDocFile} accept="image/*,application/pdf" hint="사진 또는 PDF" />
           </div>
