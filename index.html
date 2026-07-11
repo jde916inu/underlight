@@ -1700,7 +1700,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       const daysToEvent = Math.ceil((eventDate - today) / 86400000);
       const daysToDeadline = daysToEvent - 7;
       if (daysToDeadline > 0) {
-        return { type: 'earlybird', text: `‼️할인 마감 D-${daysToDeadline}‼️` };
+        return { type: 'earlybird', text: `🔥 5천원 할인마감 D-${daysToDeadline}` };
       }
       const lr = lineupRounds.find(x => x.roundId === r.id);
       if (gender === 'M' || gender === 'F') {
@@ -2026,8 +2026,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             </div>
           </div>
 
-          {/* 동반 참여 */}
-          <div className="mb-4 border border-line bg-ink2/40 rounded-2xl p-3.5">
+          {/* 동반 참여 — 여성 전용 */}
+          {gender === 'F' && <div className="mb-4 border border-line bg-ink2/40 rounded-2xl p-3.5">
             <label className="flex items-start gap-2 cursor-pointer">
               <input type="checkbox" checked={companion} onChange={e=>setCompanion(e.target.checked)} className="mt-0.5 accent-amber"/>
               <span className="text-[13px] text-fg2 leading-[1.5]">
@@ -2040,7 +2040,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 placeholder="같이 오는 분 이름 (선택)"
                 className="w-full mt-2.5 bg-ink2/60 border border-line rounded-xl text-fg text-[13px] px-3.5 py-2.5 outline-none focus:border-amber/60"/>
             )}
-          </div>
+          </div>}
 
           {/* 금액 요약 */}
           {gender && (
