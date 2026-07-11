@@ -1735,7 +1735,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
       const today = new Date(); today.setHours(0, 0, 0, 0);
       return Math.ceil((eventDate - today) / 86400000) > 7;
     })();
-    const discount = (companion ? COMPANION_DISCOUNT : 0) + (isEarlybird ? EARLYBIRD_DISCOUNT : 0);
+    const discount = (companion && gender === 'F' ? COMPANION_DISCOUNT : 0) + (isEarlybird ? EARLYBIRD_DISCOUNT : 0);
     const price = basePrice == null ? null : Math.max(0, basePrice - discount);
 
     const fmtPhone = (v) => {
@@ -2055,7 +2055,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                   <span>-{EARLYBIRD_DISCOUNT.toLocaleString()}원</span>
                 </div>
               )}
-              {companion && (
+              {companion && gender === 'F' && (
                 <div className="flex justify-between py-1 text-amber">
                   <span>동반 할인</span>
                   <span>-{COMPANION_DISCOUNT.toLocaleString()}원</span>
@@ -2105,7 +2105,7 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 <span className="text-[18px] text-amber font-extrabold">{price.toLocaleString()}원</span>
                 {isEarlybird && <span className="block text-[12px] text-amber font-bold mt-0.5">🔥 얼리버드 5,000원 할인 적용 중!</span>}
                 {!isEarlybird && <span className="block text-[11px] text-muted mt-0.5">※ 7일 전 신청 시 5,000원 할인</span>}
-                {companion && <span className="block text-[11px] text-amber mt-0.5">동반 할인 5,000원 적용</span>}
+                {companion && gender === 'F' && <span className="block text-[11px] text-amber mt-0.5">동반 할인 5,000원 적용</span>}
               </span>
             </div>
           )}
