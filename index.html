@@ -437,12 +437,12 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
   const TOSS_CLIENT_KEY = "test_ck_여기에_본인_테스트_클라이언트키_붙여넣기";
 
   // ▼ 성별 참가비 (원). 여성 무료로 하려면 F: 0 (단, 0원이면 결제창 대신 무료신청 처리됨)
-  const PRICES = { M: 43000, F: 25000 };
+  const PRICES = { M: 48000, F: 28000 };
 
   // ▼ 동반 참여(친구와 함께) 시 1인당 할인 금액 (원)
-  const COMPANION_DISCOUNT = 3000;
+  const COMPANION_DISCOUNT = 5000;
   // ▼ 얼리버드 할인 금액 (이벤트 7일 이전 신청 시 자동 적용)
-  const EARLYBIRD_DISCOUNT = 3000;
+  const EARLYBIRD_DISCOUNT = 5000;
 
   // ▼ 신청 받을 회차 목록 (soldout:true 면 마감 표시 + 선택 불가)
   const ROUNDS = [
@@ -2050,8 +2050,8 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
                 <span>{basePrice.toLocaleString()}원</span>
               </div>
               {isEarlybird && (
-                <div className="flex justify-between py-1 text-amber">
-                  <span>‼️ 얼리버드 할인</span>
+                <div className="flex justify-between py-1 text-amber font-bold">
+                  <span>🔥 얼리버드 할인</span>
                   <span>-{EARLYBIRD_DISCOUNT.toLocaleString()}원</span>
                 </div>
               )}
@@ -2103,8 +2103,9 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
               <span className="text-[13px] text-fg2 font-bold">참가비</span>
               <span className="text-right">
                 <span className="text-[18px] text-amber font-extrabold">{price.toLocaleString()}원</span>
-                {isEarlybird && <span className="block text-[11px] text-amber mt-0.5">‼️ 얼리버드 3,000원 할인 적용</span>}
-                {companion && <span className="block text-[11px] text-muted mt-0.5">동반 할인 3,000원 적용</span>}
+                {isEarlybird && <span className="block text-[12px] text-amber font-bold mt-0.5">🔥 얼리버드 5,000원 할인 적용 중!</span>}
+                {!isEarlybird && <span className="block text-[11px] text-muted mt-0.5">※ 7일 전 신청 시 5,000원 할인</span>}
+                {companion && <span className="block text-[11px] text-amber mt-0.5">동반 할인 5,000원 적용</span>}
               </span>
             </div>
           )}
