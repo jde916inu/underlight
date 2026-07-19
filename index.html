@@ -1621,10 +1621,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     const [name, setName]     = useState('');
     const [phone, setPhone]   = useState('');
     const [roundId, setRoundId] = useState(firstOpen ? firstOpen.id : '');
-    const [dayFilter, setDayFilter] = useState(() => {
-      if (!firstOpen) return '금';
-      return firstOpen.label.includes('(일)') ? '일' : '금';
-    });
     const [birthYear, setBirthYear] = useState('');   // 년생 (예: 1995)
     const [height, setHeight]       = useState('');   // 키
     const [charm, setCharm]         = useState('');   // 본인의 매력 한마디
@@ -1675,12 +1671,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
             const fo = visible.find(r => !r.soldout);
             return fo ? fo.id : '';
           });
-          // 첫 오픈 회차에 맞춰 dayFilter 초기화
-          setDayFilter(() => {
-            const fo = visible.find(r => !r.soldout);
-            if (!fo) return '금';
-            return fo.label.includes('(일)') ? '일' : '금';
-          });
         }
       }).catch(() => {});
       fetch('/api/lineup').then(r => r.json()).then(j => {
@@ -1715,15 +1705,6 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
     };
 
     if (!open) return null;
-
-    const filteredRounds = rounds.filter(r => r.label.includes('(' + dayFilter + ')'));
-
-    const handleDayFilter = (day) => {
-      setDayFilter(day);
-      const subset = rounds.filter(r => r.label.includes('(' + day + ')'));
-      const fo = subset.find(r => !r.soldout);
-      setRoundId(fo ? fo.id : (subset[0] ? subset[0].id : ''));
-    };
 
     const basePrice = gender ? PRICES[gender] : null;
     const round = rounds.find(r => r.id === roundId);
@@ -1989,22 +1970,10 @@ src="https://www.facebook.com/tr?id=986459453871241&ev=PageView&noscript=1"
           {/* 회차 */}
           <div className="mb-4">
             <div className="text-[12.5px] font-bold text-fg2 mb-2">참가 회차</div>
-            {/* 요일 탭 */}
-            <div className="flex gap-2 mb-3">
-              {['금', '일'].map(day => (
-                <button key={day} onClick={() => handleDayFilter(day)}
-                  className={"flex-1 py-2 rounded-xl text-[13px] font-bold border-2 transition " +
-                    (dayFilter === day
-                      ? "border-amber bg-amber/10 text-amber"
-                      : "border-line bg-ink2/40 text-fg2")}>
-                  {day === '금' ? '금요일' : '일요일'}
-                </button>
-              ))}
-            </div>
             <div className="space-y-2">
-              {filteredRounds.length === 0
-                ? <div className="text-center text-[13px] text-muted py-4">해당 요일 회차가 없습니다.</div>
-                : filteredRounds.map(r => {
+              {rounds.length === 0
+                ? <div className="text-center text-[13px] text-muted py-4">현재 모집 중인 회차가 없습니다.</div>
+                : rounds.map(r => {
                   const badge = getRoundBadge(r);
                   return (
                     <button key={r.id} disabled={r.soldout} onClick={()=>setRoundId(r.id)}
