@@ -54,10 +54,12 @@ module.exports = async (req, res) => {
     }
 
     // 라인업엔 "다가오는 회차 중 hideLineup이 아닌 회차"를 모두 공개 (회차별 노출은 /admin에서 토글)
+    // rounds 설정에 없는 회차(삭제된 회차)는 노출 제외
+    const cfgIds = new Set(cfg.map(r => r.id));
     const today0 = new Date(); today0.setHours(0, 0, 0, 0);
     const dated = Object.values(map)
       .map(r => ({ r, d: roundDateFromLabel(r.date, year) }))
-      .filter(x => x.d && x.d.getTime() >= today0.getTime() && !x.r.hideLineup)
+      .filter(x => x.d && x.d.getTime() >= today0.getTime() && !x.r.hideLineup && cfgIds.has(x.r.roundId))
       .sort((a, b) => a.d - b.d);
     const rounds = dated.slice(0, 2).map(x => x.r);
 
